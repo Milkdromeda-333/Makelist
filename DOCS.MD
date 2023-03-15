@@ -1,10 +1,10 @@
 - First build out server.
     X set up server with cors.
         x install cors, express package
-    - set up database in server
-        - get a database established.
-        - install mongoose
-        - connect server to database.
+    x set up database in server
+        x get a database established.
+        x install mongoose
+        x connect server to database.
     - set up models and routes
         models
         - auth model: [username, userId, preferedTheme]

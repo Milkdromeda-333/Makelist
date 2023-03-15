@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
 require('dotenv').config();
+const mongoose = require('mongoose');
 
 // middleware
 
@@ -18,18 +19,20 @@ app.use((err, req, res, next) => {
     return res.send({ errMsg: err.message });
 });
 
-
+// port listener
 app.listen(process.env.PORT, (err) => {
     if (err) {
         throw new Error(err);
     }
     // connect to db
-    // mongoose.set('strictQuery', false);
-    // mongoose.connect(process.env.MONGO_URI, (err) => {
-    //     if (err) {
-    //         throw err;
-    //     }
-    //     console.log('Connected to database');
-    // });
+    mongoose.set('strictQuery', false);
+    mongoose.connect(process.env.MONGO_URI)
+        .then(() => {
+            console.log('Connected to database');
+        })
+        .catch(err => {
+            console.error(err);
+        });
+
     console.log('Server is Successfully Running, and App is listening on port ' + process.env.PORT);
 });
