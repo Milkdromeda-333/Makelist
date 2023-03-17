@@ -79,6 +79,24 @@ router.delete('/:listId', (req, res, next) => {
         });
 });
 
+// updates list
+router.put('/list', (req, res, next) => {
+
+    List.findOneAndReplace({ _id: req.body._id, user: req.auth._id }, req.body)
+        .then(foundList => {
+            if (!foundList) {
+                res.status(400);
+                return next(new Error('List does not exist'));
+            }
+            res.status(200);
+            return res.send(foundList);
+        }).catch(err => {
+            console.log(err);
+            res.status(500);
+            return next(err);
+        });
+});
+
 // adds a new item to a list
 router.post('/:listId/new-item', (req, res, next) => {
 

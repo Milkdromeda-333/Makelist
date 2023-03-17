@@ -24,8 +24,9 @@ x create a list
 x gets a list by id
 x get all lists of a user by userId
 x delete list by userId
-- update list description
+x updates list
 x adds list items
+- update item description
 - updates list items to complete
 - updates list items text
 - deletes list items
