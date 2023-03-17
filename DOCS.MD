@@ -22,8 +22,8 @@ x sign up and sign in with jwts token and user object
 list
 x create a list
 x gets a list by id
-- get all lists of a user by userId
-- delete list by userId
+x get all lists of a user by userId
+x delete list by userId
 - update list description
 x adds list items
 - updates list items to complete

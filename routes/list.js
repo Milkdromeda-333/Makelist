@@ -31,8 +31,8 @@ router.post('/new', (req, res, next) => {
 });
 
 // get a list
-router.get('/:postId', (req, res, next) => {
-    List.findById(req.params.postId)
+router.get('/:listId', (req, res, next) => {
+    List.findById(req.params.listId)
         .then(foundList => {
             if (!foundList) {
                 res.status(200);
@@ -49,7 +49,35 @@ router.get('/:postId', (req, res, next) => {
 });
 
 // gets all lists of a user
+router.get('/', (req, res, next) => {
+    List.find({ user: req.auth._id })
+        .then(foundLists => {
+            res.status(200);
+            return res.send(foundLists);
+        }).catch(err => {
+            console.log(err);
+            res.status(500);
+            return next(err);
+        });
+});
 
+// deletes a list
+router.delete('/:listId', (req, res, next) => {
+    List.findByIdAndDelete(req.params.listId)
+        .then(foundList => {
+            if (!foundList) {
+                res.status(200);
+                return res.send("No list found.");
+            }
+            console.log(foundList);
+            res.status(200);
+            return res.send("List deleted");
+        }).catch(err => {
+            console.log(err);
+            res.status(500);
+            return next(err);
+        });
+});
 
 // adds a new item to a list
 router.post('/:listId/new-item', (req, res, next) => {

@@ -18,7 +18,7 @@ app.use(express.json());
 
 app.use('/auth', authRoute);
 app.use('/api', expressjwt({ secret: process.env.JWT_SECRET, algorithms: ['HS256'] }));
-app.use('/api/list', listRoute);
+app.use('/api/lists', listRoute);
 
 // error handler
 app.use((err, req, res, next) => {
