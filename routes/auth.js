@@ -12,6 +12,7 @@ router.post('/', (req, res, next) => {
     const user = req.body;
 
     User.findOne({ username: user.username })
+        .populate('lists')
         .then(user => {
             if (!user) {
                 res.status(403);

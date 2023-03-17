@@ -20,11 +20,12 @@ auth
 x sign up and sign in with jwts token and user object
 
 list
-- create a list
+x create a list
+x gets a list by id
 - get all lists of a user by userId
 - delete list by userId
 - update list description
-- adds list items
+x adds list items
 - updates list items to complete
 - updates list items text
 - deletes list items
@@ -45,3 +46,5 @@ Notes:
 `node -e console.log(require('crypto').randomBytes(20).toString('hex'))`
 
 - If a document/model isnt defined correctly, make sure that you are using the correct query. ie model.find() return an array of matched objects, .findOne() returns a user object.
+
+- I noticed about myself that I tend to try to finish projects as quickly as possible, and because of that I tend to lean away from learning on the spot. I was able to conciously tell myself it's okay to spend time learning something new on the spot in order to implement it in my code and was able to successfully implement populating the user object after the user logs in.

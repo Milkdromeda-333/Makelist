@@ -19,7 +19,11 @@ const UserSchema = new Schema({
     password: {
         type: String,
         require: true
-    }
+    },
+    lists: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'List'
+    }]
 });
 
 // returns user without password
