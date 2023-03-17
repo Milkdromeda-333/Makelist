@@ -17,14 +17,12 @@ router.post('/new', (req, res, next) => {
         .then(list => {
             User.findByIdAndUpdate(req.auth._id, { $push: { lists: list._id } })
                 .catch(err => {
-                    console.log(err);
                     res.status(500);
                     return next(err);
                 });
             res.status(201);
             return res.send(list);
         }).catch(err => {
-            console.log(err);
             res.status(500);
             return next(err);
         });
@@ -38,11 +36,9 @@ router.get('/:listId', (req, res, next) => {
                 res.status(200);
                 return res.send("No list was found");
             }
-            console.log(foundList);
             res.status(200);
             return res.send(foundList);
         }).catch(err => {
-            console.log(err);
             res.status(500);
             return next(err);
         });
@@ -55,7 +51,6 @@ router.get('/', (req, res, next) => {
             res.status(200);
             return res.send(foundLists);
         }).catch(err => {
-            console.log(err);
             res.status(500);
             return next(err);
         });
@@ -66,14 +61,12 @@ router.delete('/:listId', (req, res, next) => {
     List.findByIdAndDelete(req.params.listId)
         .then(foundList => {
             if (!foundList) {
-                res.status(200);
+                res.status(404);
                 return res.send("No list found.");
             }
-            console.log(foundList);
             res.status(200);
             return res.send("List deleted");
         }).catch(err => {
-            console.log(err);
             res.status(500);
             return next(err);
         });
@@ -91,7 +84,18 @@ router.put('/list', (req, res, next) => {
             res.status(200);
             return res.send(foundList);
         }).catch(err => {
-            console.log(err);
+            res.status(500);
+            return next(err);
+        });
+});
+
+// resets all repeated list items
+router.put('/:listId/reset', (req, res, next) => {
+    List.updateMany({ user: req.auth._id }, { listItems: { isRepeated: true } })
+        .then(lists => {
+            res.status(200);
+            return res.send(lists);
+        }).catch(err => {
             res.status(500);
             return next(err);
         });
@@ -105,12 +109,10 @@ router.post('/:listId/new-item', (req, res, next) => {
         { $push: { listItems: req.body } }),
         { new: true }
             .then(foundList => {
-                console.log(foundList);
                 res.status(201);
                 return res.send(foundList);
 
             }).catch(err => {
-                console.log(err);
                 res.status(500);
                 return next(err);
             });
