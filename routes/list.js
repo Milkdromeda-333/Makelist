@@ -101,21 +101,60 @@ router.put('/:listId/reset', (req, res, next) => {
         });
 });
 
+// // toggles pinned list
+// router.put('/list/:listId/pin', (req, res, next) => {
+//     List.findOneAndUpdate({ _id: req.params.listId })
+//         .then(list => {
+//             List.find({ user: req.auth._id })
+//             .
+//             list.isPinned = !list.isPinned;
+//             list.save();
+//         });
+// });
+
 // adds a new item to a list
 router.post('/:listId/new-item', (req, res, next) => {
 
     List.findOneAndUpdate(
         { user: req.auth._id, _id: req.params.listId },
-        { $push: { listItems: req.body } }),
-        { new: true }
-            .then(foundList => {
-                res.status(201);
-                return res.send(foundList);
+        { $push: { listItems: req.body } },
+        { new: true })
+        .then(foundList => {
+            res.status(201);
+            return res.send(foundList);
 
-            }).catch(err => {
-                res.status(500);
-                return next(err);
-            });
+        }).catch(err => {
+            res.status(500);
+            return next(err);
+        });
+});
+
+// updates item
+router.put('/list/:listId/item/:itemId/update', (req, res, next) => {
+
+    List.findById(req.params.listId)
+        .then(list => {
+
+            if (!list) {
+                res.send(404);
+                return next(new Error("No list was found."));
+            }
+            const index = list.listItems.findIndex(item => item._id.toString() === req.params.itemId);
+            list.listItems[index][req.body.key] = req.body.value;
+
+            list.save()
+                .then(response => {
+                    res.status(200);
+                    return res.send(response);
+                }).catch(err => {
+                    res.status(500);
+                    return next(err);
+                });
+
+        }).catch(err => {
+            res.status(500);
+            return next(err);
+        });
 });
 
 module.exports = router;

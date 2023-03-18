@@ -30,9 +30,8 @@ x updates list
 x adds list items
 x resets list so that repeatables are set to incomplete
 - toggling list pinning
-- update item description
+x update item
 - updates list items to complete
-- updates list items text
 - deletes list items
 
 user
@@ -79,3 +78,14 @@ Recieves a list id as a parameter.
 #### - POST url/api/lists/:listId/new-item : Adds new list item
 
 Recieves a list id parameter, and a request body for the list item object. Returns updated list.
+
+### - PUT url/api/lists/list/:listId/item/:itemId/update : Updates a list item
+
+Recieves list id and item id as parameters, and an object outlining what key to change, and what value to change it to. Like so
+
+```
+{
+    "key": "title",
+    "value": "new title alert"
+}
+```
