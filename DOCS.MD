@@ -31,8 +31,7 @@ x adds list items
 x resets list so that repeatables are set to incomplete
 - toggling list pinning
 x update item
-- updates list items to complete
-- deletes list items
+x deletes list items
 
 user
 - change theme(extra)
@@ -73,13 +72,13 @@ Takes a complete list object to replace the last object. Returns the object befo
 
 Recieves a list id as a parameter.
 
-### Item route:
+#### Item route:
 
 #### - POST url/api/lists/:listId/new-item : Adds new list item
 
 Recieves a list id parameter, and a request body for the list item object. Returns updated list.
 
-### - PUT url/api/lists/list/:listId/item/:itemId/update : Updates a list item
+#### - PUT url/api/lists/list/:listId/item/:itemId/update : Updates a list item
 
 Recieves list id and item id as parameters, and an object outlining what key to change, and what value to change it to. Like so
 
@@ -89,3 +88,13 @@ Recieves list id and item id as parameters, and an object outlining what key to 
     "value": "new title alert"
 }
 ```
+
+#### - DELETE url/lists/list/:listId/item/:itemId : Deletes a list item
+
+Recieves list id and item id as parameters. Returns the new list.
+
+
+- find list that is already pinned, set it to false. Then, find th list that was rewueted and turn it to true.
+
+    x findOneAndUpdate will be able to set it to false. 
+    - find() get all of a users lists, find where one isPinned is true, set it to false. Then find the list that the user queried and set it to true if it is pinning something. If its just unpinning, no need to do the last step.

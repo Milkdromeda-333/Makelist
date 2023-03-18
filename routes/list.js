@@ -102,15 +102,58 @@ router.put('/:listId/reset', (req, res, next) => {
 });
 
 // // toggles pinned list
-// router.put('/list/:listId/pin', (req, res, next) => {
-//     List.findOneAndUpdate({ _id: req.params.listId })
-//         .then(list => {
-//             List.find({ user: req.auth._id })
-//             .
-//             list.isPinned = !list.isPinned;
-//             list.save();
-//         });
-// });
+router.put('/list/:listId/pin', (req, res, next) => {
+    List.find({ user: req.auth._id })
+        .then(lists => {
+            const requestedList = lists.find(list => list._id.toString() === req.params.listId);
+            console.log("this is the list before: " + requestedList);
+
+            if (requestedList.isPinned) {
+                // unpin
+
+                requestedList.isPinned = false;
+                requestedList.save()
+                    .then(response => {
+                        res.status(200);
+                        return res.send(response);
+                    })
+                    .catch(err => {
+                        res.status(500);
+                        return next(err);
+                    });
+            } else {
+                // pin it
+
+                // unpins previously pinned list
+                List.findOneAndUpdate(
+                    { user: req.auth._id, isPinned: true },
+                    { isPinned: false }
+                ).catch(err => {
+                    res.status(500);
+                    return next(err);
+                });
+
+                requestedList.isPinned = true;
+                console.log("after : " + requestedList);
+                requestedList.save()
+                    .then(response => {
+                        res.status(200);
+                        // response is returning correctly, but isnt saving somehow to the db.
+                        // after is conssistant wih response
+                        console.log("response: " + response);
+                        return res.send("List pinned.");
+                    })
+                    .catch(err => {
+                        res.status(500);
+                        return next(err);
+                    });
+            }
+        })
+        .catch(err => {
+            res.status(500);
+            return next(err);
+        });
+});
 
 // adds a new item to a list
 router.post('/:listId/new-item', (req, res, next) => {
@@ -151,6 +194,21 @@ router.put('/list/:listId/item/:itemId/update', (req, res, next) => {
                     return next(err);
                 });
 
+        }).catch(err => {
+            res.status(500);
+            return next(err);
+        });
+});
+
+// deletes list items
+router.delete('/list/:listId/item/:itemId', (req, res, next) => {
+    List.findOneAndUpdate(
+        { _id: req.params.listId },
+        { $pull: { listItems: { _id: req.params.itemId } } },
+        { new: true })
+        .then(newList => {
+            res.status(200);
+            return res.send(newList);
         }).catch(err => {
             res.status(500);
             return next(err);
