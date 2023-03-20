@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Switch from "react-switch";
 
 export default function Navbar({isThemeDark, toggleFunc}) {
@@ -40,7 +39,10 @@ export default function Navbar({isThemeDark, toggleFunc}) {
             flex flex-row justify-between items-center
             dark:bg-dark-blue dark:text-white"
         >
-            <span className="text-lg md:text-3xl">MakeList</span>
+            <div className="center-row gap-1">
+                <img src="/logo.png" alt="logo" className="w-10 object-cover" />
+                <span className="text-lg md:text-3xl">MakeList</span>
+            </div>
 
             <Switch
                 onChange={toggleFunc}

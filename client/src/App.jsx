@@ -6,18 +6,11 @@ import './styles.css'
 
 function App() {
 
-  const [isDarkModeActive, setIsDarkModeActive] = useState(localStorage.getItem('theme') || true);
-
+  const [isDarkModeActive, setIsDarkModeActive] = useState(true);
+  
   const toggleDarkMode = () => {
-    // if (isDarkModeActive) {
-    //   setIsDarkModeActive(prev => !prev);
-    //   localStorage.setItem('theme', isDarkModeActive);
-    // } else {
-    // }
     setIsDarkModeActive(prev => !prev);
-    localStorage.setItem('theme', isDarkModeActive);
-    console.log(localStorage.getItem('theme'))
-  } 
+  }
 
   return (
     <div className={`font-font ${isDarkModeActive ? 'dark' : null}`}>

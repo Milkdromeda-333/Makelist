@@ -7,3 +7,10 @@
         @apply border
     }
 }
+
+.center-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    justify-items: center;
+}
