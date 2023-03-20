@@ -34,13 +34,14 @@ export default function Navbar({isThemeDark, toggleFunc}) {
         <nav className="
             bg-apple
             text-white
-            py-2 px-4
+            h-12 px-4
             absolute top-0 w-full
             flex flex-row justify-between items-center
-            dark:bg-dark-blue dark:text-white"
+            dark:bg-dark-blue dark:text-white
+            md:h-[55px]"
         >
             <div className="center-row gap-1">
-                <img src="/logo.png" alt="logo" className="w-10 object-cover" />
+                <img src="/logo.png" alt="logo" className="w-8 object-cover" />
                 <span className="text-lg md:text-3xl">MakeList</span>
             </div>
 

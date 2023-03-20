@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from 'react'
+import { appContext } from "../context/App";
 
 export default function LoginForm({ isUserLoggingIn, setIsUserLoggingIn }) {
+
+    const { setUsername } = useContext(appContext);
 
     const defaultFormInputs = {
         username: "",
@@ -21,7 +24,7 @@ export default function LoginForm({ isUserLoggingIn, setIsUserLoggingIn }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(userInput);
+        setUsername(userInput.username);
         setUserInput(defaultFormInputs);
     }
     
