@@ -1,3 +1,12 @@
+export default function Auth() {
+    
+    return (
+        <>
+
+        </>
+    )
+}
+
 - First build out server.
     X set up server with cors.
         x install cors, express package
