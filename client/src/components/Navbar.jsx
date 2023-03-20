@@ -1,0 +1,57 @@
+import Switch from "react-switch";
+
+export default function Navbar({isThemeDark, toggleFunc}) {
+
+    const checkedHandleIcon = (
+        <div
+            style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
+                color: "red",
+                fontSize: 18
+            }}
+        >
+            🌑
+        </div >);
+    
+    const uncheckedHandleIcon=(
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%",
+          fontSize: 20
+        }}
+      >
+        🌞
+      </div>
+    )
+    
+    return (
+        <nav className="
+            bg-apple
+            text-white
+            py-2 px-4
+            absolute top-0 w-full
+            flex flex-row justify-between items-center
+            dark:bg-dark-blue dark:text-white"
+        >
+            <div className="center-row gap-1">
+                <img src="/logo.png" alt="logo" className="w-10 object-cover" />
+                <span className="text-lg md:text-3xl">MakeList</span>
+            </div>
+
+            <Switch
+                onChange={toggleFunc}
+                checked={isThemeDark ? true : false}
+                onColor="#1c2429"
+                offColor="#77bd8b"
+                uncheckedIcon={checkedHandleIcon}
+                checkedIcon={uncheckedHandleIcon}
+            />
+        </nav>
+    )
+}
