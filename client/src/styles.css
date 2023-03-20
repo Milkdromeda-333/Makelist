@@ -15,7 +15,7 @@
 }
 
 /* checkbox stylings are from https://www.geekboots.com/css/animated-checkbox with my tweaking*/
- input[type=checkbox] {
+ input[type=checkbox]:not(.repeat) {
             appearance: none;
             width: 20px;
             height: 20px;
@@ -28,7 +28,7 @@
             position: relative;
         }
 
-        input[type=checkbox]::before {
+        input[type=checkbox]:not(.repeat)::before {
             content: '';
             position: absolute;
             width: 0;
@@ -40,7 +40,7 @@
             transition-delay: 0ms;
         }
 
-        input[type=checkbox]::after {
+        input[type=checkbox]:not(.repeat)::after {
             content: '';
             position: absolute;
             width: 0;
@@ -52,17 +52,17 @@
             transition-delay: 150ms;
         }
 
-        input[type=checkbox]:checked::before {
+        input[type=checkbox]:not(.repeat):checked::before {
             width: 12px;
             transition-delay: 150ms;
         }
 
-        input[type=checkbox]:checked::after {
+        input[type=checkbox]:not(.repeat):checked::after {
             width: 10px;
             transition-delay: 0ms;
         }
 
-        label {
+        label:not(.repeat) {
             font-size: 20px;
             color: #fff;
             cursor: pointer;
