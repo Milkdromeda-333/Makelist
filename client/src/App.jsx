@@ -7,7 +7,6 @@ import { appContext } from "./context/App";
 function App() {
 
   const { username } = useContext(appContext);
-  console.log(username)
 
   const [isDarkModeActive, setIsDarkModeActive] = useState(true);
   
