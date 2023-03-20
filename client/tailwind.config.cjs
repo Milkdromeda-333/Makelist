@@ -19,6 +19,7 @@ module.exports = {
         apple: "#82cf98",
         "apple-shade": "#77bd8b",
         blue: "#13648B",
+        "blue-shade": "#105777",
         "dark-blue": "#253137",
         "dark-blue-shade": "#1c2429"
       },

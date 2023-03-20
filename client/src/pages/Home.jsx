@@ -31,13 +31,13 @@ export default function Home() {
     const lists = userLists.map(list => (<List list={list} key={list.title} />))
 
     return (
-        <main className="pt-12 m-4 mt-6">
+        <main className="pt-20 p-4 min-h-[100vh] bg-white dark:bg-blue dark:text-white">
 
             <div className="
             center-row gap-2
             mb-4
             font-medium text-xl select-none
-            md:text3xl">
+            md:text-3xl">
 
                 <h1>Welcome, {username} </h1>
                 <span className={shouldAnimate ? "animate-wiggle" : ""}>{currentEmoji}</span>
