@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { RxCaretDown, RxCaretUp } from "react-icons/rx";
+import { MdOutlineStarOutline, MdOutlineStar } from "react-icons/md";
+import { FiEdit2, FiTrash } from "react-icons/fi";
 import Item from "./Item";
 
 export default function List({ list }) {
@@ -13,9 +15,9 @@ export default function List({ list }) {
     const items = list.listItems.map(item => <Item item={item} key={item.title } />);
 
     return (
-        <div
+        <section
             className="
-            w-full
+            w-full  p-4
             bg-apple border-apple text-white
             dark:bg-blue-shade
             dark:border-white
@@ -23,7 +25,7 @@ export default function List({ list }) {
         >
 
             <div
-                className="center-row justify-between items-center p-4 text-2xl"
+                className="center-row justify-between items-center text-2xl"
                 onClick={toggleList}
             >
                 <span>{list.name}</span>
@@ -34,8 +36,24 @@ export default function List({ list }) {
 
             {isListActive &&
                 <div className="p-4 ">
-                {items}
-            </div>}
-        </div>
+                    {items}
+                </div>
+            }
+            
+            <div className="center-row gap-2 mt-4">
+                {list.isPinned ?
+                    <MdOutlineStar className="text-2xl hover:text-gray-200 dark:hover:text-gray-300" />
+                    :
+                    <MdOutlineStarOutline className="text-2xl hover:text-gray-200 dark:hover:text-gray-300" />
+                }
+
+                <FiEdit2 className="hover:text-gray-200 dark:hover:text-gray-300" />
+                
+                <button>
+                        <FiTrash className="hover:text-red-500" />
+                </button>
+            </div>
+
+        </section>
     )
 }
