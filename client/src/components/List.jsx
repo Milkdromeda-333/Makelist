@@ -3,10 +3,12 @@ import { RxCaretDown, RxCaretUp } from "react-icons/rx";
 import { MdOutlineStarOutline, MdOutlineStar } from "react-icons/md";
 import { FiEdit2, FiTrash } from "react-icons/fi";
 import Item from "./Item";
+import AddNewItem from "./AddNewItem";
 
 export default function List({ list }) {
 
     const [isListActive, setIsListActive] = useState(list.isPinned || false);
+    const [isAddingNewItem, setIsAddingNewItem] = useState(false);
 
     const toggleList = () => {
         setIsListActive(prev => !prev);
@@ -37,9 +39,11 @@ export default function List({ list }) {
             {isListActive &&
                 <div className="p-4 ">
                     {items}
+                    {isAddingNewItem && <AddNewItem closeFunc={ setIsAddingNewItem } />}
                 </div>
             }
             
+            {/* options */}
             <div className="center-row gap-2 mt-4">
                 {list.isPinned ?
                     <MdOutlineStar className="text-2xl hover:text-gray-200 dark:hover:text-gray-300" />
@@ -52,7 +56,22 @@ export default function List({ list }) {
                 <button>
                         <FiTrash className="hover:text-red-500" />
                 </button>
+
+                <button
+                    className="
+                    rounded-full
+                    px-[10px] py-[5px] ml-auto
+                    bg-apple
+                    hover:bg-apple
+                    dark:bg-dark-blue
+                    dark:hover:bg-dark-blue-shade"
+
+                    onClick={()=>setIsAddingNewItem(true)}
+                > add new item +
+                </button>
+                
             </div>
+
 
         </section>
     )

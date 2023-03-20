@@ -29,7 +29,7 @@ export default function Item({ item }) {
                 before:bg-apple after:bg-apple
                 dark:before:bg-dark-blue dark:after:bg-dark-blue"
                 /> :
-                <input type="text" name="setRepeat" id="setRepeat" value={item.title}
+                <input type="text" name="title" id="title" value={item.title}
                     className="my-2 mr-4 pl-2 rounded w-full text-dark-blue"
                 />
         }
