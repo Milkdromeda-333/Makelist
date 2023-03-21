@@ -41,7 +41,7 @@ export default function Home() {
 
             <div className="
             center-row gap-2
-            mb-4
+            mb-2
             font-medium text-xl select-none
             md:text-3xl">
 
@@ -52,13 +52,27 @@ export default function Home() {
                     className="opacity-50 hover:opacity-100"
                     onClick={handleElementChange}
                 />
+
                 
             </div>
+            
+                <button
+                className="
+                    block md:hidden
+                    rounded-full
+                    px-[10px] py-[5px] mr-auto mb-4
+                    bg-apple-shade text-white
+                    hover:bg-[#7bc490]
+                    dark:bg-dark-blue
+                    dark:hover:bg-dark-blue-shade"
+                onClick={toggleAddNewList}
+            > add new list +</button>
 
             {lists}
 
             <button
                 className="
+                    hidden md:block
                     rounded-full
                     px-[10px] py-[5px] ml-auto
                     bg-apple-shade text-white
@@ -72,7 +86,7 @@ export default function Home() {
 
             {showAddNewList && 
             
-                <div className="">
+                <div>
                     <AddNewList closeFunc={setShowAddNewList} />
                 </div>
             }
