@@ -4,11 +4,21 @@ const cors = require('cors');
 const morgan = require('morgan');
 require('dotenv').config();
 const mongoose = require('mongoose');
+const { expressjwt } = require('express-jwt');
+
+// routes
+const authRoute = require('./routes/auth');
+const listRoute = require('./routes/list');
 
 // middleware
 
 app.use(cors());
 app.use(morgan('dev'));
+app.use(express.json());
+
+app.use('/auth', authRoute);
+app.use('/api', expressjwt({ secret: process.env.JWT_SECRET, algorithms: ['HS256'] }));
+app.use('/api/lists', listRoute);
 
 // error handler
 app.use((err, req, res, next) => {
