@@ -2,12 +2,14 @@ import { useContext, useState } from "react";
 import { appContext } from "../context/App";
 import { CiRedo } from "react-icons/ci";
 import List from "../components/List";
+import AddNewList from "./AddNewList";
 
 export default function Home() {
 
     const { username, userLists } = useContext(appContext);
 
     const [shouldAnimate, setShouldAnimate] = useState(true);
+    const [showAddNewList, setShowAddNewList] = useState(false);
 
     const handleElementChange = () => {
 
@@ -28,7 +30,11 @@ export default function Home() {
 
     const [currentEmoji, setCurrentEmoji] = useState(emoji());
 
-    const lists = userLists.map(list => (<List list={list} key={list.title} />))
+    const lists = userLists.map(list => (<List list={list} key={list.title} />));
+
+    const toggleAddNewList = () => {
+        setShowAddNewList(prev => !prev);
+    }
 
     return (
         <main className="pt-20 p-4 min-h-[100vh] bg-white dark:bg-blue dark:text-white">
@@ -50,6 +56,26 @@ export default function Home() {
             </div>
 
             {lists}
+
+            <button
+                className="
+                    rounded-full
+                    px-[10px] py-[5px] ml-auto
+                    bg-apple-shade text-white
+                    fixed bottom-5 right-4
+                    hover:bg-[#7bc490]
+                    dark:bg-dark-blue
+                    dark:hover:bg-dark-blue-shade"
+                
+                onClick={toggleAddNewList}
+            >add new list +</button>
+
+            {showAddNewList && 
+            
+                <div className="">
+                    <AddNewList closeFunc={setShowAddNewList} />
+                </div>
+            }
 
         </main>
     )

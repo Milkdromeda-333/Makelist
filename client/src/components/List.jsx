@@ -61,8 +61,8 @@ export default function List({ list }) {
                     className="
                     rounded-full
                     px-[10px] py-[5px] ml-auto
-                    bg-apple
-                    hover:bg-apple
+                    bg-apple-shade
+                    hover:bg-[#7bc490]
                     dark:bg-dark-blue
                     dark:hover:bg-dark-blue-shade"
 
@@ -71,8 +71,6 @@ export default function List({ list }) {
                 </button>
                 
             </div>
-
-
         </section>
     )
 }
