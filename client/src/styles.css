@@ -23,9 +23,9 @@
             border-color: gray;
             border-width: 1px;
             background-color: #fff;
-            margin-right: 10px;
+            margin-block: 2px;
             padding-left: 1px;
-            position: relative;
+            position: absolute;
         }
 
         input[type=checkbox]:not(.no-style)::before {

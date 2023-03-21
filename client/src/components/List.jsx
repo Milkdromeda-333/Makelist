@@ -19,7 +19,8 @@ export default function List({ list }) {
     return (
         <section
             className="
-            w-full  p-4
+            relative
+            w-full p-[5px] md:p-4
             bg-apple border-apple text-white
             dark:bg-blue-shade
             dark:border-white
