@@ -8,8 +8,8 @@ function AppProvider({children}) {
     const [userLists, setUserLists] = useState([{
         user: "4f441f55f",
         listItems: [{
-            title: "Apples for david",
-            description: "He wants 3 large red apples.",
+            title: "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+            description: "He wants 3 large red apples.He wants 3 large red apples",
             isRepeated: true,
             isCompleted: false
         },

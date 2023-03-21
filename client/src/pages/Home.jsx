@@ -52,7 +52,6 @@ export default function Home() {
                     className="opacity-50 hover:opacity-100"
                     onClick={handleElementChange}
                 />
-
                 
             </div>
             
@@ -66,7 +65,7 @@ export default function Home() {
                     dark:bg-dark-blue
                     dark:hover:bg-dark-blue-shade"
                 onClick={toggleAddNewList}
-            > add new list +</button>
+                > add new list +</button>
 
             {lists}
 

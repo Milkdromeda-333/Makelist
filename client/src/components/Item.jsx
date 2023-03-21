@@ -18,7 +18,7 @@ export default function Item({ item }) {
         <div
             className={`
             center-row rounded
-            ${item.isCompleted ? "text-apple bg-apple-shade dark:text-gray-600 dark:bg-gray-700 line-through px-2" : ""}
+            ${item.isCompleted ? "text-apple bg-apple-shade dark:text-gray-600 dark:bg-gray-700 line-through" : ""}
             ${isEditing ? "no-underline":""}
             `}
         >
@@ -26,18 +26,20 @@ export default function Item({ item }) {
                 <input
                 type="checkbox" name="completed" checked={item.isCompleted}
                 className="
-                before:bg-apple after:bg-apple
-                dark:before:bg-dark-blue dark:after:bg-dark-blue"
+                    m-2
+                    before:bg-apple after:bg-apple
+                    dark:before:bg-dark-blue dark:after:bg-dark-blue"
                 /> :
                 <input type="text" name="title" id="title" value={item.title}
-                    className="my-2 mr-4 pl-2 rounded w-full text-dark-blue"
+                    className="my-2 pl-2 rounded w-full text-dark-blue"
                 />
         }
 
-            { !isEditing && <span className="text-xl md:text-xl">{item.title}</span>}
+            { !isEditing && <span className="break-words max-w-[70%] md:max-w-[88%] md:text-xl">{item.title}</span>}
 
+            {/* options */}
             {!isEditing ?
-                <div className="ml-auto center-row gap-2">
+                <div className="ml-auto mr-2 center-row gap-2">
 
                     <button>
                         <FiEdit2 onClick={() => setIsEditing(prev => !prev)} className=" hover:text-gray-200 dark:hover:text-gray-300" />

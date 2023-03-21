@@ -44,7 +44,7 @@ export default function List({ list }) {
             }
             
             {/* options */}
-            <div className="center-row gap-2 mt-4">
+            <div className="center-row gap-2 flex-wrap mt-4 max[275px]:justify-start">
                 {list.isPinned ?
                     <MdOutlineStar className="text-2xl hover:text-gray-200 dark:hover:text-gray-300" />
                     :
@@ -66,7 +66,10 @@ export default function List({ list }) {
                     dark:bg-dark-blue
                     dark:hover:bg-dark-blue-shade"
 
-                    onClick={()=>setIsAddingNewItem(true)}
+                    onClick={() => {
+                        setIsAddingNewItem(true);
+                        setIsListActive(true);
+                    }}
                 > add new item +
                 </button>
                 

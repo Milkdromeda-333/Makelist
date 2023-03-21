@@ -33,7 +33,6 @@
             position: absolute;
             width: 0;
             height: 3px;
-            /* background-color: black; */
             transform: translate(8px, 13px) rotate(-45deg);
             transform-origin: left;
             transition: 20ms all linear;
@@ -45,7 +44,6 @@
             position: absolute;
             width: 0;
             height: 3px;
-            /* background-color: black; */
             transform: translate(1px, 8px) rotate(45deg);
             transform-origin: left;
             transition: 20ms all linear;
