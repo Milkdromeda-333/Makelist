@@ -6,10 +6,20 @@ module.exports = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        wiggle: {
+          "0%, 100%": { transform: "rotate(-5deg)" },
+          "50%": { transform: "rotate(5deg)" }
+        }
+      },
+      animation: {
+        wiggle: "wiggle 200ms ease-in-out"
+      },
       colors: {
         apple: "#82cf98",
-        "apple-shade": "#77bd8b",
+        "apple-shade": "#75ba88",
         blue: "#13648B",
+        "blue-shade": "#105777",
         "dark-blue": "#253137",
         "dark-blue-shade": "#1c2429"
       },

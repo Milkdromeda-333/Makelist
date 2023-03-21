@@ -11,6 +11,57 @@
 .center-row{
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    justify-items: center;
+    align-items: center;
 }
+
+/* checkbox stylings are from https://www.geekboots.com/css/animated-checkbox with my tweaking*/
+ input[type=checkbox]:not(.no-style) {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+            border-color: gray;
+            border-width: 1px;
+            background-color: #fff;
+            margin-block: 2px;
+            padding-left: 1px;
+            position: absolute;
+        }
+
+        input[type=checkbox]:not(.no-style)::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            transform: translate(8px, 13px) rotate(-45deg);
+            transform-origin: left;
+            transition: 20ms all linear;
+            transition-delay: 0ms;
+        }
+
+        input[type=checkbox]:not(.no-style)::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            transform: translate(1px, 8px) rotate(45deg);
+            transform-origin: left;
+            transition: 20ms all linear;
+            transition-delay: 150ms;
+        }
+
+        input[type=checkbox]:not(.no-style):checked::before {
+            width: 12px;
+            transition-delay: 150ms;
+        }
+
+        input[type=checkbox]:not(.no-style):checked::after {
+            width: 10px;
+            transition-delay: 0ms;
+        }
+
+        label:not(.no-style) {
+            font-size: 20px;
+            color: #fff;
+            cursor: pointer;
+        }
