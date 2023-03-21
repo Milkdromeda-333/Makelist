@@ -37,7 +37,7 @@ export default function Home() {
     }
 
     return (
-        <main className="pt-20 p-4 min-h-[100vh] bg-white dark:bg-blue dark:text-white">
+        <main className="h-full pt-20 p-4">
 
             <div className="
             center-row gap-2

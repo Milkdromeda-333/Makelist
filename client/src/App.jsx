@@ -16,13 +16,22 @@ function App() {
   }
 
   return (
-    <div className={`font-font ${isDarkModeActive ? 'dark' : null}`}>
+    <div className={`font-font ${isDarkModeActive ? 'dark' : ""}`}>
 
-      <Navbar isThemeDark={isDarkModeActive} toggleFunc={toggleDarkMode} setUsername={setUsername} />
+      <div className="grid grid-cols-1 min-h-screen items-stretch bg-white text-dark-blue dark:bg-blue dark:text-white"
+      >
 
-      {!username ? <Auth isThemeDark={isDarkModeActive} /> : <Home isThemeDark={isDarkModeActive} />}
+        <Navbar isThemeDark={isDarkModeActive} toggleFunc={toggleDarkMode} setUsername={setUsername} />
 
-      <Footer />
+        {
+          !username ?
+            <Auth isThemeDark={isDarkModeActive} />
+            : <Home isThemeDark={isDarkModeActive} />
+        }
+        
+        <Footer />
+
+      </div>
       
     </div>
   )

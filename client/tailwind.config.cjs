@@ -17,7 +17,7 @@ module.exports = {
       },
       colors: {
         apple: "#82cf98",
-        "apple-shade": "#77bd8b",
+        "apple-shade": "#75ba88",
         blue: "#13648B",
         "blue-shade": "#105777",
         "dark-blue": "#253137",
