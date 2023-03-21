@@ -2,6 +2,7 @@ import { useState, useContext } from 'react'
 import Home from './pages/Home';
 import Auth from './pages/Auth';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import { appContext } from "./context/App";
 
 function App() {
@@ -20,6 +21,8 @@ function App() {
       <Navbar isThemeDark={isDarkModeActive} toggleFunc={toggleDarkMode} setUsername={setUsername} />
 
       {!username ? <Auth isThemeDark={isDarkModeActive} /> : <Home isThemeDark={isDarkModeActive} />}
+
+      <Footer />
       
     </div>
   )

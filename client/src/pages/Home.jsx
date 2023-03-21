@@ -76,7 +76,7 @@ export default function Home() {
                     rounded-full
                     px-[10px] py-[5px] ml-auto
                     bg-apple-shade text-white
-                    fixed bottom-5 right-4
+                    fixed bottom-12 right-4
                     hover:bg-[#7bc490]
                     dark:bg-dark-blue
                     dark:hover:bg-dark-blue-shade"
