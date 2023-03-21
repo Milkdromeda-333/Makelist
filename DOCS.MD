@@ -1,3 +1,12 @@
+export default function Auth() {
+
+return (
+    <>
+
+    </>
+)
+}
+
 ToDo
 
 - First build out server.
@@ -98,3 +107,10 @@ Recieves list id and item id as parameters. Returns the new list.
 
     x findOneAndUpdate will be able to set it to false. 
     - find() get all of a users lists, find where one isPinned is true, set it to false. Then find the list that the user queried and set it to true if it is pinning something. If its just unpinning, no need to do the last step.
+Models:
+user: username, preferedTheme
+list: user, items (30 max each list)
+
+DEVNOTES:
+
+- I was able to implement a modal after reading up a stackoverflow post here https://stackoverflow.com/a/45608572/18193299 . At first I was not willing to do it because I was up coding all night and I thought it was gonna be hard, but I took a well needed rest, and came back and decided to look into what it take to make a modal and discovered that it actually is not as difficult as I imagined. I definitely learned to take breaks and come back fresh minded before giving up, and to not give up. Exhaust those resources! This lesson came in handy again when I realized I had an issue with the name of a list item being long and going across the screen and stretching the element it was encased in. I took a break and came back with a fresh mind and entusism to fix it. I did it using overflow: break-word, and making the maximum length of the element look good. And it all fell in place thankfully (Item.jsx).
