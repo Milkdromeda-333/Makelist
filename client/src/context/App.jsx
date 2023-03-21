@@ -25,7 +25,7 @@ function AppProvider({children}) {
     }]);
 
     return (
-        <appContext.Provider value={{username, userLists}}>
+        <appContext.Provider value={{username, userLists, setUsername}}>
             {children}
         </appContext.Provider>
     )

@@ -1,6 +1,6 @@
 import Switch from "react-switch";
 
-export default function Navbar({isThemeDark, toggleFunc}) {
+export default function Navbar({isThemeDark, toggleFunc, setUsername}) {
 
     const checkedHandleIcon = (
         <div
@@ -29,6 +29,10 @@ export default function Navbar({isThemeDark, toggleFunc}) {
         🌞
       </div>
     )
+
+    const logout = () => {
+        setUsername(undefined);
+    };
     
     return (
         <nav className="
@@ -52,7 +56,12 @@ export default function Navbar({isThemeDark, toggleFunc}) {
                 offColor="#77bd8b"
                 uncheckedIcon={checkedHandleIcon}
                 checkedIcon={uncheckedHandleIcon}
+                className="ml-auto"
             />
+
+            <button className="ml-2 hover:text-gray-200 dark:hover:text-gray-300" onClick={logout}>
+                Logout
+            </button>
         </nav>
     )
 }

@@ -31,23 +31,26 @@ export default function LoginForm({ isUserLoggingIn, setIsUserLoggingIn }) {
     return (
         <form
             className="
+            text-dark-blue
             flex flex-col gap-4
             w-full
+            dark:text-white
             md:w-1/3"
         >
 
             <h1 className="text-center text-xl md:text-3xl">Make lists. Yup, it's that simple.</h1>
 
-            <label htmlFor="username">Username:</label>
+            <label htmlFor="username" className="no-style">Username:</label>
             <input 
                 type="text"
                 name="username"
                 value={userInput.username}
                 onChange={handleChange}
                 autoComplete="username"
-                className="border p-2 dark:text-dark-blue"
+                className="border border-dark-blue p-2 dark:text-dark-blue"
             />
-            <label htmlFor="username">Password:</label>
+
+            <label htmlFor="password" className="no-style">Password:</label>
 
             <input 
                 type="password"
@@ -55,7 +58,7 @@ export default function LoginForm({ isUserLoggingIn, setIsUserLoggingIn }) {
                 value={userInput.password}
                 onChange={handleChange}
                 autoComplete={isUserLoggingIn ? "current-password":"new-password"}
-                className="border p-2 dark:text-dark-blue"
+                className="border border-dark-blue p-2 dark:text-dark-blue"
             />
 
             <button

@@ -8,8 +8,8 @@ export default function Auth({isThemeDark}) {
     return (
             <div
                 className="
-                bg-white
-                mx-4 min-h-[100vh] pt-10 pb-4
+                bg-white text-dark-blue
+                px-4 min-h-[100vh] pt-10 pb-4
                 flex flex-col justify-center items-center
                 md:flex-row md:gap-4 md:mt-0
                  dark:bg-blue dark:text-white"

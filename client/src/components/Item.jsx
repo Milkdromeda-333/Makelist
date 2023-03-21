@@ -52,15 +52,16 @@ export default function Item({ item }) {
                 <div className="ml-auto center-row gap-2 text-white">
 
                     <div className="center-row gap-1">
-                        <input type="checkbox" name="repeat" id="repeat" checked={item.isRepeated} className="repeat" />
+                        <input type="checkbox" className="no-style" name="repeat" id="repeat" checked={item.isRepeated} />
                         
-                        <label htmlFor="repeat" className="repeat">repeat?</label>
+                        <label htmlFor="repeat" className="no-style">repeat?</label>
                     </div>
 
                     <button
                         className="
-                        bg-green-600 w-9
-                        hover:bg-green-700"
+                        rounded bg-apple-shade border w-9
+                        dark:bg-dark-blue
+                        hover:text-gray-200"
                         onClick={saveEdit}
                     >
                         save

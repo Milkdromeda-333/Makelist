@@ -39,14 +39,15 @@ export default function AddNewItem({closeFunc}) {
 
             <div className="center-row gap-2">
                 <div className="center-row gap-1">
-                    <input type="checkbox" name="repeat" id="repeat" checked={inputs.isRepeated} onChange={ toggleIsRepeated } className="repeat" />
+                    <input type="checkbox" name="repeat" id="repeat" checked={inputs.isRepeated} onChange={ toggleIsRepeated } className="no-style" />
                 
                     <label htmlFor="repeat" className="repeat">repeat?</label>
                 </div>
                 <button
                     className="
-                    bg-green-600 w-9
-                    hover:bg-green-700"
+                    rounded bg-apple-shade border w-9
+                    dark:bg-dark-blue
+                    hover:text-gray-200"
                     onClick={submitNewItem}
                 >
                     add
@@ -54,7 +55,7 @@ export default function AddNewItem({closeFunc}) {
                 
                 <button
                     className="
-                    bg-red-500 w-9
+                    bg-red-500 rounded w-9
                     hover:bg-red-600"
                 
                     onClick={()=>closeFunc(false)}

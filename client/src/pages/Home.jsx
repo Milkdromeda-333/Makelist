@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { appContext } from "../context/App";
 import { CiRedo } from "react-icons/ci";
 import List from "../components/List";
-import AddNewList from "./AddNewList";
+import AddNewList from "../components/AddNewList";
 
 export default function Home() {
 

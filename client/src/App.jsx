@@ -6,7 +6,7 @@ import { appContext } from "./context/App";
 
 function App() {
 
-  const { username } = useContext(appContext);
+  const { username, setUsername } = useContext(appContext);
 
   const [isDarkModeActive, setIsDarkModeActive] = useState(true);
   
@@ -17,7 +17,7 @@ function App() {
   return (
     <div className={`font-font ${isDarkModeActive ? 'dark' : null}`}>
 
-      <Navbar isThemeDark={isDarkModeActive} toggleFunc={toggleDarkMode} />
+      <Navbar isThemeDark={isDarkModeActive} toggleFunc={toggleDarkMode} setUsername={setUsername} />
 
       {!username ? <Auth isThemeDark={isDarkModeActive} /> : <Home isThemeDark={isDarkModeActive} />}
       

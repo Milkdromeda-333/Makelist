@@ -98,7 +98,8 @@ export default function AddNewList({ closeFunc }) {
                 <button className="
                     bg-apple-shade
                     w-3/4 mx-auto mt-4 rounded p-2
-                    dark:bg-dark-blue dark:hover:bg-dark-blue-shade"
+                    dark:bg-dark-blue dark:hover:bg-dark-blue-shade
+                    hover:text-gray-200"
                     onClick={submitList}
                 >
                     Create a new list +
