@@ -40,7 +40,7 @@ export default function List({ list, setUserLists }) {
         setIsEditingTitle(prev => !prev);
     }
 
-    const items = list.listItems.map(item => <Item item={item} key={item.title} />);
+    const items = list.listItems.map(item => <Item item={item} setUserLists={setUserLists} listId={list._id} key={item.title} />);
     
     const togglePinned = () => {
         userAxios.put(`/lists/list/${list._id}/pin`)

@@ -45,14 +45,7 @@ Recieves a list id parameter, and a request body for the list item object. Retur
 
 #### - PUT url/api/lists/list/:listId/item/:itemId/update : Updates a list item
 
-Recieves list id and item id as parameters, and an object outlining what key to change, and what value to change it to. Like so
-
-```
-{
-    "key": "title",
-    "value": "new title alert"
-}
-```
+Recieves list id and item id as parameters, and a relacement object ofr the item.
 
 #### - DELETE url/lists/list/:listId/item/:itemId : Deletes a list item
 

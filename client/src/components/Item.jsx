@@ -1,16 +1,43 @@
 import { useState } from "react";
 import { FiEdit2, FiTrash } from "react-icons/fi";
+import { updateHome, userAxios } from "./utils/axios";
 
-export default function Item({ item }) {
+export default function Item({ item, listId, setUserLists }) {
 
     const [isEditing, setIsEditing] = useState(false);
+
+    const [editedItem, setEditedItem] = useState(item);
+
+    const handleChangeItem = (e) => {
+        const { value, name } = e.target;
+
+        if (name === "isRepeated") {
+            setEditedItem(prev => ({
+                ...prev,
+                isRepeated: !prev.isRepeated
+            }));
+        } else {
+            setEditedItem(prev => ({
+            ...prev,
+            title: value
+        }));
+        }
+    }
     
     const deleteItem = () => {
-        console.log("delete item.")
+        userAxios.delete(`/lists/list/${listId}/item/${item._id}`)
+            .then(() => {
+                updateHome(setUserLists);
+            }).catch(err => console.log(err));
     }
 
     const saveEdit = () => {
-        console.log("save item.");
+        userAxios.put(`/lists/list/${listId}/item/${item._id}/update`, editedItem)
+            .then((res) => {
+                console.log(res);
+                updateHome(setUserLists);
+                setIsEditing(false);
+            }).catch(err => console.log(err));
         setIsEditing(false);
     }
     
@@ -32,7 +59,8 @@ export default function Item({ item }) {
                     before:bg-apple after:bg-apple
                     dark:before:bg-dark-blue dark:after:bg-dark-blue"
                 /> :
-                <input type="text" name="title" id="title" value={item.title}
+                <input type="text" name="title" id="title" value={editedItem.title}
+                    onChange={handleChangeItem}
                     className={`my-2 ml-5 pl-2 rounded w-full text-dark-blue ${isEditing && "ml-0"}`}
                 />
         }
@@ -53,7 +81,11 @@ export default function Item({ item }) {
                     :
                     <div className="ml-auto center-row gap-2 text-white">
                         <div className="center-row gap-1">
-                            <input type="checkbox" className="no-style" name="repeat" id="repeat" checked={item.isRepeated} />
+                        <input
+                            type="checkbox" className="no-style" name="isRepeated" id="repeat"
+                            checked={editedItem.isRepeated}
+                            onChange={handleChangeItem}
+                        />
                 
                             <label htmlFor="repeat" className="no-style">repeat?</label>
                         </div>

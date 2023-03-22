@@ -193,7 +193,8 @@ router.put('/list/:listId/item/:itemId/update', (req, res, next) => {
             }
             const index = list.listItems.findIndex(item => item._id.toString() === req.params.itemId);
 
-            list.listItems[index][req.body.key] = req.body.value;
+            // list.listItems[index][req.body.key] = req.body.value;
+            list.listItems[index] = req.body;
 
             list.save()
                 .then(response => {
@@ -203,6 +204,8 @@ router.put('/list/:listId/item/:itemId/update', (req, res, next) => {
                     res.status(500);
                     return next(err);
                 });
+
+
 
         }).catch(err => {
             res.status(500);
