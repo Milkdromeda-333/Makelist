@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import Home from './pages/Home';
 import Auth from './pages/Auth';
 import Navbar from './components/Navbar';
@@ -7,7 +7,7 @@ import { appContext } from "./context/App";
 
 function App() {
 
-  const { username, setUsername } = useContext(appContext);
+  const { user, setUser } = useContext(appContext);
 
   const [isDarkModeActive, setIsDarkModeActive] = useState(true);
   
@@ -15,16 +15,17 @@ function App() {
     setIsDarkModeActive(prev => !prev);
   }
 
+
   return (
     <div className={`font-font ${isDarkModeActive ? 'dark' : ""}`}>
 
       <div className="grid grid-cols-1 min-h-screen items-stretch bg-white text-dark-blue dark:bg-blue dark:text-white"
       >
 
-        <Navbar isThemeDark={isDarkModeActive} toggleFunc={toggleDarkMode} setUsername={setUsername} />
+        <Navbar isThemeDark={isDarkModeActive} toggleFunc={toggleDarkMode} setUser={setUser} />
 
         {
-          !username ?
+          !user.token ?
             <Auth isThemeDark={isDarkModeActive} />
             : <Home isThemeDark={isDarkModeActive} />
         }

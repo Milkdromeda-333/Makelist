@@ -1,6 +1,6 @@
 import Switch from "react-switch";
 
-export default function Navbar({isThemeDark, toggleFunc, setUsername}) {
+export default function Navbar({isThemeDark, toggleFunc, setUser}) {
 
     const checkedHandleIcon = (
         <div
@@ -31,7 +31,7 @@ export default function Navbar({isThemeDark, toggleFunc, setUsername}) {
     )
 
     const logout = () => {
-        setUsername(undefined);
+        setUser({});
     };
     
     return (

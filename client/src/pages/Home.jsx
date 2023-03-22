@@ -30,7 +30,7 @@ export default function Home() {
 
     const [currentEmoji, setCurrentEmoji] = useState(emoji());
 
-    const lists = userLists.map(list => (<List list={list} key={list.title} />));
+    const lists = userLists?.map(list => (<List list={list} key={list.title} />));
 
     const toggleAddNewList = () => {
         setShowAddNewList(prev => !prev);

@@ -1,9 +1,11 @@
 import { useState, useContext } from 'react'
 import { appContext } from "../context/App";
 
-export default function LoginForm({ isUserLoggingIn, setIsUserLoggingIn }) {
+export default function LoginForm() {
 
-    const { setUsername } = useContext(appContext);
+    const { setUser } = useContext(appContext);
+    
+    const [isUserLoggingIn, setIsUserLoggingIn] = useState(false);
 
     const defaultFormInputs = {
         username: "",
@@ -24,8 +26,13 @@ export default function LoginForm({ isUserLoggingIn, setIsUserLoggingIn }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setUsername(userInput.username);
+        // api req and payload to setUser
         setUserInput(defaultFormInputs);
+    }
+
+    const handleToggleLogIn = (e) => {
+        e.preventDefault();
+        setIsUserLoggingIn(prev => !prev);
     }
     
     return (
@@ -73,16 +80,15 @@ export default function LoginForm({ isUserLoggingIn, setIsUserLoggingIn }) {
                 {isUserLoggingIn ? "Sign in." : "Sign up."}
             </button>
 
-            <button onClick={(e) =>{
-                e.preventDefault();
-                setIsUserLoggingIn(prev => !prev);
-            }}
+            <button
                 className="decoration-apple-shade
                 w-fit
                 underline
                 hover:decoration-apple-shade
                 dark:decoration-dark-blue dark:hover:text-gray-200
                 hover:text-zinc-600"
+
+                onClick={handleToggleLogIn}
             >
                 {isUserLoggingIn ? "No account? Sign up." : "Already signed up? Log in."}
             </button>

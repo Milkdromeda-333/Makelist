@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginForm from "../components/LoginForm";
 
 export default function Auth({isThemeDark}) {
 
-    const [isUserLoggingIn, setIsUserLoggingIn] = useState(false);
 
     return (
             <div
@@ -15,7 +14,7 @@ export default function Auth({isThemeDark}) {
 
                 <img src={isThemeDark ? "/mobile-note.svg" : "/mobile-note-list.gif"} alt="girl making notes" className="w-full max-w-[60%] md:w-1/3 md:max-w-none" />
 
-                <LoginForm isUserLoggingIn={isUserLoggingIn} setIsUserLoggingIn={setIsUserLoggingIn} />
+                <LoginForm  />
 
             </div>
     )
