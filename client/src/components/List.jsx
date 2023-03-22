@@ -10,9 +10,34 @@ export default function List({ list, setUserLists }) {
 
     const [isListActive, setIsListActive] = useState(list.isPinned || false);
     const [isAddingNewItem, setIsAddingNewItem] = useState(false);
+    const [isEditingTitle, setIsEditingTitle] = useState(false);
+
+    const [listTitle, setListTitle] = useState("");
+
+    const handleTitleChange = (e) => {
+        const { value } = e.target;
+        setListTitle(value);
+    }
+
+    const saveNewTitle = () => {
+        const newList = {
+            ...list,
+            title: listTitle
+        }
+        userAxios.put("/lists/list", newList)
+            .then(() => {
+                updateHome(setUserLists);
+            }).catch(err => {
+                console.log(err);
+            });
+    }
 
     const toggleList = () => {
         setIsListActive(prev => !prev);
+    }
+
+    const toggleEditingTitle = () => {
+        setIsEditingTitle(prev => !prev);
     }
 
     const items = list.listItems.map(item => <Item item={item} key={item.title} />);
@@ -50,7 +75,15 @@ export default function List({ list, setUserLists }) {
                 className="center-row justify-between items-center text-2xl"
                 onClick={toggleList}
             >
-                <span>{list.name}</span>
+                { !isEditingTitle ?
+                    <span>{list.name}</span> 
+                    :
+                    <input type="text" name="title" value={listTitle}
+                        onChange={handleTitleChange}
+                        className="
+                        w-full mr-4 rounded bg-transparent border p-2 text-base"
+                    />
+                }
 
                 { isListActive ? <RxCaretDown className="md:text-xl"/> : <RxCaretUp className="md:text-xl"/> }
 
@@ -66,20 +99,47 @@ export default function List({ list, setUserLists }) {
             {/* options */}
             <div className="center-row gap-2 flex-wrap mt-4 max[275px]:justify-start">
 
-                <div onClick={togglePinned}>
-                    {list.isPinned ?
-                        <MdOutlineStar className="text-2xl hover:text-gray-200 dark:hover:text-gray-300" />
-                        :
-                        <MdOutlineStarOutline className="text-2xl hover:text-gray-200 dark:hover:text-gray-300" />
-                    
-                    }
-                </div>
-
-                <FiEdit2 className="hover:text-gray-200 dark:hover:text-gray-300" />
                 
-                <button onClick={deleteList}>
-                        <FiTrash className="hover:text-red-500" />
-                </button>
+                { !isEditingTitle ?
+                    <>
+                    <div onClick={togglePinned}>
+                        {list.isPinned ?
+                            <MdOutlineStar className="text-2xl hover:text-gray-200 dark:hover:text-gray-300" />
+                            :
+                            <MdOutlineStarOutline className="text-2xl hover:text-gray-200 dark:hover:text-gray-300" />
+                    
+                        }
+                    </div>
+                    <button onClick={toggleEditingTitle}>
+                        <FiEdit2 className="hover:text-gray-200 dark:hover:text-gray-300" />
+                    </button>
+                    
+                    <button onClick={deleteList}>
+                            <FiTrash className="hover:text-red-500" />
+                        </button>
+                    </>
+                    :
+                    <>
+                        <button
+                            className="
+                            rounded bg-apple-shade border w-9
+                            dark:bg-dark-blue
+                            hover:text-gray-200"
+                            onClick={saveNewTitle}
+                        >
+                            save
+                        </button>
+                
+                        <button
+                            className="
+                            bg-red-500 w-9
+                            hover:bg-red-600"
+                            onClick={()=>setIsEditingTitle(false)}
+                        >
+                            exit
+                        </button>
+                    </>
+                }
 
                 <button
                     className="
