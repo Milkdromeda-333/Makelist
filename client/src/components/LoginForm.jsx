@@ -1,5 +1,7 @@
 import { useState, useContext } from 'react'
 import { appContext } from "../context/App";
+// import { userAxios } from "./utils/axios";
+import axios from 'axios';
 
 export default function LoginForm() {
 
@@ -26,7 +28,14 @@ export default function LoginForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // api req and payload to setUser
+        axios.post('/auth', userInput)
+            .then(res => {
+                console.log(res.data);
+                setUser(res.data);
+            }).catch(err => {
+                // change to console log
+                alert(err);
+        })
         setUserInput(defaultFormInputs);
     }
 

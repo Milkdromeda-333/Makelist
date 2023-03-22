@@ -7,7 +7,7 @@ export default function Auth({isThemeDark}) {
     return (
             <div
                 className="
-                px-4 pt-10 pb-4
+                px-4 pt-10 pb-4 mt-4
                 flex flex-col justify-center items-center
                 md:flex-row md:gap-4 md:mt-0"
             >
