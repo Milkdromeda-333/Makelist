@@ -8,6 +8,7 @@ function AppProvider({children}) {
     const [userLists, setUserLists] = useState([]);
 
     useEffect(() => {
+        // on load and the user has info in localStorage, set new user list.
         if (user) {
             setUserLists(user.lists);
         }

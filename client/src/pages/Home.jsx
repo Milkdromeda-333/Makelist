@@ -3,6 +3,7 @@ import { appContext } from "../context/App";
 import { CiRedo } from "react-icons/ci";
 import List from "../components/List";
 import AddNewList from "../components/AddNewList";
+import { updateHome } from "../components/utils/axios";
 
 export default function Home() {
 
@@ -22,11 +23,6 @@ export default function Home() {
         }, 200);
     };
 
-    useEffect(() => {
-        if (!user.username) {
-            setUser(JSON.parse(localStorage.getItem('user')));
-        }
-    }, []);
 
     const emoji = () => {
         const emojis = ["😀", "🤠", "😊", "🔥", "😎", "😇", "🤭", "😏", "🥳", "😺", "🙏", "👋", "🙋", "😆", "🎂", "🍰", "🐀", "🐹", "🐣", "🦉", "🐸", "🐬", "🐠", "🐡", "🦋", "🐞", "🌻", "🌹", "🌍", "🍀", "🍁", "🍄", "🌛", "🌞", "⭐", "⛈️", "🌤️", "🌊", "✨"];
@@ -41,6 +37,13 @@ export default function Home() {
     const toggleAddNewList = () => {
         setShowAddNewList(prev => !prev);
     }
+
+    useEffect(() => {
+        if (!user.username) {
+            updateHome(setUserLists);
+            setUser(JSON.parse(localStorage.getItem('user')));
+        }
+    }, []);
 
     return (
         <main className="h-full pt-20 p-4">
