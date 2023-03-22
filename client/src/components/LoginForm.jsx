@@ -34,10 +34,9 @@ export default function LoginForm() {
 
     const handleSignIn = (e) => {
         e.preventDefault();
-        axios.post('/auth', userInput)
+        axios.post('http://localhost:8080/auth', userInput)
             .then(res => {
-                saveData(res.data)
-
+                saveData(res.data);
             }).catch(err => {
                 console.log(err);
             })
@@ -47,7 +46,7 @@ export default function LoginForm() {
 
     const handleSignUp = (e) => {
         e.preventDefault();
-        axios.post('/auth/new-user', userInput)
+        axios.post('http://localhost:8080/auth/new-user', userInput)
             .then(res => {
                 saveData(res.data);
             }).catch(err => {

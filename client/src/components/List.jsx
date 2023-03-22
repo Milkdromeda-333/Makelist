@@ -4,9 +4,9 @@ import { MdOutlineStarOutline, MdOutlineStar } from "react-icons/md";
 import { FiEdit2, FiTrash } from "react-icons/fi";
 import Item from "./Item";
 import AddNewItem from "./AddNewItem";
-import { userAxios } from "./utils/axios";
+import { userAxios, updateHome } from "./utils/axios";
 
-export default function List({ list }) {
+export default function List({ list, setUserLists }) {
 
     const [isListActive, setIsListActive] = useState(list.isPinned || false);
     const [isAddingNewItem, setIsAddingNewItem] = useState(false);
@@ -18,12 +18,21 @@ export default function List({ list }) {
     const items = list.listItems.map(item => <Item item={item} key={item.title} />);
     
     const togglePinned = () => {
-        userAxios.put(`/list/${_id}/pin`)
-            .then(res => {
-                setUserLists(res.data);
+        userAxios.put(`/lists/list/${list._id}/pin`)
+            .then(() => {
+                updateHome(setUserLists);
             }).catch(err => {
                 console.log(err);
-        })
+            });
+    }
+
+    const deleteList = () => {
+        userAxios.delete(`/lists/${list._id}`)
+            .then(() => {
+                updateHome(setUserLists);
+            }).catch(err => {
+                console.log(err);
+            });
     }
 
     return (
@@ -56,7 +65,7 @@ export default function List({ list }) {
             
             {/* options */}
             <div className="center-row gap-2 flex-wrap mt-4 max[275px]:justify-start">
-                
+
                 <div onClick={togglePinned}>
                     {list.isPinned ?
                         <MdOutlineStar className="text-2xl hover:text-gray-200 dark:hover:text-gray-300" />
@@ -68,7 +77,7 @@ export default function List({ list }) {
 
                 <FiEdit2 className="hover:text-gray-200 dark:hover:text-gray-300" />
                 
-                <button>
+                <button onClick={deleteList}>
                         <FiTrash className="hover:text-red-500" />
                 </button>
 

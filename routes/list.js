@@ -118,7 +118,6 @@ router.put('/list/:listId/pin', (req, res, next) => {
     List.find({ user: req.auth._id })
         .then(lists => {
             const requestedList = lists.find(list => list._id.toString() === req.params.listId);
-            console.log("this is the list before: " + requestedList);
 
             if (requestedList.isPinned) {
 
@@ -143,8 +142,9 @@ router.put('/list/:listId/pin', (req, res, next) => {
                 });
 
                 requestedList.isPinned = true;
+
                 requestedList.save()
-                    .then(response => {
+                    .then(() => {
                         res.status(200);
                         return res.send("List pinned.");
                     })

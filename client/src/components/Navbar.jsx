@@ -32,6 +32,7 @@ export default function Navbar({isThemeDark, toggleFunc, setUser}) {
 
     const logout = () => {
         setUser({});
+        localStorage.clear();
     };
     
     return (
