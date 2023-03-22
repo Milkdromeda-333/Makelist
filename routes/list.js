@@ -47,6 +47,7 @@ router.get('/:listId', (req, res, next) => {
 // gets all lists of a user
 router.get('/', (req, res, next) => {
     List.find({ user: req.auth._id })
+        .sort({ isPinned: -1 })
         .then(foundLists => {
             res.status(200);
             return res.send(foundLists);

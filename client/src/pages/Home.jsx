@@ -32,8 +32,16 @@ export default function Home() {
 
     const [currentEmoji, setCurrentEmoji] = useState(emoji());
 
-    const lists = userLists?.map(list => (<List list={list} setUserLists={setUserLists} key={list.title} />));
+    const lists = () => {
+        if (userLists?.length) {
+            
+           return userLists?.map(list => (<List list={list} setUserLists={setUserLists} key={list.title} />));
+        }
 
+        return (
+                <span>Sorry. You have no lists yet.</span>
+        )
+    }
     const toggleAddNewList = () => {
         setShowAddNewList(prev => !prev);
     }
@@ -64,19 +72,19 @@ export default function Home() {
                 
             </div>
             
-                <button
-                className="
-                    block md:hidden
-                    rounded-full
-                    px-[10px] py-[5px] mr-auto mb-4
-                    bg-apple-shade text-white
-                    hover:bg-[#7bc490]
-                    dark:bg-dark-blue
-                    dark:hover:bg-dark-blue-shade"
-                onClick={toggleAddNewList}
-                > add new list +</button>
+            <button
+            className="
+                block md:hidden
+                rounded-full
+                px-[10px] py-[5px] mr-auto mb-4
+                bg-apple-shade text-white
+                hover:bg-[#7bc490]
+                dark:bg-dark-blue
+                dark:hover:bg-dark-blue-shade"
+            onClick={toggleAddNewList}
+            > add new list +</button>
 
-            {lists}
+            { lists() }
 
             <button
                 className="

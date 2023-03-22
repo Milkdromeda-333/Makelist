@@ -47,9 +47,9 @@ export default function Item({ item, listId, setUserLists }) {
             relative
             flex
             flex-row
-            rounded px-2
+            rounded px-2 m-2
             ${item.isCompleted ? "text-apple bg-apple-shade dark:text-gray-600 dark:bg-gray-700 line-through" : ""}
-            ${isEditing ? "no-underline flex-col p-2 my-2" : ""}
+            ${isEditing ? "no-underline flex-col  my-2 px-0" : ""}
             `}
         >
             {!isEditing ?
@@ -61,7 +61,7 @@ export default function Item({ item, listId, setUserLists }) {
                 /> :
                 <input type="text" name="title" id="title" value={editedItem.title}
                     onChange={handleChangeItem}
-                    className={`my-2 ml-5 pl-2 rounded w-full text-dark-blue ${isEditing && "ml-0"}`}
+                    className={`my-2 pl-[2px] rounded w-full text-dark-blue`}
                 />
         }
 

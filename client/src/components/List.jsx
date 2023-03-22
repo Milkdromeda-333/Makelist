@@ -2,17 +2,18 @@ import { useState } from "react";
 import { RxCaretDown, RxCaretUp } from "react-icons/rx";
 import { MdOutlineStarOutline, MdOutlineStar } from "react-icons/md";
 import { FiEdit2, FiTrash } from "react-icons/fi";
+import { CiRedo } from "react-icons/ci";
 import Item from "./Item";
 import AddNewItem from "./AddNewItem";
 import { userAxios, updateHome } from "./utils/axios";
 
 export default function List({ list, setUserLists }) {
 
-    const [isListActive, setIsListActive] = useState(list.isPinned || false);
+    const [isListActive, setIsListActive] = useState(list.isPinned === false || false);
     const [isAddingNewItem, setIsAddingNewItem] = useState(false);
     const [isEditingTitle, setIsEditingTitle] = useState(false);
 
-    const [listTitle, setListTitle] = useState("");
+    const [listTitle, setListTitle] = useState(list.name);
 
     const handleTitleChange = (e) => {
         const { value } = e.target;
@@ -40,7 +41,12 @@ export default function List({ list, setUserLists }) {
         setIsEditingTitle(prev => !prev);
     }
 
-    const items = list.listItems.map(item => <Item item={item} setUserLists={setUserLists} listId={list._id} key={item.title} />);
+    const items = () => {
+        if (list.listItems.length) {
+            return list.listItems.map(item => <Item item={item} setUserLists={setUserLists} listId={list._id} key={item.title} />);
+        }
+        return "No items here.."
+    }
     
     const togglePinned = () => {
         userAxios.put(`/lists/list/${list._id}/pin`)
@@ -60,11 +66,18 @@ export default function List({ list, setUserLists }) {
             });
     }
 
+    const resetRepeats = () => {
+        userAxios.put(`lists/${list._id}/reset`)
+            .then(() => {
+                updateHome(setUserLists);
+        })
+    }
+
     return (
         <section
             className="
             relative
-            w-full mb-4 p-[5px]
+            w-full mb-4 p-2
             bg-apple border-apple text-white
             dark:bg-blue-shade
             dark:border-white
@@ -81,7 +94,7 @@ export default function List({ list, setUserLists }) {
                     <input type="text" name="title" value={listTitle}
                         onChange={handleTitleChange}
                         className="
-                        w-full mr-4 rounded bg-transparent border p-2 text-base"
+                        w-full mr-4 rounded bg-transparent border p-[2px] pl-[4px] text-base text-dark-blue dark:text-white"
                     />
                 }
 
@@ -90,8 +103,8 @@ export default function List({ list, setUserLists }) {
             </div>
 
             {isListActive &&
-                <div className="p-4 ">
-                    {items}
+                <div className="p-2 ">
+                    {items() }
                     {isAddingNewItem && <AddNewItem closeFunc={ setIsAddingNewItem } listId={list._id} setUserLists={setUserLists} />}
                 </div>
             }
@@ -102,21 +115,26 @@ export default function List({ list, setUserLists }) {
                 
                 { !isEditingTitle ?
                     <>
-                    <div onClick={togglePinned}>
-                        {list.isPinned ?
-                            <MdOutlineStar className="text-2xl hover:text-gray-200 dark:hover:text-gray-300" />
-                            :
-                            <MdOutlineStarOutline className="text-2xl hover:text-gray-200 dark:hover:text-gray-300" />
-                    
-                        }
-                    </div>
-                    <button onClick={toggleEditingTitle}>
-                        <FiEdit2 className="hover:text-gray-200 dark:hover:text-gray-300" />
-                    </button>
-                    
-                    <button onClick={deleteList}>
-                            <FiTrash className="hover:text-red-500" />
+                        <div onClick={togglePinned}>
+                            {list.isPinned ?
+                                <MdOutlineStar className="text-2xl hover:text-gray-200 dark:hover:text-gray-300" />
+                                :
+                                <MdOutlineStarOutline className="text-2xl hover:text-gray-200 dark:hover:text-gray-300" />
+                        
+                            }
+                        </div>
+                        <button onClick={toggleEditingTitle}>
+                            <FiEdit2 className="hover:text-gray-200 dark:hover:text-gray-300" />
                         </button>
+                        
+                        <button onClick={deleteList}>
+                                <FiTrash className="hover:text-red-500" />
+                            </button>
+
+                        <CiRedo
+                            className="opacity-50 text-2xl hover:opacity-100"
+                            onClick={resetRepeats}
+                        />
                     </>
                     :
                     <>
