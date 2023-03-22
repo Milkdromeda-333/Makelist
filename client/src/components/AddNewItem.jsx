@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { userAxios, updateHome } from "./utils/axios";
 
 
-export default function AddNewItem({closeFunc}) {
+export default function AddNewItem({closeFunc, listId, setUserLists}) {
 
     const defaultInputs = {
-        item: "",
+        title: "",
         isRepeated: false
     }
 
@@ -21,12 +22,19 @@ export default function AddNewItem({closeFunc}) {
         const { value } = e.target;
         setInputs(prev => ({
             ...prev,
-            item: value
+            title: value
         }))
     }
 
     const submitNewItem = () => {
+        
+        userAxios.post(`lists/${listId}/new-item`, inputs)
+            .then(() => {
+                updateHome(setUserLists);
+            }).catch(err => console.log(err));
+        
         setInputs(defaultInputs);
+
         closeFunc(false);
     }
     

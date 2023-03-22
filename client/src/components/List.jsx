@@ -92,7 +92,7 @@ export default function List({ list, setUserLists }) {
             {isListActive &&
                 <div className="p-4 ">
                     {items}
-                    {isAddingNewItem && <AddNewItem closeFunc={ setIsAddingNewItem } />}
+                    {isAddingNewItem && <AddNewItem closeFunc={ setIsAddingNewItem } listId={list._id} setUserLists={setUserLists} />}
                 </div>
             }
             
