@@ -9,12 +9,12 @@ function AppProvider({children}) {
 
     useEffect(() => {
         if (user) {
-            setUserLists(user.listItems)
+            setUserLists(user.lists);
         }
     }, [user])
 
     return (
-        <appContext.Provider value={{user, userLists, setUser}}>
+        <appContext.Provider value={{user, userLists, setUser, setUserLists}}>
             {children}
         </appContext.Provider>
     )

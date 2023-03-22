@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { appContext } from "../context/App";
 import { CiRedo } from "react-icons/ci";
 import List from "../components/List";
@@ -6,7 +6,7 @@ import AddNewList from "../components/AddNewList";
 
 export default function Home() {
 
-    const { username, userLists } = useContext(appContext);
+    const { user, userLists, setUserLists, setUser } = useContext(appContext);
 
     const [shouldAnimate, setShouldAnimate] = useState(true);
     const [showAddNewList, setShowAddNewList] = useState(false);
@@ -22,6 +22,12 @@ export default function Home() {
         }, 200);
     };
 
+    useEffect(() => {
+        if (!user.username) {
+            setUser(JSON.parse(localStorage.getItem('user')));
+        }
+    }, []);
+
     const emoji = () => {
         const emojis = ["😀", "🤠", "😊", "🔥", "😎", "😇", "🤭", "😏", "🥳", "😺", "🙏", "👋", "🙋", "😆", "🎂", "🍰", "🐀", "🐹", "🐣", "🦉", "🐸", "🐬", "🐠", "🐡", "🦋", "🐞", "🌻", "🌹", "🌍", "🍀", "🍁", "🍄", "🌛", "🌞", "⭐", "⛈️", "🌤️", "🌊", "✨"];
         const index = Math.floor(Math.random() * emojis.length);
@@ -30,7 +36,7 @@ export default function Home() {
 
     const [currentEmoji, setCurrentEmoji] = useState(emoji());
 
-    const lists = userLists?.map(list => (<List list={list} key={list.title} />));
+    const lists = userLists?.map(list => (<List list={list} setUserLists={setUserLists} key={list.title} />));
 
     const toggleAddNewList = () => {
         setShowAddNewList(prev => !prev);
@@ -45,7 +51,7 @@ export default function Home() {
             font-medium text-xl select-none
             md:text-3xl">
 
-                <h1>Welcome, {username} </h1>
+                <h1>Welcome, {user.username} </h1>
                 <span className={shouldAnimate ? "animate-wiggle" : ""}>{currentEmoji}</span>
 
                 <CiRedo

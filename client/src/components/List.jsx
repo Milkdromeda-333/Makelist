@@ -4,6 +4,7 @@ import { MdOutlineStarOutline, MdOutlineStar } from "react-icons/md";
 import { FiEdit2, FiTrash } from "react-icons/fi";
 import Item from "./Item";
 import AddNewItem from "./AddNewItem";
+import { userAxios } from "./utils/axios";
 
 export default function List({ list }) {
 
@@ -14,17 +15,26 @@ export default function List({ list }) {
         setIsListActive(prev => !prev);
     }
 
-    const items = list.listItems.map(item => <Item item={item} key={item.title } />);
+    const items = list.listItems.map(item => <Item item={item} key={item.title} />);
+    
+    const togglePinned = () => {
+        userAxios.put(`/list/${_id}/pin`)
+            .then(res => {
+                setUserLists(res.data);
+            }).catch(err => {
+                console.log(err);
+        })
+    }
 
     return (
         <section
             className="
             relative
-            w-full p-[5px] md:p-4
+            w-full mb-4 p-[5px]
             bg-apple border-apple text-white
             dark:bg-blue-shade
             dark:border-white
-            md:w-2/3"
+            md:w-2/3 md:p-4"
         >
 
             <div
@@ -46,11 +56,15 @@ export default function List({ list }) {
             
             {/* options */}
             <div className="center-row gap-2 flex-wrap mt-4 max[275px]:justify-start">
-                {list.isPinned ?
-                    <MdOutlineStar className="text-2xl hover:text-gray-200 dark:hover:text-gray-300" />
-                    :
-                    <MdOutlineStarOutline className="text-2xl hover:text-gray-200 dark:hover:text-gray-300" />
-                }
+                
+                <div onClick={togglePinned}>
+                    {list.isPinned ?
+                        <MdOutlineStar className="text-2xl hover:text-gray-200 dark:hover:text-gray-300" />
+                        :
+                        <MdOutlineStarOutline className="text-2xl hover:text-gray-200 dark:hover:text-gray-300" />
+                    
+                    }
+                </div>
 
                 <FiEdit2 className="hover:text-gray-200 dark:hover:text-gray-300" />
                 

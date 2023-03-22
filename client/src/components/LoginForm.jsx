@@ -1,13 +1,12 @@
 import { useState, useContext } from 'react'
 import { appContext } from "../context/App";
-// import { userAxios } from "./utils/axios";
-import axios from 'axios';
+import { userAxios, axios } from "./utils/axios";
 
 export default function LoginForm() {
 
     const { setUser } = useContext(appContext);
     
-    const [isUserLoggingIn, setIsUserLoggingIn] = useState(false);
+    const [isUserLoggingIn, setIsUserLoggingIn] = useState(true);
 
     const defaultFormInputs = {
         username: "",
@@ -26,15 +25,33 @@ export default function LoginForm() {
         }))
     }
 
-    const handleSubmit = (e) => {
+    const saveData = (data) => {
+        setUser({...data.user, token: data.token});
+        localStorage.setItem('token', data.token);
+        console.log(data.user);
+        localStorage.setItem('user', JSON.stringify(data.user));
+    }
+
+    const handleSignIn = (e) => {
         e.preventDefault();
         axios.post('/auth', userInput)
             .then(res => {
-                console.log(res.data);
-                setUser(res.data);
+                saveData(res.data)
+
             }).catch(err => {
-                // change to console log
-                alert(err);
+                console.log(err);
+            })
+        
+        setUserInput(defaultFormInputs);
+    }
+
+    const handleSignUp = (e) => {
+        e.preventDefault();
+        axios.post('/auth/new-user', userInput)
+            .then(res => {
+                saveData(res.data);
+            }).catch(err => {
+                console.log(err);
         })
         setUserInput(defaultFormInputs);
     }
@@ -54,9 +71,15 @@ export default function LoginForm() {
             md:w-1/3"
         >
 
-            <h1 className="text-center text-xl md:text-3xl">Make lists. Yup, it's that simple.</h1>
+            <h1 className="text-center text-xl md:text-3xl">
+                {isUserLoggingIn ?
+                    "Log in to get back to making lists." :
+                    "Sign up to start making lists."
+                }
+            </h1>
 
             <label htmlFor="username" className="no-style">Username:</label>
+
             <input 
                 type="text"
                 name="username"
@@ -84,7 +107,7 @@ export default function LoginForm() {
                 hover:bg-apple-shade
                 dark:bg-dark-blue dark:hover:bg-dark-blue-shade"
 
-                onClick={handleSubmit}
+                onClick={isUserLoggingIn ? handleSignIn : handleSignUp}
             >
                 {isUserLoggingIn ? "Sign in." : "Sign up."}
             </button>
