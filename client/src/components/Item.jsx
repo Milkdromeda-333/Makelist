@@ -40,6 +40,24 @@ export default function Item({ item, listId, setUserLists }) {
             }).catch(err => console.log(err));
         setIsEditing(false);
     }
+
+    const checkItem = (e) => {
+        const { value } = e.target;
+        
+        if (value === "on") {
+            userAxios.put(`/lists/list/${listId}/item/${item._id}/update`,
+                { ...item, isCompleted: false })
+                .then(() => {
+                    updateHome(setUserLists);
+                }).catch(err => console.log(err));
+        } else {
+            userAxios.put(`/lists/list/${listId}/item/${item._id}/update`,
+                { ...item, isCompleted: true })
+                .then(() => {
+                    updateHome(setUserLists);
+                }).catch(err => console.log(err));
+        }
+    }
     
     return (
         <div
@@ -58,6 +76,7 @@ export default function Item({ item, listId, setUserLists }) {
                 className="
                     before:bg-apple after:bg-apple
                     dark:before:bg-dark-blue dark:after:bg-dark-blue"
+                    onChange={checkItem}
                 /> :
                 <input type="text" name="title" id="title" value={editedItem.title}
                     onChange={handleChangeItem}
