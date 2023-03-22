@@ -95,7 +95,7 @@ export default function Home() {
             {showAddNewList && 
             
                 <div>
-                    <AddNewList closeFunc={setShowAddNewList} />
+                    <AddNewList closeFunc={setShowAddNewList} setUserLists={setUserLists} />
                 </div>
             }
 

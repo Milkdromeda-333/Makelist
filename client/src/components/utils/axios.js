@@ -14,7 +14,6 @@ const updateHome = (cb) => {
     userAxios.get('/lists')
         .then(res => {
             cb(res.data);
-            localStorage.setItem('user', JSON.stringify(res.data));
         }).catch(err => {
             console.log(err);
         });

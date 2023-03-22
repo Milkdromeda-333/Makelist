@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { MdOutlineStarOutline, MdOutlineStar } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
+import { updateHome, userAxios } from "./utils/axios";
 
-export default function AddNewList({ closeFunc }) {
+export default function AddNewList({ closeFunc, setUserLists }) {
 
     const defaultInputs = {
         name: "",
@@ -15,7 +16,6 @@ export default function AddNewList({ closeFunc }) {
             ...prev,
             name: value
         }))
-        console.log(inputs.name)
     }
 
     const togglePinned = () => {
@@ -27,16 +27,20 @@ export default function AddNewList({ closeFunc }) {
     
 
     const close = () => {
-        // clear inputs
+        setInputs(defaultInputs);
         closeFunc();
-        // update feed?
+       
     }
 
 
     const submitList = () => {
-        // submit list to api
-        setInputs(defaultInputs);
-        close();
+        userAxios.post("/lists/new", inputs)
+            .then(res => {
+                updateHome(setUserLists);
+                setInputs(defaultInputs);
+                close();
+            }).catch(err=>console.log(err));
+        
     }
     
     return (
@@ -71,7 +75,7 @@ export default function AddNewList({ closeFunc }) {
                 <input type="name" id="name" className="rounded text-dark-blue p-2" onChange={handleInputs} />
 
                 <div className="center-row mt-4">
-                    {inputs.isPinned ?
+                    {!inputs.isPinned ?
                         <>
                             <MdOutlineStarOutline
                                 className="
