@@ -7,7 +7,7 @@ import { updateHome } from "../components/utils/axios";
 
 export default function Home() {
 
-    const { user, userLists, setUserLists, setUser, setUserListFunc } = useContext(appContext);
+    const { user, userLists, setUserLists, setUser } = useContext(appContext);
 
     const [shouldAnimate, setShouldAnimate] = useState(true);
     const [showAddNewList, setShowAddNewList] = useState(false);
@@ -35,7 +35,7 @@ export default function Home() {
     const lists = () => {
         if (userLists?.length) {
             
-           return userLists?.map(list => (<List list={list} setUserLists={setUserLists} setUserListFunc={setUserListFunc} key={list.name} />));
+           return userLists?.map(list => (<List list={list} setUserLists={setUserLists}  key={list.name} />));
         }
 
         return (

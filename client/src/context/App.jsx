@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react"
+import { createContext, useState } from "react"
 
 const appContext = createContext();
 
@@ -10,13 +10,6 @@ function AppProvider({children}) {
     const setUserListFunc = (data) => {
         setUserLists(data);
     }
-
-    // useEffect(() => {
-    //     // on load and the user has info in localStorage, set new user list.
-    //     if (user) {
-    //         setUserListFunc(user.lists);
-    //     }
-    // }, [user])
 
     return (
         <appContext.Provider value={{user, userLists, setUser, setUserLists, setUserListFunc}}>

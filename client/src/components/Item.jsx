@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FiEdit2, FiTrash } from "react-icons/fi";
 import { updateHome, userAxios } from "./utils/axios";
 
-export default function Item({ item, listId, setUserLists, setUserListFunc }) {
+export default function Item({ item, listId, setUserLists }) {
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -35,7 +35,7 @@ export default function Item({ item, listId, setUserLists, setUserListFunc }) {
 
     const saveEdit = () => {
         userAxios.put(`/lists/list/${listId}/item/${item._id}/update`, editedItem)
-            .then((res) => {
+            .then(() => {
                 updateHome(setUserLists);
                 setIsEditing(false);
             }).catch(err => console.log(err));
@@ -50,7 +50,7 @@ export default function Item({ item, listId, setUserLists, setUserListFunc }) {
             setIsChecked(false);
             userAxios.put(`/lists/list/${listId}/item/${item._id}/update`,
                 { ...item, isCompleted: false })
-                .then((res) => {
+                .then(() => {
                     updateHome(setUserLists);
                 }).catch(err => console.log(err));
         }
@@ -59,12 +59,13 @@ export default function Item({ item, listId, setUserLists, setUserListFunc }) {
             setIsChecked(true);
              userAxios.put(`/lists/list/${listId}/item/${item._id}/update`,
                 { ...item, isCompleted: true })
-                .then((res) => {
+                .then(() => {
                     updateHome(setUserLists);
                 }).catch(err => console.log(err));
         }
     }
 
+    // DOCS: makes sure that the items checked state is in sync with the item data
     useEffect(() => {
         setIsChecked(item.isCompleted)
     }, [item.isCompleted]);

@@ -7,7 +7,7 @@ import Item from "./Item";
 import AddNewItem from "./AddNewItem";
 import { userAxios, updateHome } from "./utils/axios";
 
-export default function List({ list, setUserLists, setUserListFunc }) {
+export default function List({ list, setUserLists }) {
 
     const [isListActive, setIsListActive] = useState(list.isPinned);
     const [isAddingNewItem, setIsAddingNewItem] = useState(false);
@@ -23,7 +23,7 @@ export default function List({ list, setUserLists, setUserListFunc }) {
     const saveNewTitle = () => {
         const newList = {
             ...list,
-            title: listTitle
+            name: listTitle
         }
         userAxios.put("/lists/list", newList)
             .then(() => {
@@ -31,6 +31,7 @@ export default function List({ list, setUserLists, setUserListFunc }) {
             }).catch(err => {
                 console.log(err);
             });
+        toggleEditingTitle();
     }
 
     const toggleList = () => {
@@ -43,7 +44,7 @@ export default function List({ list, setUserLists, setUserListFunc }) {
 
     const items = () => {
         if (list.listItems.length) {
-            return list.listItems.map(item => <Item item={item} setUserLists={setUserLists} setUserListFunc={setUserListFunc} listId={list._id} key={item.title} />);
+            return list.listItems.map(item => <Item item={item} setUserLists={setUserLists} listId={list._id} key={item.title} />);
         }
         return "No items here.."
     }
@@ -104,7 +105,7 @@ export default function List({ list, setUserLists, setUserListFunc }) {
 
             {isListActive &&
                 <div className="p-2 ">
-                    {items() }
+                    {items()}
                     {isAddingNewItem && <AddNewItem closeFunc={ setIsAddingNewItem } listId={list._id} setUserLists={setUserLists} />}
                 </div>
             }
