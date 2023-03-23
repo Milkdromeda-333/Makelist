@@ -7,15 +7,19 @@ function AppProvider({children}) {
     const [user, setUser] = useState(localStorage.getItem('user') || {});
     const [userLists, setUserLists] = useState([]);
 
-    useEffect(() => {
-        // on load and the user has info in localStorage, set new user list.
-        if (user) {
-            setUserLists(user.lists);
-        }
-    }, [user])
+    const setUserListFunc = (data) => {
+        setUserLists(data);
+    }
+
+    // useEffect(() => {
+    //     // on load and the user has info in localStorage, set new user list.
+    //     if (user) {
+    //         setUserListFunc(user.lists);
+    //     }
+    // }, [user])
 
     return (
-        <appContext.Provider value={{user, userLists, setUser, setUserLists}}>
+        <appContext.Provider value={{user, userLists, setUser, setUserLists, setUserListFunc}}>
             {children}
         </appContext.Provider>
     )

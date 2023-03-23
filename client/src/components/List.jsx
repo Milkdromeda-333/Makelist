@@ -7,7 +7,7 @@ import Item from "./Item";
 import AddNewItem from "./AddNewItem";
 import { userAxios, updateHome } from "./utils/axios";
 
-export default function List({ list, setUserLists }) {
+export default function List({ list, setUserLists, setUserListFunc }) {
 
     const [isListActive, setIsListActive] = useState(list.isPinned === false || false);
     const [isAddingNewItem, setIsAddingNewItem] = useState(false);
@@ -43,7 +43,7 @@ export default function List({ list, setUserLists }) {
 
     const items = () => {
         if (list.listItems.length) {
-            return list.listItems.map(item => <Item item={item} setUserLists={setUserLists} listId={list._id} key={item.title} />);
+            return list.listItems.map(item => <Item item={item} setUserLists={setUserLists} setUserListFunc={setUserListFunc} listId={list._id} key={item.title} />);
         }
         return "No items here.."
     }

@@ -85,6 +85,7 @@ router.put('/list', (req, res, next) => {
                 res.status(400);
                 return next(new Error('List does not exist'));
             }
+            console.log(req.body);
             res.status(200);
             return res.send(foundList);
         }).catch(err => {
@@ -196,6 +197,7 @@ router.put('/list/:listId/item/:itemId/update', (req, res, next) => {
 
             // list.listItems[index][req.body.key] = req.body.value;
             list.listItems[index] = req.body;
+            console.log(req.body);
 
             list.save()
                 .then(response => {

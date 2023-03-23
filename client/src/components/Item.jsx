@@ -2,11 +2,13 @@ import { useState } from "react";
 import { FiEdit2, FiTrash } from "react-icons/fi";
 import { updateHome, userAxios } from "./utils/axios";
 
-export default function Item({ item, listId, setUserLists }) {
+export default function Item({ item, listId, setUserLists, setUserListFunc }) {
 
     const [isEditing, setIsEditing] = useState(false);
 
     const [editedItem, setEditedItem] = useState(item);
+
+    const [isChecked, setIsChecked] = useState(item.isCompleted);
 
     const handleChangeItem = (e) => {
         const { value, name } = e.target;
@@ -34,7 +36,6 @@ export default function Item({ item, listId, setUserLists }) {
     const saveEdit = () => {
         userAxios.put(`/lists/list/${listId}/item/${item._id}/update`, editedItem)
             .then((res) => {
-                console.log(res);
                 updateHome(setUserLists);
                 setIsEditing(false);
             }).catch(err => console.log(err));
@@ -42,18 +43,25 @@ export default function Item({ item, listId, setUserLists }) {
     }
 
     const checkItem = (e) => {
-        const { value } = e.target;
-        
-        if (value === "on") {
+        const { checked, name } = e.target;
+
+        console.log(checked)
+
+        if (checked === false) {
+
+            setIsChecked(false);
             userAxios.put(`/lists/list/${listId}/item/${item._id}/update`,
                 { ...item, isCompleted: false })
-                .then(() => {
+                .then((res) => {
                     updateHome(setUserLists);
                 }).catch(err => console.log(err));
-        } else {
-            userAxios.put(`/lists/list/${listId}/item/${item._id}/update`,
+        }
+
+        if (checked === true) {
+            setIsChecked(true);
+             userAxios.put(`/lists/list/${listId}/item/${item._id}/update`,
                 { ...item, isCompleted: true })
-                .then(() => {
+                .then((res) => {
                     updateHome(setUserLists);
                 }).catch(err => console.log(err));
         }
@@ -66,17 +74,17 @@ export default function Item({ item, listId, setUserLists }) {
             flex
             flex-row
             rounded px-2 m-2
-            ${item.isCompleted ? "text-apple bg-apple-shade dark:text-gray-600 dark:bg-gray-700 line-through" : ""}
+            ${isChecked ? "text-apple bg-apple-shade dark:text-gray-600 dark:bg-gray-700 line-through" : ""}
             ${isEditing ? "no-underline flex-col  my-2 px-0" : ""}
             `}
         >
             {!isEditing ?
                 <input
-                type="checkbox" name="completed" checked={item.isCompleted}
-                className="
-                    before:bg-apple after:bg-apple
-                    dark:before:bg-dark-blue dark:after:bg-dark-blue"
-                    onChange={checkItem}
+                    type="checkbox" name="isCompleted" checked={isChecked}
+                    className="
+                        before:bg-apple after:bg-apple
+                        dark:before:bg-dark-blue dark:after:bg-dark-blue"
+                        onChange={checkItem}
                 /> :
                 <input type="text" name="title" id="title" value={editedItem.title}
                     onChange={handleChangeItem}
