@@ -64,7 +64,7 @@ export default function LoginForm() {
         <form
             className="
             text-dark-blue
-            flex flex-col gap-4
+            flex flex-col gap-2
             w-full
             dark:text-white
             md:w-1/3"

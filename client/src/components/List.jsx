@@ -95,7 +95,9 @@ export default function List({ list, setUserLists }) {
                     <input type="text" name="title" value={listTitle}
                         onChange={handleTitleChange}
                         className="
-                        w-full mr-4 rounded bg-transparent border p-[2px] pl-[4px] text-base text-dark-blue dark:text-white"
+                        w-full mr-4 rounded 
+                        bg-white border p-[2px] pl-[4px] text-base  text-plum
+                        dark:text-white dark:bg-transparent"
                     />
                 }
 
@@ -150,6 +152,7 @@ export default function List({ list, setUserLists }) {
                         <button
                             className="
                             rounded border w-9
+                            bg-plum text-white
                             dark:bg-dark-blue
                             hover:text-gray-200"
                             onClick={saveNewTitle}
@@ -159,7 +162,7 @@ export default function List({ list, setUserLists }) {
                 
                         <button
                             className="
-                            bg-red-500 w-9
+                            bg-red-500 text-white w-9
                             hover:bg-red-600"
                             onClick={()=>setIsEditingTitle(false)}
                         >

@@ -55,13 +55,13 @@ export default function AddNewList({ closeFunc, setUserLists }) {
             <section
                 className="
                 bg-pink text-plum
-                p-5 rounded
+                p-5 rounded border-plum border-2
                 h-[50%] w-[80%]
                 flex flex-col justify-center
                 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
                 md:h-1/2 md:w-1/2
-                dark:bg-blue-shade
-                dark:text-white"
+                dark:bg-blue dark:border-white
+                dark:text-white dark:border-[1px]"
             >
                 <h2 className="text-2xl md:absolute top-4 mb-4">Add new list:</h2>
 

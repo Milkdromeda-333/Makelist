@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FiEdit2, FiTrash } from "react-icons/fi";
 import { updateHome, userAxios } from "./utils/axios";
+import audio from "/public/clack-85854.mp3";
 
 export default function Item({ item, listId, setUserLists }) {
 
@@ -42,10 +43,12 @@ export default function Item({ item, listId, setUserLists }) {
         setIsEditing(false);
     }
 
-    const checkItem = (e) => {
-        const { checked } = e.target;
+    const checkItem = (e, manualIsChecked) => {
 
-        if (checked === false) {
+        if (e) {
+            const { checked } = e.target;
+
+             if (checked === false) {
 
             setIsChecked(false);
             userAxios.put(`/lists/list/${listId}/item/${item._id}/update`,
@@ -55,7 +58,32 @@ export default function Item({ item, listId, setUserLists }) {
                 }).catch(err => console.log(err));
         }
 
-        if (checked === true) {
+        if ( checked === true) {
+            setIsChecked(true);
+             userAxios.put(`/lists/list/${listId}/item/${item._id}/update`,
+                { ...item, isCompleted: true })
+                .then(() => {
+                    updateHome(setUserLists);
+                }).catch(err => console.log(err));
+            }
+            return;
+        }
+
+        let checkedSound = new Audio(audio);
+
+        checkedSound.play();
+
+        if (manualIsChecked) {
+
+            setIsChecked(false);
+            userAxios.put(`/lists/list/${listId}/item/${item._id}/update`,
+                { ...item, isCompleted: false })
+                .then(() => {
+                    updateHome(setUserLists);
+                }).catch(err => console.log(err));
+        }
+
+        if (!manualIsChecked) {
             setIsChecked(true);
              userAxios.put(`/lists/list/${listId}/item/${item._id}/update`,
                 { ...item, isCompleted: true })
@@ -77,29 +105,40 @@ export default function Item({ item, listId, setUserLists }) {
             flex
             flex-row
             rounded px-2 m-2
-            ${isChecked ? "bg-plum-shade text-plum-tone dark:text-gray-600 dark:bg-gray-700 line-through" : ""}
+            hover:-translate-y-[2px]
+            ${
+                isChecked ?
+                "bg-plum-shade text-plum-tone dark:text-gray-600 dark:bg-gray-700 line-through hover:bg-[#34272b] dark:hover:bg-[#323b49]"
+                : "hover:bg-[#e3b2b3] dark:hover:bg-[#0f516e]"
+            }
             ${isEditing ? "no-underline flex-col  my-2 px-0" : ""}
             `}
         >
-            {!isEditing ?
-                <input
-                    type="checkbox" name="isCompleted" checked={isChecked}
-                    className="
-                        before:bg-plum after:bg-plum
-                        dark:before:bg-dark-blue dark:after:bg-dark-blue"
-                        onChange={checkItem}
-                /> :
-                <input type="text" name="title" id="title" value={editedItem.title}
-                    onChange={handleChangeItem}
-                    className={`my-2 pl-[2px] rounded w-full text-dark-blue`}
-                />
-        }
-
-            { !isEditing && <span className="pl-2 ml-5 pr-[5px] break-words max-w-[73%] md:max-w-[88%] md:text-xl">{item.title}</span>}
+            <div
+                onClick={() => !isEditing ? checkItem(null, isChecked) : null}
+                className="w-full"
+            >
+                {!isEditing ?
+                    <input
+                        type="checkbox" name="isCompleted" checked={isChecked}
+                        className="
+                            before:bg-plum after:bg-plum
+                            dark:before:bg-dark-blue dark:after:bg-dark-blue"
+                            onChange={checkItem}
+                    /> :
+                    <input type="text" name="title" id="title" value={editedItem.title}
+                        onChange={handleChangeItem}
+                        className={`my-2 pl-[2px] rounded w-full text-dark-blue`}
+                    />
+                        }
+                {!isEditing &&
+                    <span className="pl-2 block w-full ml-5 pr-[5px] break-words max-w-[73%] md:max-w-[88%] md:text-xl">{item.title}</span>
+                }
+            </div>
 
             {/* options */}
                 {!isEditing ?
-                    <div className="ml-auto center-row gap-1">
+                    <div className="center-row gap-1">
                         <button>
                             <FiEdit2 onClick={() => setIsEditing(prev => !prev)} className=" hover:text-gray-200 dark:hover:text-gray-300" />
                         </button>
