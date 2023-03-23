@@ -86,11 +86,11 @@ List.findOneAndUpdate(
 - The way that the app updates the home screen is a little disorganized, and definitely not optimized. I'd like to fix that. 
 
 TWEAKS TO ADD:
-    - add more emojis?
+    x add more emojis?
     x make pinned lists stay at the top
-    - if no lists or items, add a notification for that
+    x if no lists or items, add a notification for that
     - change light mode primary color?
     - hover effect for the items
-    - make reset repeats
-    - make the completing items functional lmfaooo
+    x make reset repeats
+    x make the completing items functional lmfaooo
     - add list item completion ding

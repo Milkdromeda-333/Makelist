@@ -47,10 +47,8 @@ export default function Home() {
     }
 
     useEffect(() => {
-        if (!user.username) {
             updateHome(setUserLists);
             setUser(JSON.parse(localStorage.getItem('user')));
-        }
     }, []);
 
     return (

@@ -6,6 +6,41 @@ const User = require('../models/user');
 // create a list
 router.post('/new', (req, res, next) => {
 
+
+    if (req.body.isPinned === true) {
+        // change all isPinned to false and then insert new object
+        List.updateMany(
+            { user: req.auth._id },
+            { $set: { isPinned: false } })
+            .then(() => {
+                // why does this need to be in the .then to work?
+
+                const newList = new List({
+                    user: req.auth._id,
+                    name: req.body.name,
+                    isPinned: req.body.isPinned || false,
+                    listItems: []
+                });
+
+                newList.save()
+                    .then(list => {
+                        User.findByIdAndUpdate(req.auth._id, { $push: { lists: list._id } })
+                            .catch(err => {
+                                res.status(500);
+                                return next(err);
+                            });
+                        res.status(201);
+                        return res.send(list);
+                    }).catch(err => {
+                        res.status(500);
+                        return next(err);
+                    });
+            })
+            .catch(err => console.log(err));
+
+        return;
+    }
+
     const newList = new List({
         user: req.auth._id,
         name: req.body.name,
@@ -85,7 +120,6 @@ router.put('/list', (req, res, next) => {
                 res.status(400);
                 return next(new Error('List does not exist'));
             }
-            console.log(req.body);
             res.status(200);
             return res.send(foundList);
         }).catch(err => {
@@ -207,9 +241,7 @@ router.put('/list/:listId/item/:itemId/update', (req, res, next) => {
             }
             const index = list.listItems.findIndex(item => item._id.toString() === req.params.itemId);
 
-            // list.listItems[index][req.body.key] = req.body.value;
             list.listItems[index] = req.body;
-            console.log(req.body);
 
             list.save()
                 .then(response => {
@@ -219,8 +251,6 @@ router.put('/list/:listId/item/:itemId/update', (req, res, next) => {
                     res.status(500);
                     return next(err);
                 });
-
-
 
         }).catch(err => {
             res.status(500);

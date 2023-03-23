@@ -74,29 +74,27 @@ export default function AddNewList({ closeFunc, setUserLists }) {
 
                 <input type="name" id="name" className="rounded text-dark-blue p-2" onChange={handleInputs} />
 
-                <div className="center-row mt-4">
+                <div className="center-row mt-4"  onClick={togglePinned}>
                     {!inputs.isPinned ?
-                        <>
+                        <div>
                             <MdOutlineStarOutline
                                 className="
                                 text-2xl mr-1
                                 hover:text-gray-200
                                 dark:hover:text-gray-300"
-                                onClick={togglePinned}
+                                
                             />
-                            <span> Pin?</span>
-                        </> :
+                        </div> :
                         <>
                             <MdOutlineStar
                                 className="
                                 text-2xl mr-1
                                 hover:text-gray-200
                                 dark:hover:text-gray-300"
-                                onClick={togglePinned}
                             />
-                            <span> Pin?</span>
                         </>
                     }
+                    <span> Pin?</span>
                 </div>
 
                 <button className="
