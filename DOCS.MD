@@ -92,14 +92,3 @@ List.findOneAndUpdate(
 ISSUES:
 
 - When checking an item for the first time after page loads, it buffers. I seen a vanilla JS solution, but am unsure about how to do it in react.
-
-TWEAKS TO ADD:
-    x add more emojis?
-    x make pinned lists stay at the top
-    x if no lists or items, add a notification for that
-    x change light mode primary color?
-    x hover effect for the items
-    x make reset repeats
-    x make the completing items functional lmfaooo
-    x add list item completion ding
-    - if list is deleted, remove from user list as well.

@@ -100,6 +100,23 @@ router.delete('/:listId', (req, res, next) => {
                 res.status(404);
                 return res.send("No list found.");
             }
+
+            // deletes ref of the list from user document
+            User.findById(req.auth._id)
+                .then(user => {
+                    if (!foundList) {
+                        res.status(404);
+                        return res.send("No user found.");
+                    }
+                    const newList = user.lists.filter(list => list === req.params.listId);
+                    user.lists = newList;
+                    console.log(user);
+                    console.log(newList, req.params.listId);
+
+                    user.save()
+                        .catch(err => console.log(err));
+                }).catch(err => console.log(err));
+
             res.status(200);
             return res.send("List deleted");
         }).catch(err => {
