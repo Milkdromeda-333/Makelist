@@ -66,6 +66,25 @@ Recieves list id and item id as parameters. Returns the new list.
 
 - SO, I have a route that has some complex logic that I have never donr before. I spent time trying to fi it until I decided to enlist help from a TA. SHe helped me to get a solution by using a mongoose playground, but after the call, I found another bug while testing it. I was able to solve the bug by doing a lot of reading and trying things out with my figers crosed.
 
+- I learned to use the all positional operator, and to incorporate arrayFilters. Here is how I implemented it before having to delete it to etend functonality.
+
+```
+List.findOneAndUpdate(
+        { _id: req.params.listId },
+        { "listItems.$[q].isCompleted": false },
+        { arrayFilters: [{ "q.isRepeated": true }] }
+    )
+        .then(list => {
+            res.status(201);
+            res.send(list);
+        }).catch(err => {
+            res.status(500);
+            return next(err);
+        });
+```
+
+- The way that the app updates the home screen is a little disorganized, and definitely not optimized. I'd like to fix that. 
+
 TWEAKS TO ADD:
     - add more emojis?
     x make pinned lists stay at the top
@@ -74,3 +93,4 @@ TWEAKS TO ADD:
     - hover effect for the items
     - make reset repeats
     - make the completing items functional lmfaooo
+    - add list item completion ding

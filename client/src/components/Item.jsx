@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiEdit2, FiTrash } from "react-icons/fi";
 import { updateHome, userAxios } from "./utils/axios";
 
@@ -43,9 +43,7 @@ export default function Item({ item, listId, setUserLists, setUserListFunc }) {
     }
 
     const checkItem = (e) => {
-        const { checked, name } = e.target;
-
-        console.log(checked)
+        const { checked } = e.target;
 
         if (checked === false) {
 
@@ -66,6 +64,10 @@ export default function Item({ item, listId, setUserLists, setUserListFunc }) {
                 }).catch(err => console.log(err));
         }
     }
+
+    useEffect(() => {
+        setIsChecked(item.isCompleted)
+    }, [item.isCompleted]);
     
     return (
         <div

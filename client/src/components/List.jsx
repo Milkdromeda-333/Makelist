@@ -9,7 +9,7 @@ import { userAxios, updateHome } from "./utils/axios";
 
 export default function List({ list, setUserLists, setUserListFunc }) {
 
-    const [isListActive, setIsListActive] = useState(list.isPinned === false || false);
+    const [isListActive, setIsListActive] = useState(list.isPinned);
     const [isAddingNewItem, setIsAddingNewItem] = useState(false);
     const [isEditingTitle, setIsEditingTitle] = useState(false);
 
@@ -70,7 +70,7 @@ export default function List({ list, setUserLists, setUserListFunc }) {
         userAxios.put(`lists/${list._id}/reset`)
             .then(() => {
                 updateHome(setUserLists);
-        })
+            }).catch(err => console.log(err));
     }
 
     return (

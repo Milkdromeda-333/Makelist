@@ -35,7 +35,7 @@ export default function Home() {
     const lists = () => {
         if (userLists?.length) {
             
-           return userLists?.map(list => (<List list={list} setUserLists={setUserLists} setUserListFunc={setUserListFunc} key={list.title} />));
+           return userLists?.map(list => (<List list={list} setUserLists={setUserLists} setUserListFunc={setUserListFunc} key={list.name} />));
         }
 
         return (

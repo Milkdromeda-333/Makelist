@@ -4,7 +4,7 @@ const appContext = createContext();
 
 function AppProvider({children}) {
 
-    const [user, setUser] = useState(localStorage.getItem('user') || {});
+    const [user, setUser] = useState(localStorage.getItem('user') || "");
     const [userLists, setUserLists] = useState([]);
 
     const setUserListFunc = (data) => {

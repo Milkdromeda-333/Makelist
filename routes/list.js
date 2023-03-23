@@ -97,22 +97,34 @@ router.put('/list', (req, res, next) => {
 // resets all repeated list items
 router.put('/:listId/reset', (req, res, next) => {
 
-    List.findOneAndUpdate(
-        { _id: req.params.listId },
-        { "listItems.$[q].isCompleted": false },
-        { arrayFilters: [{ "q.isRepeated": true }] }
-    )
+    List.findById(req.params.listId)
         .then(list => {
+
             if (!list) {
                 res.status(404);
-                return next(new Error("No list"));
+                return next(new Error("No list found"));
             }
-            res.status(201);
-            res.send(list);
-        }).catch(err => {
-            res.status(500);
-            return next(err);
+
+            const filter = (o) => {
+                let newList = o.listItems.filter(item => item.isRepeated);
+                return newList.map(item => {
+                    item.isCompleted = false;
+                    return item;
+                });
+            };
+
+            list.listItems = filter(list);
+
+            list.save()
+                .then(response => {
+                    res.status(200);
+                    res.send(response);
+                }).catch(err => {
+                    res.status(500);
+                    return next(err);
+                });
         });
+
 });
 
 //  toggles pinned list
