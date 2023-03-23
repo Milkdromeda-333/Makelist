@@ -59,9 +59,3 @@
             width: 10px;
             transition-delay: 0ms;
         }
-
-        label:not(.no-style) {
-            font-size: 20px;
-            color: #fff;
-            cursor: pointer;
-        }

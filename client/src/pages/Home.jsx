@@ -55,12 +55,14 @@ export default function Home() {
         <main className="h-full pt-20 p-4">
 
             <div className="
-            center-row gap-2
-            mb-2
-            font-medium text-xl select-none
+            center-row gap-2 mb-2
+            font-medium text-xl select-none text-plum
+            dark:text-white
             md:text-3xl">
 
-                <h1>Welcome, {user.username} </h1>
+                <h1 className="[text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]  font-bold">
+                    Welcome, {user.username}
+                </h1>
                 <span className={shouldAnimate ? "animate-wiggle" : ""}>{currentEmoji}</span>
 
                 <CiRedo
@@ -70,13 +72,14 @@ export default function Home() {
                 
             </div>
             
+            {/* mobile only */}
             <button
             className="
                 block md:hidden
                 rounded-full
                 px-[10px] py-[5px] mr-auto mb-4
-                bg-apple-shade text-white
-                hover:bg-[#7bc490]
+                bg-plum  text-white
+                hover:bg-plum-shade
                 dark:bg-dark-blue
                 dark:hover:bg-dark-blue-shade"
             onClick={toggleAddNewList}
@@ -84,14 +87,15 @@ export default function Home() {
 
             { lists() }
 
+            {/* wide-screen only */}
             <button
                 className="
                     hidden md:block
                     rounded-full
                     px-[10px] py-[5px] ml-auto
-                    bg-apple-shade text-white
+                    bg-plum  text-white
                     fixed bottom-12 right-4
-                    hover:bg-[#7bc490]
+                    hover:bg-plum-shade
                     dark:bg-dark-blue
                     dark:hover:bg-dark-blue-shade"
                 

@@ -19,7 +19,7 @@ function App() {
   return (
     <div className={`font-font ${isDarkModeActive ? 'dark' : ""}`}>
 
-      <div className="grid grid-cols-1 min-h-screen items-stretch bg-white text-dark-blue dark:bg-blue dark:text-white"
+      <div className="grid grid-cols-1 min-h-screen items-stretch bg-peach text-dark-blue dark:bg-blue dark:text-white"
       >
 
         <Navbar isThemeDark={isDarkModeActive} toggleFunc={toggleDarkMode} setUser={setUser} />

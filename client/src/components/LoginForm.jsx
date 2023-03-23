@@ -101,9 +101,9 @@ export default function LoginForm() {
 
             <button
                 className="
-                bg-apple text-white
+                bg-pink text-white
                 py-2
-                hover:bg-apple-shade
+                hover:bg-[#ffb2b3] 
                 dark:bg-dark-blue dark:hover:bg-dark-blue-shade"
 
                 onClick={isUserLoggingIn ? handleSignIn : handleSignUp}
@@ -112,10 +112,10 @@ export default function LoginForm() {
             </button>
 
             <button
-                className="decoration-apple-shade
+                className="decoration-purple 
                 w-fit
                 underline
-                hover:decoration-apple-shade
+                hover:decoration-purple 
                 dark:decoration-dark-blue dark:hover:text-gray-200
                 hover:text-zinc-600"
 

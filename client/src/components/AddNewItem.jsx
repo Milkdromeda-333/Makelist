@@ -47,13 +47,13 @@ export default function AddNewItem({closeFunc, listId, setUserLists}) {
 
             <div className="center-row gap-2">
                 <div className="center-row gap-1">
-                    <input type="checkbox" name="repeat" id="repeat" checked={inputs.isRepeated} onChange={ toggleIsRepeated } className="no-style" />
+                    <input type="checkbox" name="repeat" id="repeat" checked={inputs.isRepeated} onChange={ toggleIsRepeated } className="no-style checked:bg-plum" />
                 
-                    <label htmlFor="repeat" className="repeat">repeat?</label>
+                    <label htmlFor="repeat" className="repeat text-plum dark:text-white">repeat?</label>
                 </div>
                 <button
                     className="
-                    rounded bg-apple-shade border w-9
+                    rounded bg-plum-tone  border w-9
                     dark:bg-dark-blue
                     hover:text-gray-200"
                     onClick={submitNewItem}

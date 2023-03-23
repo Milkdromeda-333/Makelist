@@ -85,12 +85,17 @@ List.findOneAndUpdate(
 
 - The way that the app updates the home screen is a little disorganized, and definitely not optimized. I'd like to fix that. 
 
+- Light color scheme from https://www.happyhues.co/palettes/15 , Icons from react icons
+
+- I had an issue with my create list route, when it was created with isPinned being true, 
+
 TWEAKS TO ADD:
     x add more emojis?
     x make pinned lists stay at the top
     x if no lists or items, add a notification for that
-    - change light mode primary color?
+    x change light mode primary color?
     - hover effect for the items
     x make reset repeats
     x make the completing items functional lmfaooo
     - add list item completion ding
+    - if list is deleted, remove from user list as well.

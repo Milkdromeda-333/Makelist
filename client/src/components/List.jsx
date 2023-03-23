@@ -78,10 +78,10 @@ export default function List({ list, setUserLists }) {
         <section
             className="
             relative
-            w-full mb-4 p-2
-            bg-apple border-apple text-white
+            w-full my-4 p-2 rounded
+            bg-pink border-pink text-plum
             dark:bg-blue-shade
-            dark:border-white
+            dark:text-white
             md:w-2/3 md:p-4"
         >
 
@@ -118,18 +118,26 @@ export default function List({ list, setUserLists }) {
                     <>
                         <div onClick={togglePinned}>
                             {list.isPinned ?
-                                <MdOutlineStar className="text-2xl hover:text-gray-200 dark:hover:text-gray-300" />
+                                <MdOutlineStar
+                                    className="text-2xl opacity-50 
+                                    hover:text-plum hover:opacity-100
+                                    dark:hover:text-gray-300"
+                                />
                                 :
-                                <MdOutlineStarOutline className="text-2xl hover:text-gray-200 dark:hover:text-gray-300" />
+                                <MdOutlineStarOutline
+                                    className="text-2xl opacity-50 
+                                    hover:text-plum hover:opacity-100
+                                    dark:hover:text-gray-300"
+                                />
                         
                             }
                         </div>
                         <button onClick={toggleEditingTitle}>
-                            <FiEdit2 className="hover:text-gray-200 dark:hover:text-gray-300" />
+                            <FiEdit2 className="opacity-50 hover:opacity-100" />
                         </button>
                         
                         <button onClick={deleteList}>
-                                <FiTrash className="hover:text-red-500" />
+                                <FiTrash className="opacity-50 hover:opacity-100 hover:text-red-500" />
                             </button>
 
                         <CiRedo
@@ -141,7 +149,7 @@ export default function List({ list, setUserLists }) {
                     <>
                         <button
                             className="
-                            rounded bg-apple-shade border w-9
+                            rounded border w-9
                             dark:bg-dark-blue
                             hover:text-gray-200"
                             onClick={saveNewTitle}
@@ -164,9 +172,9 @@ export default function List({ list, setUserLists }) {
                     className="
                     rounded-full
                     px-[10px] py-[5px] ml-auto
-                    bg-apple-shade
-                    hover:bg-[#7bc490]
-                    dark:bg-dark-blue
+                    bg-plum text-white
+                    hover:bg-plum-shade
+                    dark:bg-dark-blue dark:text-white
                     dark:hover:bg-dark-blue-shade"
 
                     onClick={() => {

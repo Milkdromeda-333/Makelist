@@ -37,7 +37,7 @@ export default function Navbar({isThemeDark, toggleFunc, setUser}) {
     
     return (
         <nav className="
-            bg-apple
+            bg-plum
             text-white
             h-12 px-4
             absolute top-0 w-full
@@ -54,7 +54,7 @@ export default function Navbar({isThemeDark, toggleFunc, setUser}) {
                 onChange={toggleFunc}
                 checked={isThemeDark ? true : false}
                 onColor="#1c2429"
-                offColor="#77bd8b"
+                offColor="#281f21"
                 uncheckedIcon={checkedHandleIcon}
                 checkedIcon={uncheckedHandleIcon}
                 className="ml-auto"

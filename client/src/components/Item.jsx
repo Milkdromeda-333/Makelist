@@ -77,7 +77,7 @@ export default function Item({ item, listId, setUserLists }) {
             flex
             flex-row
             rounded px-2 m-2
-            ${isChecked ? "text-apple bg-apple-shade dark:text-gray-600 dark:bg-gray-700 line-through" : ""}
+            ${isChecked ? "bg-plum-shade text-plum-tone dark:text-gray-600 dark:bg-gray-700 line-through" : ""}
             ${isEditing ? "no-underline flex-col  my-2 px-0" : ""}
             `}
         >
@@ -85,7 +85,7 @@ export default function Item({ item, listId, setUserLists }) {
                 <input
                     type="checkbox" name="isCompleted" checked={isChecked}
                     className="
-                        before:bg-apple after:bg-apple
+                        before:bg-plum after:bg-plum
                         dark:before:bg-dark-blue dark:after:bg-dark-blue"
                         onChange={checkItem}
                 /> :
@@ -109,10 +109,10 @@ export default function Item({ item, listId, setUserLists }) {
                         </button>
                     </div>
                     :
-                    <div className="ml-auto center-row gap-2 text-white">
+                    <div className="ml-auto my-2 center-row gap-2 text-white">
                         <div className="center-row gap-1">
                         <input
-                            type="checkbox" className="no-style" name="isRepeated" id="repeat"
+                            type="checkbox" className="no-style bg-pink" name="isRepeated" id="repeat"
                             checked={editedItem.isRepeated}
                             onChange={handleChangeItem}
                         />
@@ -121,7 +121,7 @@ export default function Item({ item, listId, setUserLists }) {
                         </div>
                         <button
                             className="
-                            rounded bg-apple-shade border w-9
+                            rounded bg-plum-tone border w-9
                             dark:bg-dark-blue
                             hover:text-gray-200"
                             onClick={saveEdit}
