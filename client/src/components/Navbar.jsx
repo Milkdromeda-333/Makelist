@@ -1,7 +1,11 @@
 import Switch from "react-switch";
 
-export default function Navbar({isThemeDark, toggleFunc, setUser}) {
+export default function Navbar(props) {
+    
+    const { setUser , prefersDarkTheme, toggleDarkMode} = props;
 
+
+    // light mode
     const checkedHandleIcon = (
         <div
             style={{
@@ -13,9 +17,10 @@ export default function Navbar({isThemeDark, toggleFunc, setUser}) {
                 fontSize: 18
             }}
         >
-            🌑
+            🌞
         </div >);
     
+    // dark mode
     const uncheckedHandleIcon=(
       <div
         style={{
@@ -26,7 +31,7 @@ export default function Navbar({isThemeDark, toggleFunc, setUser}) {
           fontSize: 20
         }}
       >
-        🌞
+        🌑
       </div>
     )
 
@@ -51,8 +56,8 @@ export default function Navbar({isThemeDark, toggleFunc, setUser}) {
             </div>
 
             <Switch
-                onChange={toggleFunc}
-                checked={isThemeDark ? true : false}
+                onChange={toggleDarkMode}
+                checked={prefersDarkTheme}
                 onColor="#1c2429"
                 offColor="#281f21"
                 uncheckedIcon={checkedHandleIcon}

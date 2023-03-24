@@ -8,26 +8,30 @@ import { appContext } from "./context/App";
 function App() {
 
   const { setUser } = useContext(appContext);
+ 
+  const [prefersDarkTheme, setprefersDarkTheme] = useState(localStorage.getItem("prefersDarkTheme") === "true");
 
-  const [isDarkModeActive, setIsDarkModeActive] = useState(true);
   
-  const toggleDarkMode = () => {
-    setIsDarkModeActive(prev => !prev);
-  }
+    const toggleDarkMode = () => {
+        setprefersDarkTheme(prev => !prev)
+    }
 
-
+  useEffect(() => {
+    localStorage.setItem("prefersDarkTheme", prefersDarkTheme)
+  }, [prefersDarkTheme])
+  
   return (
-    <div className={`font-font ${isDarkModeActive ? 'dark' : ""}`}>
+    <div className={`font-font ${prefersDarkTheme ? "dark" : ""}`}>
 
       <div className="grid grid-cols-1 min-h-screen items-stretch bg-peach text-dark-blue dark:bg-blue dark:text-white"
       >
 
-        <Navbar isThemeDark={isDarkModeActive} toggleFunc={toggleDarkMode} setUser={setUser} />
+        <Navbar setUser={setUser} prefersDarkTheme={prefersDarkTheme} toggleDarkMode={toggleDarkMode} />
 
         {
           !localStorage.getItem('token') ?
-            <Auth isThemeDark={isDarkModeActive} />
-            : <Home isThemeDark={isDarkModeActive} />
+            <Auth prefersDarkTheme={prefersDarkTheme} />
+            : <Home prefersDarkTheme={prefersDarkTheme} />
         }
         
         <Footer />

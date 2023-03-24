@@ -11,11 +11,6 @@ const UserSchema = new Schema({
         minLength: 2,
         maxLength: 20
     },
-    preferedTheme: {
-        type: String,
-        default: "HOUSEPLANT",
-        enum: ["NIGHT", "HOUSEPLANT"]
-    },
     password: {
         type: String,
         require: true

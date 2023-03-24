@@ -1,6 +1,6 @@
 import LoginForm from "../components/LoginForm";
 
-export default function Auth({isThemeDark}) {
+export default function Auth({prefersDarkTheme}) {
 
 
     return (
@@ -19,7 +19,7 @@ export default function Auth({isThemeDark}) {
             >
 
                 <img
-                    src={isThemeDark ? "/mobile-note.svg" : "/mobile-note-light.svg"}
+                    src={prefersDarkTheme ? "/mobile-note.svg" : "/mobile-note-light.svg"}
                     alt="girl making notes"
                     className="w-full md:max-w-none"
                 />
