@@ -1,12 +1,3 @@
-export default function Auth() {
-
-return (
-    <>
-
-    </>
-)
-}
-
 ## Endpoint Docs:
 
 ### List route:
