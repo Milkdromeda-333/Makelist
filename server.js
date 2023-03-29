@@ -6,6 +6,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const { expressjwt } = require('express-jwt');
 const path = require("path");
+const port = process.env.PORT || 3000;
 
 // routes
 const authRoute = require('./routes/auth');
@@ -43,7 +44,7 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log('Connected to database');
 
-        app.listen(process.env.PORT, (err) => {
+        app.listen(port, (err) => {
             if (err) {
                 throw new Error(err);
             }
