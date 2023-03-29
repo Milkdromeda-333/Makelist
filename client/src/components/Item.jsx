@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FiEdit2, FiTrash } from "react-icons/fi";
 import { updateHome, userAxios } from "./utils/axios";
-import audio from "/public/clack-85854.mp3";
+import audio from "/clack-85854.mp3";
 
 export default function Item({ item, listId, setUserLists }) {
 

@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import { appContext } from "../context/App";
-import { userAxios, axios } from "./utils/axios";
+import { axios } from "./utils/axios";
 
 export default function LoginForm() {
 
@@ -28,7 +28,6 @@ export default function LoginForm() {
     const saveData = (data) => {
         setUser({...data.user, token: data.token});
         localStorage.setItem('token', data.token);
-        console.log(data.user);
         localStorage.setItem('user', JSON.stringify(data.user));
     }
 
