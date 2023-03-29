@@ -110,8 +110,6 @@ router.delete('/:listId', (req, res, next) => {
                     }
                     const newList = user.lists.filter(list => list === req.params.listId);
                     user.lists = newList;
-                    console.log(user);
-                    console.log(newList, req.params.listId);
 
                     user.save()
                         .catch(err => console.log(err));

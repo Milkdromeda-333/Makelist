@@ -4,7 +4,7 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
 function generateAccessToken(payload) {
-    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '12hr' });
+    return jwt.sign(payload, process.env.JWT_SECRET);
 }
 
 // log in

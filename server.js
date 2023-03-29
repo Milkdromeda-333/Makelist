@@ -5,6 +5,7 @@ const morgan = require('morgan');
 require('dotenv').config();
 const mongoose = require('mongoose');
 const { expressjwt } = require('express-jwt');
+const path = require("path");
 
 // routes
 const authRoute = require('./routes/auth');
@@ -15,6 +16,8 @@ const listRoute = require('./routes/list');
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
+// this serves static files
+app.use(express.static(path.join(__dirname, "client", "build")));
 
 app.use('/auth', authRoute);
 app.use('/api', expressjwt({ secret: process.env.JWT_SECRET, algorithms: ['HS256'] }));
@@ -27,6 +30,11 @@ app.use((err, req, res, next) => {
         res.status(err.status);
     }
     return res.send({ errMsg: err.message });
+});
+
+// this sends the client to the index page if it is passed a route it does not support
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
 // port listener
