@@ -17,7 +17,7 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 // this serves static files
-app.use(express.static(path.join(__dirname, "client", "build")));
+app.use(express.static(path.join(__dirname, "client", "dist")));
 
 app.use('/auth', authRoute);
 app.use('/api', expressjwt({ secret: process.env.JWT_SECRET, algorithms: ['HS256'] }));
@@ -37,20 +37,19 @@ app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
-// port listener
-app.listen(process.env.PORT, (err) => {
-    if (err) {
-        throw new Error(err);
-    }
-    // connect to db
-    mongoose.set('strictQuery', false);
-    mongoose.connect(process.env.MONGO_URI)
-        .then(() => {
-            console.log('Connected to database');
-        })
-        .catch(err => {
-            console.error(err);
-        });
+// port listener and connect to db
+mongoose.set('strictQuery', false);
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+        console.log('Connected to database');
 
-    console.log('Server is Successfully Running, and App is listening on port ' + process.env.PORT);
-});
+        app.listen(process.env.PORT, (err) => {
+            if (err) {
+                throw new Error(err);
+            }
+            console.log('Server is Successfully Running, and App is listening on port ' + process.env.PORT);
+        });
+    })
+    .catch(err => {
+        console.error(err);
+    });
