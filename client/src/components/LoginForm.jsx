@@ -33,7 +33,7 @@ export default function LoginForm() {
 
     const handleSignIn = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:8080/auth', userInput)
+        axios.post('https://gentle-teal-apron.cyclic.app/auth', userInput)
             .then(res => {
                 saveData(res.data);
             }).catch(err => {
@@ -45,7 +45,7 @@ export default function LoginForm() {
 
     const handleSignUp = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:8080/auth/new-user', userInput)
+        axios.post('https://gentle-teal-apron.cyclic.app/auth/new-user', userInput)
             .then(res => {
                 saveData(res.data);
             }).catch(err => {
