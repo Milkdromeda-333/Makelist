@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = `http://localhost:8080/api`;
+axios.defaults.baseURL = `https://gentle-teal-apron.cyclic.app/api`;
 
 const userAxios = axios.create();
 
