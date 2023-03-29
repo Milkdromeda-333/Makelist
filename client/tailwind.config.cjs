@@ -16,8 +16,11 @@ module.exports = {
         wiggle: "wiggle 200ms ease-in-out"
       },
       colors: {
-        apple: "#82cf98",
-        "apple-shade": "#75ba88",
+        peach: "#faeee7",
+        plum: "#33272a",
+        "plum-shade": "#231b1d",
+        "plum-tone": "#463b3d",
+        pink: "#ffc6c7",
         blue: "#13648B",
         "blue-shade": "#105777",
         "dark-blue": "#253137",

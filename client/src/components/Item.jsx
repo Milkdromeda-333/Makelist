@@ -1,18 +1,102 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiEdit2, FiTrash } from "react-icons/fi";
+import { updateHome, userAxios } from "./utils/axios";
+import audio from "/clack-85854.mp3";
 
-export default function Item({ item }) {
+export default function Item({ item, listId, setUserLists }) {
 
     const [isEditing, setIsEditing] = useState(false);
+
+    const [editedItem, setEditedItem] = useState(item);
+
+    const [isChecked, setIsChecked] = useState(item.isCompleted);
+
+    const handleChangeItem = (e) => {
+        const { value, name } = e.target;
+
+        if (name === "isRepeated") {
+            setEditedItem(prev => ({
+                ...prev,
+                isRepeated: !prev.isRepeated
+            }));
+        } else {
+            setEditedItem(prev => ({
+            ...prev,
+            title: value
+        }));
+        }
+    }
     
     const deleteItem = () => {
-        console.log("delete item.")
+        userAxios.delete(`/lists/list/${listId}/item/${item._id}`)
+            .then(() => {
+                updateHome(setUserLists);
+            }).catch(err => console.log(err));
     }
 
     const saveEdit = () => {
-        console.log("save item.");
+        userAxios.put(`/lists/list/${listId}/item/${item._id}/update`, editedItem)
+            .then(() => {
+                updateHome(setUserLists);
+                setIsEditing(false);
+            }).catch(err => console.log(err));
         setIsEditing(false);
     }
+
+    const checkItem = (e, manualIsChecked) => {
+
+        if (e) {
+            const { checked } = e.target;
+
+             if (checked === false) {
+
+            setIsChecked(false);
+            userAxios.put(`/lists/list/${listId}/item/${item._id}/update`,
+                { ...item, isCompleted: false })
+                .then(() => {
+                    updateHome(setUserLists);
+                }).catch(err => console.log(err));
+        }
+
+        if ( checked === true) {
+            setIsChecked(true);
+             userAxios.put(`/lists/list/${listId}/item/${item._id}/update`,
+                { ...item, isCompleted: true })
+                .then(() => {
+                    updateHome(setUserLists);
+                }).catch(err => console.log(err));
+            }
+            return;
+        }
+
+        let checkedSound = new Audio(audio);
+
+        checkedSound.play();
+
+        if (manualIsChecked) {
+
+            setIsChecked(false);
+            userAxios.put(`/lists/list/${listId}/item/${item._id}/update`,
+                { ...item, isCompleted: false })
+                .then(() => {
+                    updateHome(setUserLists);
+                }).catch(err => console.log(err));
+        }
+
+        if (!manualIsChecked) {
+            setIsChecked(true);
+             userAxios.put(`/lists/list/${listId}/item/${item._id}/update`,
+                { ...item, isCompleted: true })
+                .then(() => {
+                    updateHome(setUserLists);
+                }).catch(err => console.log(err));
+        }
+    }
+
+    // DOCS: makes sure that the items checked state is in sync with the item data
+    useEffect(() => {
+        setIsChecked(item.isCompleted)
+    }, [item.isCompleted]);
     
     return (
         <div
@@ -20,28 +104,41 @@ export default function Item({ item }) {
             relative
             flex
             flex-row
-            rounded px-2
-            ${item.isCompleted ? "text-apple bg-apple-shade dark:text-gray-600 dark:bg-gray-700 line-through" : ""}
-            ${isEditing ? "no-underline flex-col p-2 my-2" : ""}
+            rounded px-2 m-2
+            hover:-translate-y-[2px]
+            ${
+                isChecked ?
+                "bg-plum-shade text-plum-tone dark:text-gray-600 dark:bg-gray-700 line-through hover:bg-[#34272b] dark:hover:bg-[#323b49]"
+                : "hover:bg-[#e3b2b3] dark:hover:bg-[#0f516e]"
+            }
+            ${isEditing ? "no-underline flex-col  my-2 px-0" : ""}
             `}
         >
-            {!isEditing ?
-                <input
-                type="checkbox" name="completed" checked={item.isCompleted}
-                className="
-                    before:bg-apple after:bg-apple
-                    dark:before:bg-dark-blue dark:after:bg-dark-blue"
-                /> :
-                <input type="text" name="title" id="title" value={item.title}
-                    className={`my-2 ml-5 pl-2 rounded w-full text-dark-blue ${isEditing && "ml-0"}`}
-                />
-        }
-
-            { !isEditing && <span className="pl-2 ml-5 pr-[5px] break-words max-w-[73%] md:max-w-[88%] md:text-xl">{item.title}</span>}
+            <div
+                onClick={() => !isEditing ? checkItem(null, isChecked) : null}
+                className="w-full"
+            >
+                {!isEditing ?
+                    <input
+                        type="checkbox" name="isCompleted" checked={isChecked}
+                        className="
+                            before:bg-plum after:bg-plum
+                            dark:before:bg-dark-blue dark:after:bg-dark-blue"
+                            onChange={checkItem}
+                    /> :
+                    <input type="text" name="title" id="title" value={editedItem.title}
+                        onChange={handleChangeItem}
+                        className={`my-2 pl-[2px] rounded w-full text-dark-blue`}
+                    />
+                        }
+                {!isEditing &&
+                    <span className="pl-2 block w-full ml-5 pr-[5px] break-words max-w-[73%] md:max-w-[88%] md:text-xl">{item.title}</span>
+                }
+            </div>
 
             {/* options */}
                 {!isEditing ?
-                    <div className="ml-auto center-row gap-1">
+                    <div className="center-row gap-1">
                         <button>
                             <FiEdit2 onClick={() => setIsEditing(prev => !prev)} className=" hover:text-gray-200 dark:hover:text-gray-300" />
                         </button>
@@ -51,15 +148,19 @@ export default function Item({ item }) {
                         </button>
                     </div>
                     :
-                    <div className="ml-auto center-row gap-2 text-white">
+                    <div className="ml-auto my-2 center-row gap-2 text-white">
                         <div className="center-row gap-1">
-                            <input type="checkbox" className="no-style" name="repeat" id="repeat" checked={item.isRepeated} />
+                        <input
+                            type="checkbox" className="no-style bg-pink" name="isRepeated" id="repeat"
+                            checked={editedItem.isRepeated}
+                            onChange={handleChangeItem}
+                        />
                 
                             <label htmlFor="repeat" className="no-style">repeat?</label>
                         </div>
                         <button
                             className="
-                            rounded bg-apple-shade border w-9
+                            rounded bg-plum-tone border w-9
                             dark:bg-dark-blue
                             hover:text-gray-200"
                             onClick={saveEdit}

@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import Home from './pages/Home';
 import Auth from './pages/Auth';
 import Navbar from './components/Navbar';
@@ -7,26 +7,31 @@ import { appContext } from "./context/App";
 
 function App() {
 
-  const { username, setUsername } = useContext(appContext);
+  const { setUser } = useContext(appContext);
+ 
+  const [prefersDarkTheme, setprefersDarkTheme] = useState(localStorage.getItem("prefersDarkTheme") === "true");
 
-  const [isDarkModeActive, setIsDarkModeActive] = useState(true);
   
-  const toggleDarkMode = () => {
-    setIsDarkModeActive(prev => !prev);
-  }
+    const toggleDarkMode = () => {
+        setprefersDarkTheme(prev => !prev)
+    }
 
+  useEffect(() => {
+    localStorage.setItem("prefersDarkTheme", prefersDarkTheme)
+  }, [prefersDarkTheme])
+  
   return (
-    <div className={`font-font ${isDarkModeActive ? 'dark' : ""}`}>
+    <div className={`font-font ${prefersDarkTheme ? "dark" : ""}`}>
 
-      <div className="grid grid-cols-1 min-h-screen items-stretch bg-white text-dark-blue dark:bg-blue dark:text-white"
+      <div className="grid grid-cols-1 min-h-screen items-stretch bg-peach text-dark-blue dark:bg-blue dark:text-white"
       >
 
-        <Navbar isThemeDark={isDarkModeActive} toggleFunc={toggleDarkMode} setUsername={setUsername} />
+        <Navbar setUser={setUser} prefersDarkTheme={prefersDarkTheme} toggleDarkMode={toggleDarkMode} />
 
         {
-          !username ?
-            <Auth isThemeDark={isDarkModeActive} />
-            : <Home isThemeDark={isDarkModeActive} />
+          !localStorage.getItem('token') ?
+            <Auth prefersDarkTheme={prefersDarkTheme} />
+            : <Home prefersDarkTheme={prefersDarkTheme} />
         }
         
         <Footer />

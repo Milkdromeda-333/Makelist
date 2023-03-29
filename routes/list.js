@@ -6,6 +6,41 @@ const User = require('../models/user');
 // create a list
 router.post('/new', (req, res, next) => {
 
+
+    if (req.body.isPinned === true) {
+        // change all isPinned to false and then insert new object
+        List.updateMany(
+            { user: req.auth._id },
+            { $set: { isPinned: false } })
+            .then(() => {
+                // why does this need to be in the .then to work?
+
+                const newList = new List({
+                    user: req.auth._id,
+                    name: req.body.name,
+                    isPinned: req.body.isPinned || false,
+                    listItems: []
+                });
+
+                newList.save()
+                    .then(list => {
+                        User.findByIdAndUpdate(req.auth._id, { $push: { lists: list._id } })
+                            .catch(err => {
+                                res.status(500);
+                                return next(err);
+                            });
+                        res.status(201);
+                        return res.send(list);
+                    }).catch(err => {
+                        res.status(500);
+                        return next(err);
+                    });
+            })
+            .catch(err => console.log(err));
+
+        return;
+    }
+
     const newList = new List({
         user: req.auth._id,
         name: req.body.name,
@@ -47,6 +82,7 @@ router.get('/:listId', (req, res, next) => {
 // gets all lists of a user
 router.get('/', (req, res, next) => {
     List.find({ user: req.auth._id })
+        .sort({ isPinned: -1 })
         .then(foundLists => {
             res.status(200);
             return res.send(foundLists);
@@ -64,6 +100,23 @@ router.delete('/:listId', (req, res, next) => {
                 res.status(404);
                 return res.send("No list found.");
             }
+
+            // deletes ref of the list from user document
+            User.findById(req.auth._id)
+                .then(user => {
+                    if (!foundList) {
+                        res.status(404);
+                        return res.send("No user found.");
+                    }
+                    const newList = user.lists.filter(list => list === req.params.listId);
+                    user.lists = newList;
+                    console.log(user);
+                    console.log(newList, req.params.listId);
+
+                    user.save()
+                        .catch(err => console.log(err));
+                }).catch(err => console.log(err));
+
             res.status(200);
             return res.send("List deleted");
         }).catch(err => {
@@ -95,22 +148,34 @@ router.put('/list', (req, res, next) => {
 // resets all repeated list items
 router.put('/:listId/reset', (req, res, next) => {
 
-    List.findOneAndUpdate(
-        { _id: req.params.listId },
-        { "listItems.$[q].isCompleted": false },
-        { arrayFilters: [{ "q.isRepeated": true }] }
-    )
+    List.findById(req.params.listId)
         .then(list => {
+
             if (!list) {
                 res.status(404);
-                return next(new Error("No list"));
+                return next(new Error("No list found"));
             }
-            res.status(201);
-            res.send(list);
-        }).catch(err => {
-            res.status(500);
-            return next(err);
+
+            const filter = (o) => {
+                let newList = o.listItems.filter(item => item.isRepeated);
+                return newList.map(item => {
+                    item.isCompleted = false;
+                    return item;
+                });
+            };
+
+            list.listItems = filter(list);
+
+            list.save()
+                .then(response => {
+                    res.status(200);
+                    res.send(response);
+                }).catch(err => {
+                    res.status(500);
+                    return next(err);
+                });
         });
+
 });
 
 //  toggles pinned list
@@ -118,7 +183,6 @@ router.put('/list/:listId/pin', (req, res, next) => {
     List.find({ user: req.auth._id })
         .then(lists => {
             const requestedList = lists.find(list => list._id.toString() === req.params.listId);
-            console.log("this is the list before: " + requestedList);
 
             if (requestedList.isPinned) {
 
@@ -143,8 +207,9 @@ router.put('/list/:listId/pin', (req, res, next) => {
                 });
 
                 requestedList.isPinned = true;
+
                 requestedList.save()
-                    .then(response => {
+                    .then(() => {
                         res.status(200);
                         return res.send("List pinned.");
                     })
@@ -193,7 +258,7 @@ router.put('/list/:listId/item/:itemId/update', (req, res, next) => {
             }
             const index = list.listItems.findIndex(item => item._id.toString() === req.params.itemId);
 
-            list.listItems[index][req.body.key] = req.body.value;
+            list.listItems[index] = req.body;
 
             list.save()
                 .then(response => {

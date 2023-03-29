@@ -1,7 +1,11 @@
 import Switch from "react-switch";
 
-export default function Navbar({isThemeDark, toggleFunc, setUsername}) {
+export default function Navbar(props) {
+    
+    const { setUser , prefersDarkTheme, toggleDarkMode} = props;
 
+
+    // light mode
     const checkedHandleIcon = (
         <div
             style={{
@@ -13,9 +17,10 @@ export default function Navbar({isThemeDark, toggleFunc, setUsername}) {
                 fontSize: 18
             }}
         >
-            🌑
+            🌞
         </div >);
     
+    // dark mode
     const uncheckedHandleIcon=(
       <div
         style={{
@@ -26,17 +31,18 @@ export default function Navbar({isThemeDark, toggleFunc, setUsername}) {
           fontSize: 20
         }}
       >
-        🌞
+        🌑
       </div>
     )
 
     const logout = () => {
-        setUsername(undefined);
+        setUser({});
+        localStorage.clear();
     };
     
     return (
         <nav className="
-            bg-apple
+            bg-plum
             text-white
             h-12 px-4
             absolute top-0 w-full
@@ -50,10 +56,10 @@ export default function Navbar({isThemeDark, toggleFunc, setUsername}) {
             </div>
 
             <Switch
-                onChange={toggleFunc}
-                checked={isThemeDark ? true : false}
+                onChange={toggleDarkMode}
+                checked={prefersDarkTheme}
                 onColor="#1c2429"
-                offColor="#77bd8b"
+                offColor="#281f21"
                 uncheckedIcon={checkedHandleIcon}
                 checkedIcon={uncheckedHandleIcon}
                 className="ml-auto"

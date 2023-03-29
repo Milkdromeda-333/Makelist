@@ -34,6 +34,9 @@ router.post('/', (req, res, next) => {
                 res.status(200);
                 return res.send({ token, user: user.withoutPassword() });
             });
+        }).catch(err => {
+            res.status(500);
+            return next(new Error(err));
         });
 });
 

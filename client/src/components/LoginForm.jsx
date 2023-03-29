@@ -1,9 +1,12 @@
 import { useState, useContext } from 'react'
 import { appContext } from "../context/App";
+import { axios } from "./utils/axios";
 
-export default function LoginForm({ isUserLoggingIn, setIsUserLoggingIn }) {
+export default function LoginForm() {
 
-    const { setUsername } = useContext(appContext);
+    const { setUser } = useContext(appContext);
+    
+    const [isUserLoggingIn, setIsUserLoggingIn] = useState(true);
 
     const defaultFormInputs = {
         username: "",
@@ -22,25 +25,59 @@ export default function LoginForm({ isUserLoggingIn, setIsUserLoggingIn }) {
         }))
     }
 
-    const handleSubmit = (e) => {
+    const saveData = (data) => {
+        setUser({...data.user, token: data.token});
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+    }
+
+    const handleSignIn = (e) => {
         e.preventDefault();
-        setUsername(userInput.username);
+        axios.post('http://localhost:8080/auth', userInput)
+            .then(res => {
+                saveData(res.data);
+            }).catch(err => {
+                console.log(err);
+            })
+        
         setUserInput(defaultFormInputs);
+    }
+
+    const handleSignUp = (e) => {
+        e.preventDefault();
+        axios.post('http://localhost:8080/auth/new-user', userInput)
+            .then(res => {
+                saveData(res.data);
+            }).catch(err => {
+                console.log(err);
+        })
+        setUserInput(defaultFormInputs);
+    }
+
+    const handleToggleLogIn = (e) => {
+        e.preventDefault();
+        setIsUserLoggingIn(prev => !prev);
     }
     
     return (
         <form
             className="
             text-dark-blue
-            flex flex-col gap-4
+            flex flex-col gap-2
             w-full
             dark:text-white
             md:w-1/3"
         >
 
-            <h1 className="text-center text-xl md:text-3xl">Make lists. Yup, it's that simple.</h1>
+            <h1 className="text-center text-xl md:text-3xl">
+                {isUserLoggingIn ?
+                    "Log in to get back to making lists." :
+                    "Sign up to start making lists."
+                }
+            </h1>
 
             <label htmlFor="username" className="no-style">Username:</label>
+
             <input 
                 type="text"
                 name="username"
@@ -63,26 +100,25 @@ export default function LoginForm({ isUserLoggingIn, setIsUserLoggingIn }) {
 
             <button
                 className="
-                bg-apple text-white
+                bg-pink text-white
                 py-2
-                hover:bg-apple-shade
+                hover:bg-[#ffb2b3] 
                 dark:bg-dark-blue dark:hover:bg-dark-blue-shade"
 
-                onClick={handleSubmit}
+                onClick={isUserLoggingIn ? handleSignIn : handleSignUp}
             >
                 {isUserLoggingIn ? "Sign in." : "Sign up."}
             </button>
 
-            <button onClick={(e) =>{
-                e.preventDefault();
-                setIsUserLoggingIn(prev => !prev);
-            }}
-                className="decoration-apple-shade
+            <button
+                className="decoration-purple 
                 w-fit
                 underline
-                hover:decoration-apple-shade
+                hover:decoration-purple 
                 dark:decoration-dark-blue dark:hover:text-gray-200
                 hover:text-zinc-600"
+
+                onClick={handleToggleLogIn}
             >
                 {isUserLoggingIn ? "No account? Sign up." : "Already signed up? Log in."}
             </button>
