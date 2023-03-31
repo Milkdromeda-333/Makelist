@@ -78,7 +78,43 @@ List.findOneAndUpdate(
 
 - Light color scheme from https://www.happyhues.co/palettes/15 , Icons from react icons
 
-- I had an issue with my create list route, when it was created with isPinned being true, 
+- I had an issue with my create list route, when it was created with isPinned being true
+
+- I was implementing a fix t oauto focus on inputs when the ymount, and implemented a way using a utility i called useAutoFocus, here is the component below. You would import this into the component where it is needed, pass the ref proprty to the node that you want to be the ref with the value of the util instantiated like so below the util example. Then, youd create a useeffect that will check if the ref's current value is truthy, and if it is, focus on it. [Here is the article i used to get this solution](https://blog.logrocket.com/how-to-autofocus-using-react-hooks/). I still do not have a firm understanding of how this works.
+
+```
+import { useRef, useEffect } from "react";
+
+const useAutoFocus = () => {
+
+    // instantiates useRef hook
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+        // on mount, if there is a ref, focus it.
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, []);
+
+    return inputRef;
+};
+
+export default useAutoFocus;
+```
+
+```
+const inputRef = useAutoFocus();
+
+useEffect(()=>{
+    if(inputRef.current){
+        input.current.focus()
+    }
+}, [])
+
+// node to be referenced
+<input ref={inputRef}>
+```
 
 ISSUES:
 

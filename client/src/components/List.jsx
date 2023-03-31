@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { RxCaretDown, RxCaretUp } from "react-icons/rx";
 import { MdOutlineStarOutline, MdOutlineStar } from "react-icons/md";
 import { FiEdit2, FiTrash } from "react-icons/fi";
@@ -12,6 +12,8 @@ export default function List({ list, setUserLists }) {
     const [isListActive, setIsListActive] = useState(list.isPinned);
     const [isAddingNewItem, setIsAddingNewItem] = useState(false);
     const [isEditingTitle, setIsEditingTitle] = useState(false);
+    const [screenWidth, setScreenWidth] = useState(window.matchMedia('(max-width: 768px)'));
+
 
     const [listTitle, setListTitle] = useState(list.name);
 
@@ -25,7 +27,7 @@ export default function List({ list, setUserLists }) {
             ...list,
             name: listTitle
         }
-        userAxios.put("/lists/list", newList)
+        userAxios.put("api/lists/list", newList)
             .then(() => {
                 updateHome(setUserLists);
             }).catch(err => {
@@ -50,7 +52,7 @@ export default function List({ list, setUserLists }) {
     }
     
     const togglePinned = () => {
-        userAxios.put(`/lists/list/${list._id}/pin`)
+        userAxios.put(`api/lists/list/${list._id}/pin`)
             .then(() => {
                 updateHome(setUserLists);
             }).catch(err => {
@@ -59,7 +61,7 @@ export default function List({ list, setUserLists }) {
     }
 
     const deleteList = () => {
-        userAxios.delete(`/lists/${list._id}`)
+        userAxios.delete(`api/lists/${list._id}`)
             .then(() => {
                 updateHome(setUserLists);
             }).catch(err => {
@@ -68,11 +70,18 @@ export default function List({ list, setUserLists }) {
     }
 
     const resetRepeats = () => {
-        userAxios.put(`lists/${list._id}/reset`)
+        userAxios.put(`api/lists/${list._id}/reset`)
             .then(() => {
                 updateHome(setUserLists);
             }).catch(err => console.log(err));
     }
+
+    const focusedInput = useRef(null);
+    useEffect(() => {
+        if (focusedInput.current) {
+            focusedInput.current.focus();
+        }
+    }, [isEditingTitle])
 
     return (
         <section
@@ -98,13 +107,15 @@ export default function List({ list, setUserLists }) {
                         w-full mr-4 rounded 
                         bg-white border p-[2px] pl-[4px] text-base  text-plum
                         dark:text-white dark:bg-transparent"
+                        ref={focusedInput}
                     />
                 }
 
                 { isListActive ? <RxCaretDown className="md:text-xl"/> : <RxCaretUp className="md:text-xl"/> }
 
             </div>
-
+            
+            {/* items  */}
             {isListActive &&
                 <div className="p-2 ">
                     {items()}
@@ -134,18 +145,26 @@ export default function List({ list, setUserLists }) {
                         
                             }
                         </div>
+                        
                         <button onClick={toggleEditingTitle}>
                             <FiEdit2 className="opacity-50 hover:opacity-100" />
                         </button>
                         
                         <button onClick={deleteList}>
                                 <FiTrash className="opacity-50 hover:opacity-100 hover:text-red-500" />
-                            </button>
+                        </button>
 
-                        <CiRedo
-                            className="opacity-50 text-2xl hover:opacity-100"
-                            onClick={resetRepeats}
-                        />
+                        <button className="relative"  onClick={resetRepeats}>
+                            { !screenWidth.matches ? <span
+                                className="
+                                md:after:absolute md:after:left-0 md:after:top-0 md:after:content-['reset?'] md:after:opacity-0
+                                after:hover:transition-all ease-in after:hover:opacity-100 hover:after:left-full"
+                            >
+                                <CiRedo className="opacity-50 text-2xl hover:opacity-100"/>
+                            </span>
+                            : <span className="opacity-50 active:opacity-100">reset</span> 
+                            }
+                        </button>
                     </>
                     :
                     <>

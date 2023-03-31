@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { userAxios, updateHome } from "./utils/axios";
+// import useAutoFocus from "./utils/autoFocus";
 
 
 export default function AddNewItem({closeFunc, listId, setUserLists}) {
@@ -28,7 +29,7 @@ export default function AddNewItem({closeFunc, listId, setUserLists}) {
 
     const submitNewItem = () => {
         
-        userAxios.post(`lists/${listId}/new-item`, inputs)
+        userAxios.post(`api/lists/${listId}/new-item`, inputs)
             .then(() => {
                 updateHome(setUserLists);
             }).catch(err => console.log(err));
@@ -38,10 +39,17 @@ export default function AddNewItem({closeFunc, listId, setUserLists}) {
         closeFunc(false);
     }
     
+    const focusedInput = useRef(null);
+    useEffect(() => {
+        if (focusedInput.current) {
+            focusedInput.current.focus();
+        }
+    }, []);
+    
     return (
         <div className="flex flex-col justify-start gap-2 text-white md:flex-row md:justify-center">
             
-            <input type="text" name="title" id="title" value={inputs.item} onChange={handleChange}
+            <input type="text" ref={focusedInput} name="title" id="title" value={inputs.item} onChange={handleChange}
                     className="my-2 mr-2 pl-2 rounded w-full text-dark-blue md:mr-4"
             />
 
@@ -53,7 +61,7 @@ export default function AddNewItem({closeFunc, listId, setUserLists}) {
                 </div>
                 <button
                     className="
-                    rounded bg-plum-tone  border w-9
+                    rounded bg-plum  border w-9
                     dark:bg-dark-blue
                     hover:text-gray-200"
                     onClick={submitNewItem}

@@ -34,7 +34,7 @@ export default function AddNewList({ closeFunc, setUserLists }) {
 
 
     const submitList = () => {
-        userAxios.post("/lists/new", inputs)
+        userAxios.post("api/lists/new", inputs)
             .then(res => {
                 updateHome(setUserLists);
                 setInputs(defaultInputs);
@@ -68,10 +68,10 @@ export default function AddNewList({ closeFunc, setUserLists }) {
                 <RxCross2
                     className="
                     absolute top-4 right-4 
-                    text-xl text-plum rounded-lg
+                    text-xl text-[#785d63]
                     md:text-3xl
-                    hover:bg-[#ffe4e4]
-                    dark:text-white dark:hover:bg-[#ffffff61]"
+                    hover:text-plum rounded-lg
+                    dark:text-[#fefefecf] dark:hover:text-white"
                     onClick={close}
                 />
 
@@ -79,9 +79,9 @@ export default function AddNewList({ closeFunc, setUserLists }) {
                     Name:
                 </label>
 
-                <input type="name" id="name" className="rounded border border-plum text-plum p-2" onChange={handleInputs} />
+                <input type="name" id="name" className="rounded border border-plum text-plum p-2" onChange={handleInputs} autoFocus />
 
-                <div className="center-row mt-4 w-fit rounded p-1 hover:bg-[#ffe4e4] dark:hover:bg-[#146990]"  onClick={togglePinned}>
+                <div className="center-row transition-all cursor-pointer mt-4 w-fit rounded p-1 hover:bg-[#ffe4e4] dark:hover:bg-[#ffffff61]"  onClick={togglePinned}>
                     {!inputs.isPinned ?
                         <div>
                             <MdOutlineStarOutline

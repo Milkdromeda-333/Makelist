@@ -11,20 +11,20 @@ export default function Auth({prefersDarkTheme}) {
                 md:flex-row md:gap-4 md:mt-0"
         >
             
-            <a href="https://storyset.com/user" target="_blank"
-                className="
+            <div className="
                 w-full max-w-[60%]
                 flex flex-col justify-center items-center
-                md:w-1/3"
-            >
+                md:w-1/3">
 
                 <img
                     src={prefersDarkTheme ? "/mobile-note.svg" : "/mobile-note-light.svg"}
                     alt="girl making notes"
                     className="w-full md:max-w-none"
                 />
-                <span className="underline text-sm">Illistration by Storyset</span>
-            </a>
+                <a href="https://storyset.com/user" className="underline text-sm hover:text-zinc-600 dark:hover:text-gray-200" target="_blank">
+                    Illistration by Storyset
+                </a>
+            </div>
 
                 <LoginForm  />
 

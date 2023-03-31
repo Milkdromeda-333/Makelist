@@ -35,7 +35,7 @@ app.use((err, req, res, next) => {
 
 // this sends the client to the index page if it is passed a route it does not support
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+    res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
 
 // port listener and connect to db
@@ -48,7 +48,7 @@ mongoose.connect(process.env.MONGO_URI)
             if (err) {
                 throw new Error(err);
             }
-            console.log('Server is Successfully Running, and App is listening on port ' + process.env.PORT);
+            console.log('Server is Successfully Running, and App is listening on port ' + port);
         });
     })
     .catch(err => {

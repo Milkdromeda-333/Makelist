@@ -1,6 +1,10 @@
 import axios from "axios";
 
-axios.defaults.baseURL = `https://gentle-teal-apron.cyclic.app/api`;
+const isEnvDev = false;
+
+const url = isEnvDev ? "http://localhost:3000/" : `https://makelist.cyclic.app/`;
+
+axios.defaults.baseURL = url;
 
 const userAxios = axios.create();
 
@@ -11,7 +15,7 @@ userAxios.interceptors.request.use(config => {
 });
 
 const updateHome = (cb) => {
-    userAxios.get('/lists')
+    userAxios.get('api/lists')
         .then(res => {
             cb(res.data);
             const user = JSON.parse(localStorage.getItem('user'));

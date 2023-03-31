@@ -6,7 +6,7 @@ export default function Footer() {
             <span>
                 Developed by&nbsp;
                 <a href="https://milkdromeda-333.github.io/anjaniques-links/" target="_blank"
-                    className="underline hover:text-pink dark:hover:text-gray-300"
+                    className="underline hover:text-pink cursor-pointer dark:hover:text-gray-300"
                 >Anjanique</a>
                 🌍
             </span>

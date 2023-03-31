@@ -9,9 +9,9 @@ function generateAccessToken(payload) {
 
 // log in
 router.post('/', (req, res, next) => {
-    const user = req.body;
+    const loginAttempt = req.body;
 
-    User.findOne({ username: user.username })
+    User.findOne({ username: loginAttempt.username })
         .populate('lists')
         .then(user => {
             if (!user) {
@@ -19,7 +19,8 @@ router.post('/', (req, res, next) => {
                 return next(new Error("Username or password are incorrect."));
             }
 
-            user.checkPassword(user.password, (err, isMatch) => {
+            user.checkPassword(loginAttempt.password, (err, isMatch) => {
+
                 if (err) {
                     res.status(500);
                     return next(err);

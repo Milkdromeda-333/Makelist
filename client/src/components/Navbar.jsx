@@ -37,7 +37,8 @@ export default function Navbar(props) {
 
     const logout = () => {
         setUser({});
-        localStorage.clear();
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
     };
     
     return (
@@ -65,9 +66,14 @@ export default function Navbar(props) {
                 className="ml-auto"
             />
 
-            <button className="ml-2 hover:text-gray-200 dark:hover:text-gray-300" onClick={logout}>
+            {
+                localStorage.getItem("token") &&
+                <button
+                    className="ml-2 hover:text-gray-200 dark:hover:text-gray-300" onClick={logout}
+                >
                 Logout
-            </button>
+                </button>
+            }
         </nav>
     )
 }

@@ -19,7 +19,7 @@ module.exports = {
         peach: "#faeee7",
         plum: "#33272a",
         "plum-shade": "#231b1d",
-        "plum-tone": "#463b3d",
+        "plum-tone": "#655e61",
         pink: "#ffc6c7",
         blue: "#13648B",
         "blue-shade": "#105777",

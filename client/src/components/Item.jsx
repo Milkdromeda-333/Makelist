@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { FiEdit2, FiTrash } from "react-icons/fi";
 import { updateHome, userAxios } from "./utils/axios";
 import audio from "/clack-85854.mp3";
@@ -28,14 +28,14 @@ export default function Item({ item, listId, setUserLists }) {
     }
     
     const deleteItem = () => {
-        userAxios.delete(`/lists/list/${listId}/item/${item._id}`)
+        userAxios.delete(`api/lists/list/${listId}/item/${item._id}`)
             .then(() => {
                 updateHome(setUserLists);
             }).catch(err => console.log(err));
     }
 
     const saveEdit = () => {
-        userAxios.put(`/lists/list/${listId}/item/${item._id}/update`, editedItem)
+        userAxios.put(`api/lists/list/${listId}/item/${item._id}/update`, editedItem)
             .then(() => {
                 updateHome(setUserLists);
                 setIsEditing(false);
@@ -51,7 +51,7 @@ export default function Item({ item, listId, setUserLists }) {
              if (checked === false) {
 
             setIsChecked(false);
-            userAxios.put(`/lists/list/${listId}/item/${item._id}/update`,
+            userAxios.put(`api/lists/list/${listId}/item/${item._id}/update`,
                 { ...item, isCompleted: false })
                 .then(() => {
                     updateHome(setUserLists);
@@ -60,7 +60,7 @@ export default function Item({ item, listId, setUserLists }) {
 
         if ( checked === true) {
             setIsChecked(true);
-             userAxios.put(`/lists/list/${listId}/item/${item._id}/update`,
+             userAxios.put(`api/lists/list/${listId}/item/${item._id}/update`,
                 { ...item, isCompleted: true })
                 .then(() => {
                     updateHome(setUserLists);
@@ -76,7 +76,7 @@ export default function Item({ item, listId, setUserLists }) {
         if (manualIsChecked) {
 
             setIsChecked(false);
-            userAxios.put(`/lists/list/${listId}/item/${item._id}/update`,
+            userAxios.put(`api/lists/list/${listId}/item/${item._id}/update`,
                 { ...item, isCompleted: false })
                 .then(() => {
                     updateHome(setUserLists);
@@ -85,7 +85,7 @@ export default function Item({ item, listId, setUserLists }) {
 
         if (!manualIsChecked) {
             setIsChecked(true);
-             userAxios.put(`/lists/list/${listId}/item/${item._id}/update`,
+             userAxios.put(`api/lists/list/${listId}/item/${item._id}/update`,
                 { ...item, isCompleted: true })
                 .then(() => {
                     updateHome(setUserLists);
@@ -98,20 +98,28 @@ export default function Item({ item, listId, setUserLists }) {
         setIsChecked(item.isCompleted)
     }, [item.isCompleted]);
     
+    const focusedInput = useRef(null);
+
+    // DOCS: when isEditing changes, tell javascript that if ref is truthy, focus on it
+    useEffect(() => {
+        if (focusedInput.current) {
+            focusedInput.current.focus();
+        }
+    }, [isEditing])
+    
     return (
         <div
             className={`
             relative
-            flex
-            flex-row
-            rounded px-2 m-2
+            flex flex-row
+            rounded px-2 m-2 cursor-pointer
             hover:-translate-y-[2px]
             ${
                 isChecked ?
-                "bg-plum-shade text-plum-tone dark:text-gray-600 dark:bg-gray-700 line-through hover:bg-[#34272b] dark:hover:bg-[#323b49]"
+                "bg-plum text-plum-tone line-through hover:bg-[#34272b] dark:text-gray-400 dark:bg-gray-700 dark:hover:bg-[#323b49]"
                 : "hover:bg-[#e3b2b3] dark:hover:bg-[#0f516e]"
             }
-            ${isEditing ? "no-underline flex-col  my-2 px-0" : ""}
+            ${isEditing ? "no-underline flex-col  my-2 px-0 bg-plum hover:bg-plum hover:translate-y-0" : ""}
             `}
         >
             <div
@@ -124,11 +132,12 @@ export default function Item({ item, listId, setUserLists }) {
                         className="
                             before:bg-plum after:bg-plum
                             dark:before:bg-dark-blue dark:after:bg-dark-blue"
-                            onChange={checkItem}
+                        onChange={checkItem}
                     /> :
                     <input type="text" name="title" id="title" value={editedItem.title}
                         onChange={handleChangeItem}
                         className={`my-2 pl-[2px] rounded w-full text-dark-blue`}
+                        ref={focusedInput}
                     />
                         }
                 {!isEditing &&
@@ -140,7 +149,9 @@ export default function Item({ item, listId, setUserLists }) {
                 {!isEditing ?
                     <div className="center-row gap-1">
                         <button>
-                            <FiEdit2 onClick={() => setIsEditing(prev => !prev)} className=" hover:text-gray-200 dark:hover:text-gray-300" />
+                        <FiEdit2 onClick={() => setIsEditing(prev => !prev)}
+                            className=" hover:text-white dark:hover:text-gray-200"
+                        />
                         </button>
                 
                         <button>
@@ -154,13 +165,14 @@ export default function Item({ item, listId, setUserLists }) {
                             type="checkbox" className="no-style bg-pink" name="isRepeated" id="repeat"
                             checked={editedItem.isRepeated}
                             onChange={handleChangeItem}
+                            autoFocus
                         />
                 
                             <label htmlFor="repeat" className="no-style">repeat?</label>
                         </div>
                         <button
                             className="
-                            rounded bg-plum-tone border w-9
+                            rounded bg-plum-shade border w-10
                             dark:bg-dark-blue
                             hover:text-gray-200"
                             onClick={saveEdit}
@@ -170,7 +182,7 @@ export default function Item({ item, listId, setUserLists }) {
                 
                         <button
                             className="
-                            bg-red-500 w-9
+                            bg-red-500 w-10 rounded
                             hover:bg-red-600"
                             onClick={()=>setIsEditing(false)}
                         >

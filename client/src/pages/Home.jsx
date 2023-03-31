@@ -66,7 +66,7 @@ export default function Home() {
                 <span className={shouldAnimate ? "animate-wiggle" : ""}>{currentEmoji}</span>
 
                 <CiRedo
-                    className="opacity-50 hover:opacity-100"
+                    className="opacity-50 cursor-pointer hover:opacity-100"
                     onClick={handleElementChange}
                 />
                 
