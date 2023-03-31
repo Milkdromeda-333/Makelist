@@ -9,8 +9,7 @@ function App() {
 
   const { setUser } = useContext(appContext);
  
-  const [prefersDarkTheme, setPrefersDarkTheme] = useState(localStorage.getItem("prefersDarkTheme") !== "null" || false);
-
+  const [prefersDarkTheme, setPrefersDarkTheme] = useState(localStorage.getItem("prefersDarkTheme") === "true");
   
     const toggleDarkMode = () => {
         setPrefersDarkTheme(prev => !prev)
