@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const isEnvDev = true;
+const isEnvDev = false;
 
 const url = isEnvDev ? "http://localhost:3000/" : `https://makelist.cyclic.app/`;
 
