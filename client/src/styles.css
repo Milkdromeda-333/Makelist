@@ -16,46 +16,141 @@
 
 /* checkbox stylings are from https://www.geekboots.com/css/animated-checkbox with my tweaking*/
  input[type=checkbox]:not(.no-style) {
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 5px;
-            border-color: gray;
-            border-width: 1px;
-            background-color: #fff;
-            margin-block: 2px;
-            padding-left: 1px;
-            position: absolute;
-        }
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    border-color: gray;
+    border-width: 1px;
+    background-color: #fff;
+    margin-block: 2px;
+    padding-left: 1px;
+    position: absolute;
+}
 
-        input[type=checkbox]:not(.no-style)::before {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px;
-            transform: translate(8px, 13px) rotate(-45deg);
-            transform-origin: left;
-            transition: 20ms all linear;
-            transition-delay: 0ms;
-        }
+input[type=checkbox]:not(.no-style)::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    transform: translate(8px, 13px) rotate(-45deg);
+    transform-origin: left;
+    transition: 20ms all linear;
+    transition-delay: 0ms;
+}
 
-        input[type=checkbox]:not(.no-style)::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px;
-            transform: translate(1px, 8px) rotate(45deg);
-            transform-origin: left;
-            transition: 20ms all linear;
-            transition-delay: 150ms;
-        }
+input[type=checkbox]:not(.no-style)::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    transform: translate(1px, 8px) rotate(45deg);
+    transform-origin: left;
+    transition: 20ms all linear;
+    transition-delay: 150ms;
+}
 
-        input[type=checkbox]:not(.no-style):checked::before {
-            width: 12px;
-            transition-delay: 150ms;
-        }
+input[type=checkbox]:not(.no-style):checked::before {
+    width: 12px;
+    transition-delay: 150ms;
+}
 
-        input[type=checkbox]:not(.no-style):checked::after {
-            width: 10px;
-            transition-delay: 0ms;
-        }
+input[type=checkbox]:not(.no-style):checked::after {
+    width: 10px;
+    transition-delay: 0ms;
+}
+
+        /* loader styles */
+.loader {
+  --dim: 1rem;
+  width: var(--dim);
+  height: var(--dim);
+  position: relative;
+  margin: 0 auto;
+  -webkit-animation: spin988 2s linear infinite;
+          animation: spin988 2s linear infinite;
+}
+
+.loader .circle {
+  --color: #ffffff;
+  --dim: .4rem;
+  width: var(--dim);
+  height: var(--dim);
+  background-color: var(--color);
+  border-radius: 50%;
+  position: absolute;
+}
+
+.loader .circle:nth-child(1) {
+  top: 0;
+  left: 0;
+}
+
+.loader .circle:nth-child(2) {
+  top: 0;
+  right: 0;
+}
+
+.loader .circle:nth-child(3) {
+  bottom: 0;
+  left: 0;
+}
+
+.loader .circle:nth-child(4) {
+  bottom: 0;
+  right: 0;
+}
+
+@-webkit-keyframes spin988 {
+  0% {
+    -webkit-transform: scale(1) rotate(0);
+            transform: scale(1) rotate(0);
+  }
+
+  20%, 25% {
+    -webkit-transform: scale(1.3) rotate(90deg);
+            transform: scale(1.3) rotate(90deg);
+  }
+
+  45%, 50% {
+    -webkit-transform: scale(1) rotate(180deg);
+            transform: scale(1) rotate(180deg);
+  }
+
+  70%, 75% {
+    -webkit-transform: scale(1.3) rotate(270deg);
+            transform: scale(1.3) rotate(270deg);
+  }
+
+  95%, 100% {
+    -webkit-transform: scale(1) rotate(360deg);
+            transform: scale(1) rotate(360deg);
+  }
+}
+
+@keyframes spin988 {
+  0% {
+    -webkit-transform: scale(1) rotate(0);
+            transform: scale(1) rotate(0);
+  }
+
+  20%, 25% {
+    -webkit-transform: scale(1.3) rotate(90deg);
+            transform: scale(1.3) rotate(90deg);
+  }
+
+  45%, 50% {
+    -webkit-transform: scale(1) rotate(180deg);
+            transform: scale(1) rotate(180deg);
+  }
+
+  70%, 75% {
+    -webkit-transform: scale(1.3) rotate(270deg);
+            transform: scale(1.3) rotate(270deg);
+  }
+
+  95%, 100% {
+    -webkit-transform: scale(1) rotate(360deg);
+            transform: scale(1) rotate(360deg);
+  }
+}

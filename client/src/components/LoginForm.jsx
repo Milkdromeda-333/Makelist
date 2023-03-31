@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react'
 import { appContext } from "../context/App";
 import { axios } from "./utils/axios";
+import Loader from './Loader';
 
 export default function LoginForm() {
 
@@ -16,6 +17,7 @@ export default function LoginForm() {
     
     const [isAuthFailed, setisAuthFailed] = useState(false);
     const [failMessage, setFailMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const failOperation = (failMessage) => {
         setFailMessage(failMessage);
@@ -42,7 +44,10 @@ export default function LoginForm() {
 
     const handleSignIn = (e) => {
         e.preventDefault();
+        setIsLoading(true);
+
         if (!userInput.username || !userInput.password) {
+            setIsLoading(false);
             return failOperation("Please fill out both fields.");
         }
         axios.post('/auth', userInput)
@@ -53,12 +58,17 @@ export default function LoginForm() {
                 failOperation(err.response.data.errMsg);
             })
         
+        setIsLoading(false);
         setUserInput(defaultFormInputs);
+       
+        
     }
 
     const handleSignUp = (e) => {
         e.preventDefault();
+        setIsLoading(true);
         if (!(userInput.username || userInput.password)) {
+            setIsLoading(false);
             return failOperation("Please fill out both fields.");
         }
         axios.post('/auth/new-user', userInput)
@@ -69,16 +79,16 @@ export default function LoginForm() {
                 failOperation(err.response.data.errMsg);
         })
         setUserInput(defaultFormInputs);
+        setIsLoading(false);
     }
 
     const handleToggleLogIn = (e) => {
         e.preventDefault();
+        setIsLoading(false);
         setisAuthFailed(false);
         setFailMessage("");
         setIsUserLoggingIn(prev => !prev);
     }
-
-
     
     return (
         <form
@@ -130,16 +140,20 @@ export default function LoginForm() {
                 dark:text-dark-blue`}
             />
 
-            <button
-                className="
+            <button disabled={isLoading}
+                className={`
                 bg-pink text-white
-                py-2 text-lg
-                hover:bg-[#fbced0] active:bg-[#f7d6d8]
-                dark:bg-dark-blue dark:hover:bg-dark-blue-shade dark:active:bg-[#28353c]"
+                h-10 text-lg
+                hover:bg-[#fbced0] active:bg-[#f7d6d8] disabled:bg-[#fbced0]
+                dark:bg-dark-blue dark:hover:bg-dark-blue-shade dark:active:bg-[#28353c]`}
 
                 onClick={isUserLoggingIn ? handleSignIn : handleSignUp}
             >
-                {isUserLoggingIn ? "Sign in." : "Sign up."}
+                <span className={isLoading === false ? "block" : "hidden"}>
+                    {isUserLoggingIn ? "Sign in." : "Sign up."}
+                </span>
+
+                { isLoading && <Loader /> }
             </button>
 
             <button

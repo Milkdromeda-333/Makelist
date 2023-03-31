@@ -48,17 +48,31 @@ router.post('/new-user', (req, res, next) => {
     // checks for disallowed charecters
     if (userInput.username.match(/^[0-9a-zA-Z]{1,16}$/)) {
 
-        const newUser = new User(req.body);
+        User.find({ username: userInput.username })
+            .then(response => {
+                if (response.length > 0) {
+                    console.log(response);
+                    res.status(400);
+                    return next(new Error("That username already exists."));
+                }
 
-        newUser.save()
-            .then((response) => {
-                const token = generateAccessToken(newUser.withoutPassword());
-                res.status(201);
-                return res.send({ user: response, token });
-            })
-            .catch(err => {
+                const newUser = new User(req.body);
+
+                newUser.save()
+                    .then((response) => {
+                        const token = generateAccessToken(newUser.withoutPassword());
+                        res.status(201);
+                        return res.send({ user: response, token });
+                    })
+                    .catch(err => {
+                        res.status(500);
+                        return next(new Error("Server error."));
+
+                    });
+            }).catch(err => {
+                console.log(err);
                 res.status(500);
-                return next(err);
+                return next(new Error("Server error."));
             });
     } else {
         res.status(400);

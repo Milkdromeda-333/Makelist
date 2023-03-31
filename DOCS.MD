@@ -116,6 +116,8 @@ useEffect(()=>{
 <input ref={inputRef}>
 ```
 
+- Loader code is from here https://uiverse.io/AbanoubMagdy1/evil-bullfrog-30
+
 ISSUES:
 
 - When checking an item for the first time after page loads, it buffers. I seen a vanilla JS solution, but am unsure about how to do it in react.
