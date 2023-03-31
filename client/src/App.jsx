@@ -17,9 +17,6 @@ function App() {
     }
 
   useEffect(() => {
-    if (localStorage.getItem("prefersDarkTheme") === "null") {
-      return localStorage.setItem("prefersDarkTheme", true);
-    }
     localStorage.setItem("prefersDarkTheme", prefersDarkTheme)
   }, [prefersDarkTheme])
   
