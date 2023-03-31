@@ -42,8 +42,8 @@ export default function LoginForm() {
 
     const handleSignIn = (e) => {
         e.preventDefault();
-        if (!(userInput.username || userInput.password)) {
-            return failOperation("Please fill out fields.");
+        if (!userInput.username || !userInput.password) {
+            return failOperation("Please fill out both fields.");
         }
         axios.post('/auth', userInput)
             .then(res => {
@@ -59,7 +59,7 @@ export default function LoginForm() {
     const handleSignUp = (e) => {
         e.preventDefault();
         if (!(userInput.username || userInput.password)) {
-            return failOperation("Please fill out fields.");
+            return failOperation("Please fill out both fields.");
         }
         axios.post('/auth/new-user', userInput)
             .then(res => {
@@ -133,9 +133,9 @@ export default function LoginForm() {
             <button
                 className="
                 bg-pink text-white
-                py-2
-                hover:bg-[#ffb2b3] 
-                dark:bg-dark-blue dark:hover:bg-dark-blue-shade"
+                py-2 text-lg
+                hover:bg-[#fbced0] active:bg-[#f7d6d8]
+                dark:bg-dark-blue dark:hover:bg-dark-blue-shade dark:active:bg-[#28353c]"
 
                 onClick={isUserLoggingIn ? handleSignIn : handleSignUp}
             >

@@ -22,7 +22,7 @@ export default function Auth({prefersDarkTheme}) {
                     className="w-full md:max-w-none"
                 />
                 <a href="https://storyset.com/user" className="underline text-sm hover:text-zinc-600 dark:hover:text-gray-200" target="_blank">
-                    Illistration by Storyset
+                    Illustration by Storyset
                 </a>
             </div>
 
