@@ -121,3 +121,9 @@ useEffect(()=>{
 ISSUES:
 
 - When checking an item for the first time after page loads, it buffers. I seen a vanilla JS solution, but am unsure about how to do it in react.
+
+REMEMBER:
+- BEFORE REVISING LOCALLY: set `isEnvDev` to true in src/utils/axios and comment out `disableReactDevTools();` in src/main
+
+HOW TO DEPLOY:
+i think ijust push to main...

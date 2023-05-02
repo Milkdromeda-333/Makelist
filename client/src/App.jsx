@@ -9,15 +9,15 @@ function App() {
 
   const { setUser } = useContext(appContext);
  
-  const [prefersDarkTheme, setPrefersDarkTheme] = useState(localStorage.getItem("prefersDarkTheme") === "true");
-  
-    const toggleDarkMode = () => {
-        setPrefersDarkTheme(prev => !prev)
-    }
+  const [prefersDarkTheme, setPrefersDarkTheme] = useState(localStorage.getItem("prefersDarkTheme") !== "false");
+
+  const toggleDarkMode = () => {
+    setPrefersDarkTheme(prev => !prev);
+  }
 
   useEffect(() => {
-    localStorage.setItem("prefersDarkTheme", prefersDarkTheme)
-  }, [prefersDarkTheme])
+    localStorage.setItem("prefersDarkTheme", prefersDarkTheme);
+  }, [prefersDarkTheme]);
   
   return (
     <div className={`font-font ${prefersDarkTheme ? "dark" : ""}`}>

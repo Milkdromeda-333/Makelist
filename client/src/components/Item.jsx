@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { FiEdit2, FiTrash } from "react-icons/fi";
 import { updateHome, userAxios } from "./utils/axios";
-import audio from "/clack-85854.mp3";
 
 export default function Item({ item, listId, setUserLists }) {
 
@@ -68,10 +67,6 @@ export default function Item({ item, listId, setUserLists }) {
             }
             return;
         }
-
-        let checkedSound = new Audio(audio);
-
-        checkedSound.play();
 
         if (manualIsChecked) {
 
