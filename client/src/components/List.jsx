@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { RxCaretDown, RxCaretUp } from "react-icons/rx";
 import { MdOutlineStarOutline, MdOutlineStar } from "react-icons/md";
 import { FiEdit2, FiTrash } from "react-icons/fi";
 import { CiRedo } from "react-icons/ci";
+import {SlArrowDown, SlArrowUp} from "react-icons/sl"
 import Item from "./Item";
 import AddNewItem from "./AddNewItem";
 import { userAxios, updateHome } from "./utils/axios";
@@ -105,13 +105,12 @@ export default function List({ list, setUserLists }) {
                         onChange={handleTitleChange}
                         className="
                         w-full mr-4 rounded 
-                        bg-white border p-[2px] pl-[4px] text-base  text-plum
-                        dark:text-white dark:bg-transparent"
+                        bg-white border p-[2px] pl-[4px] text-base  text-plum"
                         ref={focusedInput}
                     />
                 }
 
-                { isListActive ? <RxCaretDown className="md:text-xl"/> : <RxCaretUp className="md:text-xl"/> }
+                { isListActive ? <SlArrowUp className="md:text-base"/> : <SlArrowDown className="md:text-base"/> }
 
             </div>
             
@@ -181,7 +180,7 @@ export default function List({ list, setUserLists }) {
                 
                         <button
                             className="
-                            bg-red-500 text-white w-9
+                            bg-red-500 text-white w-9 rounded
                             hover:bg-red-600"
                             onClick={()=>setIsEditingTitle(false)}
                         >

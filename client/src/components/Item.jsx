@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { FiEdit2, FiTrash } from "react-icons/fi";
 import { updateHome, userAxios } from "./utils/axios";
-import audio from "/clack-85854.mp3";
 
 export default function Item({ item, listId, setUserLists }) {
 
@@ -69,10 +68,6 @@ export default function Item({ item, listId, setUserLists }) {
             return;
         }
 
-        let checkedSound = new Audio(audio);
-
-        checkedSound.play();
-
         if (manualIsChecked) {
 
             setIsChecked(false);
@@ -110,21 +105,20 @@ export default function Item({ item, listId, setUserLists }) {
     return (
         <div
             className={`
-            relative
-            flex flex-row
-            rounded px-2 m-2 cursor-pointer
-            hover:-translate-y-[2px]
-            ${
-                isChecked ?
-                "bg-plum text-plum-tone line-through hover:bg-[#34272b] dark:text-gray-400 dark:bg-gray-700 dark:hover:bg-[#323b49]"
-                : "hover:bg-[#e3b2b3] dark:hover:bg-[#0f516e]"
-            }
-            ${isEditing ? "no-underline flex-col  my-2 px-0 bg-plum hover:bg-plum hover:translate-y-0" : ""}
+                relative
+                flex flex-row
+                rounded px-2 m-2 cursor-pointer
+                ${
+                    isChecked ?
+                    "bg-plum text-plum-tone line-through hover:bg-[#241b1d] dark:text-gray-400 dark:bg-gray-700 dark:hover:bg-[#323b49]"
+                    : "hover:bg-[#e3b2b3] dark:hover:bg-[#0f516e]"
+                }
+                ${isEditing && "no-underline flex-col my-2 px-0 hover:bg-plum dark:hover:bg-gray-700"}
             `}
         >
             <div
                 onClick={() => !isEditing ? checkItem(null, isChecked) : null}
-                className="w-full"
+                className="w-full flex flex-row justify-start items-center"
             >
                 {!isEditing ?
                     <input
@@ -141,7 +135,7 @@ export default function Item({ item, listId, setUserLists }) {
                     />
                         }
                 {!isEditing &&
-                    <span className="pl-2 block w-full ml-5 pr-[5px] break-words max-w-[73%] md:max-w-[88%] md:text-xl">{item.title}</span>
+                    <span className="pl-2 block w-full pr-[5px] break-words max-w-[73%] md:max-w-[88%] md:text-xl">{item.title}</span>
                 }
             </div>
 
@@ -188,7 +182,8 @@ export default function Item({ item, listId, setUserLists }) {
                         >
                             exit
                         </button>
-                    </div>}
+                </div>
+            }
         </div>
     )
 }
