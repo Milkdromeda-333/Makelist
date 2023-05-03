@@ -9,6 +9,7 @@ export default function Home() {
 
     const { user, userLists, setUserLists, setUser } = useContext(appContext);
 
+    // i am holding this in state for the emoji animation because when the emoji's change it does not re-animate.
     const [shouldAnimate, setShouldAnimate] = useState(true);
     const [showAddNewList, setShowAddNewList] = useState(false);
 
@@ -23,7 +24,6 @@ export default function Home() {
         }, 200);
     };
 
-
     const emoji = () => {
         const emojis = ["😀", "🤠", "😊", "🔥", "😎", "😇", "🤭", "😏", "🥳", "😺", "🙏", "👋", "🙋", "😆", "🎂", "🍰", "🐀", "🐹", "🐣", "🦉", "🐸", "🐬", "🐠", "🐡", "🦋", "🐞", "🌻", "🌹", "🌍", "🍀", "🍁", "🍄", "🌛", "🌞", "⭐", "⛈️", "🌤️", "🌊", "✨"];
         const index = Math.floor(Math.random() * emojis.length);
@@ -34,21 +34,19 @@ export default function Home() {
 
     const lists = () => {
         if (userLists?.length) {
-            
            return userLists?.map(list => (<List list={list} setUserLists={setUserLists}  key={list.name} />));
         }
 
-        return (
-                <span>Sorry. You have no lists yet.</span>
-        )
+        return <span>Sorry. You have no lists yet.</span>;
     }
+
     const toggleAddNewList = () => {
         setShowAddNewList(prev => !prev);
     }
 
     useEffect(() => {
-            updateHome(setUserLists);
-            setUser(JSON.parse(localStorage.getItem('user')));
+        updateHome(setUserLists);
+        setUser(JSON.parse(localStorage.getItem('user')));
     }, []);
 
     return (
