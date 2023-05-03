@@ -135,7 +135,7 @@ export default function Item({ item, listId, setUserLists }) {
                     />
                         }
                 {!isEditing &&
-                    <span className="pl-2 block w-full ml-5 pr-[5px] break-words max-w-[73%] md:max-w-[88%] md:text-xl">{item.title}</span>
+                    <span className="pl-2 block w-full pr-[5px] break-words max-w-[73%] md:max-w-[88%] md:text-xl">{item.title}</span>
                 }
             </div>
 
