@@ -105,16 +105,15 @@ export default function Item({ item, listId, setUserLists }) {
     return (
         <div
             className={`
-            relative
-            flex flex-row
-            rounded px-2 m-2 cursor-pointer
-            hover:-translate-y-[2px]
-            ${
-                isChecked ?
-                "bg-plum text-plum-tone line-through hover:bg-[#34272b] dark:text-gray-400 dark:bg-gray-700 dark:hover:bg-[#323b49]"
-                : "hover:bg-[#e3b2b3] dark:hover:bg-[#0f516e]"
-            }
-            ${isEditing ? "no-underline flex-col  my-2 px-0 bg-plum hover:bg-plum hover:translate-y-0" : ""}
+                relative
+                flex flex-row
+                rounded px-2 m-2 cursor-pointer
+                ${
+                    isChecked ?
+                    "bg-plum text-plum-tone line-through hover:bg-[#34272b] dark:text-gray-400 dark:bg-gray-700 dark:hover:bg-[#323b49]"
+                    : "hover:bg-[#e3b2b3] dark:hover:bg-[#0f516e]"
+                }
+                ${isEditing && "no-underline flex-col my-2 px-0 hover:bg-initial dark:hover:bg-gray-700"}
             `}
         >
             <div
