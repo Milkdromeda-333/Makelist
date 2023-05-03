@@ -21,7 +21,7 @@ export default function Home() {
 
         setTimeout(() => {
             setShouldAnimate(false);
-        }, 200);
+        }, 170);
     };
 
     const emoji = () => {

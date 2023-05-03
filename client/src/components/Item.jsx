@@ -118,7 +118,7 @@ export default function Item({ item, listId, setUserLists }) {
         >
             <div
                 onClick={() => !isEditing ? checkItem(null, isChecked) : null}
-                className="w-full"
+                className="w-full flex flex-row justify-start items-center"
             >
                 {!isEditing ?
                     <input
@@ -182,7 +182,8 @@ export default function Item({ item, listId, setUserLists }) {
                         >
                             exit
                         </button>
-                    </div>}
+                </div>
+            }
         </div>
     )
 }
