@@ -6,14 +6,12 @@ const User = require('../models/user');
 // create a list
 router.post('/new', (req, res, next) => {
 
-
     if (req.body.isPinned === true) {
         // change all isPinned to false and then insert new object
         List.updateMany(
             { user: req.auth._id },
             { $set: { isPinned: false } })
             .then(() => {
-                // why does this need to be in the .then to work?
 
                 const newList = new List({
                     user: req.auth._id,

@@ -77,6 +77,7 @@ export default function List({ list, setUserLists }) {
     }
 
     const focusedInput = useRef(null);
+
     useEffect(() => {
         if (focusedInput.current) {
             focusedInput.current.focus();
@@ -109,9 +110,7 @@ export default function List({ list, setUserLists }) {
                         ref={focusedInput}
                     />
                 }
-
                 { isListActive ? <SlArrowUp className="md:text-base"/> : <SlArrowDown className="md:text-base"/> }
-
             </div>
             
             {/* items  */}

@@ -130,6 +130,7 @@ export default function Item({ item, listId, setUserLists }) {
                     /> :
                     <input type="text" name="title" id="title" value={editedItem.title}
                         onChange={handleChangeItem}
+                        maxLength={100}
                         className={`my-2 pl-[2px] rounded w-full text-dark-blue`}
                         ref={focusedInput}
                     />
