@@ -138,11 +138,10 @@ export default function Item({ item, listId, setUserLists }) {
                 {!isEditing &&
                     <span className="pl-2 block w-full pr-[5px] break-words max-w-[73%] md:max-w-[88%] md:text-xl">{item.title}</span>
                 }
-            </div>
 
             {/* options */}
                 {!isEditing ?
-                    <div className="center-row gap-1">
+                    <div className="ml-auto center-row gap-1">
                         <button>
                         <FiEdit2 onClick={() => setIsEditing(prev => !prev)}
                             className=" hover:text-white dark:hover:text-gray-200"
@@ -185,6 +184,7 @@ export default function Item({ item, listId, setUserLists }) {
                         </button>
                 </div>
             }
+            </div>
         </div>
     )
 }

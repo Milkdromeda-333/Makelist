@@ -53,13 +53,15 @@ export default function LoginForm() {
         axios.post('/auth', userInput)
             .then(res => {
                 saveData(res.data);
+                setIsLoading(false);
+                setUserInput(defaultFormInputs);
             }).catch(err => {
                 console.log(err);
                 failOperation(err.response.data.errMsg);
+                setIsLoading(false);
+                setUserInput(defaultFormInputs);
             })
         
-        setIsLoading(false);
-        setUserInput(defaultFormInputs);
        
         
     }
@@ -74,12 +76,14 @@ export default function LoginForm() {
         axios.post('/auth/new-user', userInput)
             .then(res => {
                 saveData(res.data);
+                setUserInput(defaultFormInputs);
+                setIsLoading(false);
             }).catch(err => {
                 console.log(err);
                 failOperation(err.response.data.errMsg);
+                setUserInput(defaultFormInputs);
+                setIsLoading(false);
         })
-        setUserInput(defaultFormInputs);
-        setIsLoading(false);
     }
 
     const handleToggleLogIn = (e) => {
