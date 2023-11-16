@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const isEnvDev = false;
+import { isEnvDev } from "../../../env.json";
 
 const url = isEnvDev ? "http://localhost:3000/" : `https://makelist.cyclic.app/`;
 
@@ -14,10 +14,10 @@ userAxios.interceptors.request.use(config => {
     return config;
 });
 
-const updateHome = (cb) => {
+const updateHome = (callbackFunc) => {
     userAxios.get('api/lists')
         .then(res => {
-            cb(res.data);
+            callbackFunc(res.data);
             const user = JSON.parse(localStorage.getItem('user'));
             user.listItems = res.data;
             localStorage.setItem('user', JSON.stringify(user));
