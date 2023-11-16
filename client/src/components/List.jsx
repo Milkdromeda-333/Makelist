@@ -5,6 +5,7 @@ import { CiRedo } from "react-icons/ci";
 import {SlArrowDown, SlArrowUp} from "react-icons/sl"
 import Item from "./Item";
 import AddNewItem from "./AddNewItem";
+import Loader from "./Loader";
 import { userAxios, updateHome } from "./utils/axios";
 
 export default function List({ list, setUserLists }) {
@@ -12,6 +13,7 @@ export default function List({ list, setUserLists }) {
     const [isListActive, setIsListActive] = useState(list.isPinned);
     const [isAddingNewItem, setIsAddingNewItem] = useState(false);
     const [isEditingTitle, setIsEditingTitle] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [screenWidth, setScreenWidth] = useState(window.matchMedia('(max-width: 768px)'));
 
 
@@ -46,7 +48,13 @@ export default function List({ list, setUserLists }) {
 
     const items = () => {
         if (list.listItems.length) {
-            return list.listItems.map(item => <Item item={item} setUserLists={setUserLists} listId={list._id} key={item.title} />);
+            return list.listItems.map(item => <Item
+                item={item}
+                setUserLists={setUserLists}
+                listId={list._id}
+                setIsItemLoading={setIsLoading}
+                key={item.title}
+            />);
         }
         return "No items here.."
     }
@@ -117,13 +125,13 @@ export default function List({ list, setUserLists }) {
             {isListActive &&
                 <div className="p-2 ">
                     {items()}
-                    {isAddingNewItem && <AddNewItem closeFunc={ setIsAddingNewItem } listId={list._id} setUserLists={setUserLists} />}
+                    {isLoading && <Loader/>}
+                    {isAddingNewItem && <AddNewItem closeFunc={ setIsAddingNewItem } listId={list._id} setUserLists={setUserLists} setIsItemLoading={setIsLoading} />}
                 </div>
             }
             
             {/* options */}
             <div className="center-row gap-2 flex-wrap mt-4 max[275px]:justify-start">
-
                 
                 { !isEditingTitle ?
                     <>

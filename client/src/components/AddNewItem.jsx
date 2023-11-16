@@ -3,7 +3,7 @@ import { userAxios, updateHome } from "./utils/axios";
 // import useAutoFocus from "./utils/autoFocus";
 
 
-export default function AddNewItem({closeFunc, listId, setUserLists}) {
+export default function AddNewItem({closeFunc, listId, setUserLists, setIsItemLoading}) {
 
     const defaultInputs = {
         title: "",
@@ -28,11 +28,15 @@ export default function AddNewItem({closeFunc, listId, setUserLists}) {
     }
 
     const submitNewItem = () => {
-        
+        setIsItemLoading(true);
         userAxios.post(`api/lists/${listId}/new-item`, inputs)
             .then(() => {
                 updateHome(setUserLists);
-            }).catch(err => console.log(err));
+                setIsItemLoading(false);
+            }).catch(err => {
+                setIsItemLoading(false);
+                console.log(err);
+            });
         
         setInputs(defaultInputs);
 
@@ -47,13 +51,13 @@ export default function AddNewItem({closeFunc, listId, setUserLists}) {
     }, []);
     
     return (
-        <div className="flex flex-col justify-start gap-2 text-white md:flex-row md:justify-center">
+        <div className="flex flex-col justify-start gap-2 text-white mx-4 md:justify-center">
             
             <input type="text" ref={focusedInput} name="title" id="title" value={inputs.item} onChange={handleChange}
-                    className="my-2 mr-2 pl-2 rounded w-full text-dark-blue md:mr-4"
+                    className="my-2 pl-1 rounded w-full text-dark-blue "
             />
 
-            <div className="center-row gap-2">
+            <div className="center-row gap-2 ml-auto">
                 <div className="center-row gap-1">
                     <input type="checkbox" name="repeat" id="repeat" checked={inputs.isRepeated} onChange={ toggleIsRepeated } className="no-style checked:bg-plum" />
                 
