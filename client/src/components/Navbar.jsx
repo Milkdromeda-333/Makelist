@@ -1,9 +1,12 @@
+import { useState } from "react";
 import Switch from "react-switch";
+import NavbarOptions from "./NavbarOptions";
 
 export default function Navbar(props) {
     
-    const { setUser , prefersDarkTheme, toggleDarkMode} = props;
+    const { setUser, prefersDarkTheme, toggleDarkMode, setNavbarOptionsModalData } = props;
 
+    const [isModalVisible, setIsModalVisible] = useState(false);
 
     // light mode
     const checkedHandleIcon = (
@@ -35,11 +38,6 @@ export default function Navbar(props) {
       </div>
     )
 
-    const logout = () => {
-        setUser({});
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-    };
     
     return (
         <nav className="
@@ -63,16 +61,16 @@ export default function Navbar(props) {
                 offColor="#281f21"
                 uncheckedIcon={checkedHandleIcon}
                 checkedIcon={uncheckedHandleIcon}
-                className="ml-auto"
+                className="ml-auto mr-4"
             />
 
             {
                 localStorage.getItem("token") &&
-                <button
-                    className="ml-2 hover:text-gray-200 dark:hover:text-gray-300" onClick={logout}
-                >
-                Logout
-                </button>
+                <NavbarOptions
+                    setUser={setUser}
+                    setIsModalVisible={setIsModalVisible}
+                    setNavbarOptionsModalData={setNavbarOptionsModalData}
+                />
             }
         </nav>
     )

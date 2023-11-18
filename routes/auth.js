@@ -91,20 +91,9 @@ router.delete("/delete", expressjwt({ secret: process.env.JWT_SECRET, algorithms
     }
 
     try {
-        const user = await User.findOne({
-            _id: req.auth._id
-        });
-
-
-        if (user) {
-            await List.deleteMany({ user: req.auth._id });
-            await user.deleteOne();
-
-            return res.status(200).send("User deleted successfully.");
-        } else {
-            res.status(400).send(new Error("User does not exist."));
-        }
-
+        await List.deleteMany({ user: req.auth._id });
+        await User.deleteOne({ _id: req.auth._id });
+        return res.status(200).send("User deleted successfully.");
     } catch (err) {
         res.status(400);
         return next(err);
