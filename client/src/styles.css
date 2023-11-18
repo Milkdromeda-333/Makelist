@@ -15,6 +15,12 @@
   align-items: center;
 }
 
+.center-col{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 /* checkbox stylings are from https://www.geekboots.com/css/animated-checkbox with my tweaking*/
  input[type=checkbox]:not(.no-style) {
   appearance: none;

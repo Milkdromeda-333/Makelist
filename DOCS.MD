@@ -1,47 +1,3 @@
-## Endpoint Docs:
-
-### List route:
-
-#### - POST url/api/lists/new : Create new list
-
-Creates a new list. Takes a request body with a list name and wether it is pinned ot not. isPinned could be defined ass true or not defined at all.
-
-#### - GET url/api/lists/:listId : Returns a list
-
-Recieves a parameter with list id.
-
-#### - GET url/api/lists/ : Returns all lists created by the user.
-
-#### - DELETE url/api/lists/:listId - Deletes a list.
-
-Takes the list id as a parameter. Returns a status 404 if no list is found, and code 200 and "List deleted" if a list is found.
-
-#### - PUT url/api/lists/list - Updates a list
-
-Takes a complete list object to replace the last object. Returns the object before it was updated.
-
-#### - PUT url/api/lists/:listId/reset : Resets all repeated list items of a certain list.
-
-Recieves a list id as a parameter.
-
-#### - PUT url/api/list/:listId/pin : toggles a pinned list
-
-Recieves a list id. Returns a confirmation string if successful. Toggles to false other lists that are pinned.
-
-#### Item route:
-
-#### - POST url/api/lists/:listId/new-item : Adds new list item
-
-Recieves a list id parameter, and a request body for the list item object. Returns updated list.
-
-#### - PUT url/api/lists/list/:listId/item/:itemId/update : Updates a list item
-
-Recieves list id and item id as parameters, and a relacement object ofr the item.
-
-#### - DELETE url/lists/list/:listId/item/:itemId : Deletes a list item
-
-Recieves list id and item id as parameters. Returns the new list.
-
 
 ## DEV Notes:
 
@@ -126,4 +82,4 @@ REMEMBER:
 - BEFORE REVISING LOCALLY: set `isEnvDev` to true in src/utils/axios and comment out `disableReactDevTools();` in src/main
 
 HOW TO DEPLOY:
-i think ijust push to main...
+Build project then push to main.

@@ -93,14 +93,12 @@ export default function Item({ item, listId, setUserLists, setIsItemLoading }) {
         }
     }
 
-    // DOCS: makes sure that the items checked state is in sync with the item data
     useEffect(() => {
         setIsChecked(item.isCompleted)
     }, [item.isCompleted]);
     
     const focusedInput = useRef(null);
 
-    // DOCS: when isEditing changes, tell javascript that if ref is truthy, focus on it
     useEffect(() => {
         if (focusedInput.current) {
             focusedInput.current.focus();
@@ -139,7 +137,8 @@ export default function Item({ item, listId, setUserLists, setIsItemLoading }) {
                     /> :
                     <input type="text" name="title" id="title" value={editedItem.title}
                         onChange={handleChangeItem}
-                        maxLength={100}
+                        maxLength={99}
+                        minLength={1}
                         className={`pl-[2px] rounded w-full text-dark-blue`}
                         ref={focusedInput}
                     />
@@ -187,7 +186,7 @@ export default function Item({ item, listId, setUserLists, setIsItemLoading }) {
                             className="
                             bg-red-500 w-10 rounded
                             hover:bg-red-600"
-                            onClick={()=>setIsEditing(false)}
+                            onClick={() => { setIsEditing(false); setEditedItem(item); }}
                         >
                             exit
                         </button>

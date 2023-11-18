@@ -1,7 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import { userAxios, updateHome } from "./utils/axios";
-// import useAutoFocus from "./utils/autoFocus";
-
 
 export default function AddNewItem({closeFunc, listId, setUserLists, setIsItemLoading}) {
 
@@ -53,13 +51,22 @@ export default function AddNewItem({closeFunc, listId, setUserLists, setIsItemLo
     return (
         <div className="flex flex-col justify-start gap-2 text-white mx-4 md:justify-center">
             
-            <input type="text" ref={focusedInput} name="title" id="title" value={inputs.item} onChange={handleChange}
-                    className="my-2 pl-1 rounded w-full text-dark-blue "
+            <input type="text"
+                ref={focusedInput}
+                name="title" id="title"
+                value={inputs.item} onChange={handleChange}
+                className="my-2 pl-1 rounded w-full text-dark-blue "
+                maxLength={99} minLength={1}
             />
 
             <div className="center-row gap-2 ml-auto">
                 <div className="center-row gap-1">
-                    <input type="checkbox" name="repeat" id="repeat" checked={inputs.isRepeated} onChange={ toggleIsRepeated } className="no-style checked:bg-plum" />
+                    <input
+                        type="checkbox" name="repeat" id="repeat"
+                        checked={inputs.isRepeated}
+                        onChange={toggleIsRepeated}
+                        className="no-style checked:bg-plum"
+                    />
                 
                     <label htmlFor="repeat" className="repeat text-plum dark:text-white">repeat?</label>
                 </div>

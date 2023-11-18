@@ -4,14 +4,18 @@ import { CiRedo } from "react-icons/ci";
 import List from "../components/List";
 import AddNewList from "../components/AddNewList";
 import { updateHome } from "../components/utils/axios";
+import LogoutModal from "../components/LogoutModal";
+import DeleteAccountModal from "../components/DeleteAccountModal";
 
-export default function Home() {
+
+export default function Home({navbarOptionsModalData, setNavbarOptionsModalData}) {
 
     const { user, userLists, setUserLists, setUser } = useContext(appContext);
 
     // i am holding this in state for the emoji animation because when the emoji's change it does not re-animate.
     const [shouldAnimate, setShouldAnimate] = useState(true);
     const [showAddNewList, setShowAddNewList] = useState(false);
+
 
     const handleElementChange = () => {
 
@@ -105,6 +109,14 @@ export default function Home() {
                 <div>
                     <AddNewList closeFunc={setShowAddNewList} setUserLists={setUserLists} />
                 </div>
+            }
+
+            {navbarOptionsModalData.logout &&
+                <LogoutModal setNavbarOptionsModalData={setNavbarOptionsModalData} setUser={setUser} />
+            }
+
+            {navbarOptionsModalData.delete &&
+                <DeleteAccountModal setNavbarOptionsModalData={setNavbarOptionsModalData} setUser={setUser} />
             }
 
         </main>

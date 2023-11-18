@@ -15,9 +15,15 @@ export default function List({ list, setUserLists }) {
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [screenWidth, setScreenWidth] = useState(window.matchMedia('(max-width: 768px)'));
-
-
     const [listTitle, setListTitle] = useState(list.name);
+    const [listProgress, setListProgress] = useState(list.name);
+
+    const getListProgress = () => {
+        const listLength = list.listItems.length;
+        const numCompleted = list.listItems.filter(item => item.isCompleted).length;
+        return numCompleted + " / " + listLength;
+    }
+
 
     const handleTitleChange = (e) => {
         const { value } = e.target;
@@ -118,7 +124,10 @@ export default function List({ list, setUserLists }) {
                         ref={focusedInput}
                     />
                 }
+                <div className="center-row gap-4">
+                <span className="">{getListProgress()}</span>
                 { isListActive ? <SlArrowUp className="md:text-base"/> : <SlArrowDown className="md:text-base"/> }
+                </div>
             </div>
             
             {/* items  */}

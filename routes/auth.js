@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+const { expressjwt } = require('express-jwt');
+const { List } = require('../models/list');
 
 function generateAccessToken(payload) {
     return jwt.sign(payload, process.env.JWT_SECRET);
@@ -77,6 +79,24 @@ router.post('/new-user', (req, res, next) => {
     } else {
         res.status(400);
         return res.send(new Error("Disallowed charecters detected."));
+    }
+});
+
+// delete user account
+router.delete("/delete", expressjwt({ secret: process.env.JWT_SECRET, algorithms: ['HS256'] }), async (req, res, next) => {
+    console.log("req.auth ", req.auth);
+    if (!req.auth) {
+        res.status(400);
+        return next(new Error("Authorization insufficient"));
+    }
+
+    try {
+        await List.deleteMany({ user: req.auth._id });
+        await User.deleteOne({ _id: req.auth._id });
+        return res.status(200).send("User deleted successfully.");
+    } catch (err) {
+        res.status(400);
+        return next(err);
     }
 });
 
