@@ -1,7 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import { userAxios, updateHome } from "./utils/axios";
-// import useAutoFocus from "./utils/autoFocus";
-
 
 export default function AddNewItem({closeFunc, listId, setUserLists, setIsItemLoading}) {
 
